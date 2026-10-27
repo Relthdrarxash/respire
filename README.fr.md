@@ -59,6 +59,14 @@ Prérequis : JDK 17. L'appli est écrite en Kotlin avec Jetpack Compose et fonct
 - Le filtre Reels et Shorts repose sur des identifiants de vues qu'Instagram ou YouTube peuvent modifier lors d'une mise à jour.
 - Les applis ouvertes via un lien depuis une autre appli déclenchent aussi la pause. C'est voulu.
 
+## Licence
+
+Copyright (C) 2026 Relthdrarxash
+
+Respire est un logiciel libre : tu peux le redistribuer et le modifier selon les termes de la [licence publique générale GNU v3.0](LICENSE). Les versions modifiées que tu distribues doivent rester sous la même licence, avec leur code source disponible.
+
+Les polices de `app/src/main/res/font/` restent sous leur propre licence SIL Open Font License (voir `licences/`).
+
 ## Crédits
 
 - Identifiants de vues pour repérer les Reels et les Shorts : [short-video-rules](https://github.com/bhargavprajapati949/short-video-rules) (MIT) et [appblock](https://github.com/rubberpencils/appblock).

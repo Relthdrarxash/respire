@@ -59,6 +59,14 @@ Requirements: JDK 17. The app uses Kotlin and Jetpack Compose, with a minimum of
 - The Reels and Shorts filter relies on view IDs that Instagram or YouTube may change in an update.
 - Apps opened from a link inside another app also trigger the pause. This is intended.
 
+## License
+
+Copyright (C) 2026 Relthdrarxash
+
+Respire is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License v3.0](LICENSE). Modified versions you distribute must stay under the same license, with their source code available.
+
+The fonts in `app/src/main/res/font/` keep their own SIL Open Font License (see `licences/`).
+
 ## Credits
 
 - View IDs for Reels and Shorts detection: [short-video-rules](https://github.com/bhargavprajapati949/short-video-rules) (MIT) and [appblock](https://github.com/rubberpencils/appblock).
