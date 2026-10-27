@@ -70,6 +70,7 @@ data class HomeUi(
     val blockShorts: Boolean,
     val shortsBlockedToday: Int,
     val diagnostic: String,
+    val days: List<DayDetail>,
 )
 
 enum class ShortKind { REELS, SHORTS }
@@ -288,6 +289,7 @@ private fun ActivationCard(onOpenAccessibility: () -> Unit) {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun StatsCard(ui: HomeUi) {
+    var openDay by remember { mutableStateOf<Int?>(null) }
     CalmeCard {
         Text(
             stringResource(R.string.stats_today),
@@ -322,12 +324,21 @@ private fun StatsCard(ui: HomeUi) {
         ) {
             ui.week.forEachIndexed { i, v ->
                 val today = i == ui.week.lastIndex
+                // Toute la colonne est cliquable, pas seulement la barre (plus facile au doigt).
                 Box(
                     Modifier
                         .weight(1f)
-                        .fillMaxHeight((v.toFloat() / max).coerceAtLeast(0.08f))
-                        .background(if (today) Calme.Sage else Calme.Ring2, RoundedCornerShape(6.dp))
-                )
+                        .fillMaxHeight()
+                        .clickable(role = Role.Button) { openDay = i },
+                    contentAlignment = Alignment.BottomCenter,
+                ) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight((v.toFloat() / max).coerceAtLeast(0.08f))
+                            .background(if (today) Calme.Sage else Calme.Ring2, RoundedCornerShape(6.dp))
+                    )
+                }
             }
         }
         Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -340,10 +351,17 @@ private fun StatsCard(ui: HomeUi) {
             }
         }
         Text(
-            stringResource(R.string.stats_week),
+            stringResource(R.string.stats_week) + " · " + stringResource(R.string.stats_tap_hint),
             modifier = Modifier.padding(top = 4.dp),
             fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
         )
+        peakHour(sumHours(ui.days))?.let { h ->
+            Text(
+                stringResource(R.string.week_peak, hourLabel(h)),
+                modifier = Modifier.padding(top = 10.dp),
+                fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = Calme.Ink,
+            )
+        }
         if (ui.blockReels || ui.blockShorts) {
             Text(
                 stringResource(R.string.stats_shorts, ui.shortsBlockedToday),
@@ -351,6 +369,10 @@ private fun StatsCard(ui: HomeUi) {
                 fontFamily = Nunito, fontSize = 14.sp, color = Calme.Ink,
             )
         }
+    }
+
+    openDay?.let { i ->
+        ui.days.getOrNull(i)?.let { day -> DayDialog(day) { openDay = null } }
     }
 }
 

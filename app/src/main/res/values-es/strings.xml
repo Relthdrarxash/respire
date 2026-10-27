@@ -68,6 +68,14 @@
     <string name="diag_copy">Copiar</string>
     <string name="diag_copied">Copiado</string>
     <string name="dialog_close">Cerrar</string>
+    <string name="stats_tap_hint">toca un día para verlo por horas</string>
+    <string name="week_peak">Esta semana, la tentación alcanza su pico hacia las %1$s</string>
+    <string name="hours_peak">Momento más tentador: %1$s</string>
+    <string name="hours_empty">No se registró ninguna tentación ese día.</string>
+    <string name="hours_attempts">Tentaciones</string>
+    <string name="hours_giveups">Renuncias</string>
+    <string name="hours_totals">Pausas: %1$d · renuncias: %2$d · Reels/Shorts evitados: %3$d</string>
+    <string name="hours_note">El seguimiento por horas empezó con la versión 3.5. Los días anteriores solo tienen el total diario.</string>
     <string name="back">Atrás</string>
     <plurals name="stats_gave_up">
         <item quantity="one">veces que renunciaste\nde %d pausa</item>

@@ -73,6 +73,7 @@ class Prefs(context: Context) {
     fun recordAttempt(pkg: String, now: Long) {
         appendLog("att_$pkg", now)
         bumpDay("d_att", now)
+        bumpHour("h_att", now)
     }
 
     /** L'utilisateur a choisi d'ouvrir ou de prolonger. */
@@ -82,6 +83,7 @@ class Prefs(context: Context) {
     fun recordGiveUp(now: Long) {
         appendLog("giveup", now)
         bumpDay("d_give", now)
+        bumpHour("h_give", now)
     }
 
     // ---- Historique par jour (pour le graphique de la semaine) ----------------
@@ -122,7 +124,37 @@ class Prefs(context: Context) {
         .mapNotNull { sp.getString("diag_$it", null) }
         .joinToString("\n\n")
 
-    fun recordShortBlocked(now: Long) = bumpDay("d_short", now)
+    fun recordShortBlocked(now: Long) {
+        bumpDay("d_short", now)
+        bumpHour("h_short", now)
+    }
+
+    // ---- Historique par heure (24 compteurs par jour) -------------------------------
+
+    private fun readHours(key: String): IntArray {
+        val out = IntArray(24)
+        sp.getString(key, null)?.split(',')?.forEachIndexed { i, v ->
+            if (i < 24) out[i] = v.toIntOrNull() ?: 0
+        }
+        return out
+    }
+
+    private fun bumpHour(prefix: String, now: Long) {
+        val key = dayKey(prefix, now)
+        val hours = readHours(key)
+        val h = Calendar.getInstance().apply { timeInMillis = now }.get(Calendar.HOUR_OF_DAY)
+        hours[h]++
+        sp.edit().putString(key, hours.joinToString(",")).apply()
+    }
+
+    /** Tentatives (pauses affichées), renoncements et vidéos courtes écartées, heure par heure. */
+    data class DayHours(val attempts: List<Int>, val giveUps: List<Int>, val shorts: List<Int>)
+
+    fun hoursOf(dayTime: Long): DayHours = DayHours(
+        attempts = readHours(dayKey("h_att", dayTime)).toList(),
+        giveUps = readHours(dayKey("h_give", dayTime)).toList(),
+        shorts = readHours(dayKey("h_short", dayTime)).toList(),
+    )
 
     fun shortsBlockedToday(now: Long = System.currentTimeMillis()): Int =
         sp.getInt(dayKey("d_short", now), 0)

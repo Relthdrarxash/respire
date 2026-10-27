@@ -71,6 +71,14 @@
     <string name="diag_copy">Copy</string>
     <string name="diag_copied">Copied</string>
     <string name="dialog_close">Close</string>
+    <string name="stats_tap_hint">tap a day for the hour-by-hour view</string>
+    <string name="week_peak">This week, temptation peaks around %1$s</string>
+    <string name="hours_peak">Most tempting time: %1$s</string>
+    <string name="hours_empty">No temptation recorded that day.</string>
+    <string name="hours_attempts">Temptations</string>
+    <string name="hours_giveups">Gave up</string>
+    <string name="hours_totals">Pauses: %1$d · gave up: %2$d · Reels/Shorts skipped: %3$d</string>
+    <string name="hours_note">Hourly tracking started with version 3.5. Earlier days only have daily totals.</string>
     <string name="back">Back</string>
     <plurals name="stats_gave_up">
         <item quantity="one">time you gave up\nout of %d pause</item>

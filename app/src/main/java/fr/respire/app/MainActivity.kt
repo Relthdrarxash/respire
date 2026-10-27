@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 import fr.respire.app.ui.AppItem
+import fr.respire.app.ui.DayDetail
 import fr.respire.app.ui.Calme
 import fr.respire.app.ui.HomeScreen
 import fr.respire.app.ui.HomeUi
@@ -116,6 +117,7 @@ class MainActivity : ComponentActivity() {
             blockShorts = prefs.blockShorts,
             shortsBlockedToday = prefs.shortsBlockedToday(),
             diagnostic = prefs.shortDiagnostic(),
+            days = weekDays(),
         )
     }
 
@@ -124,6 +126,22 @@ class MainActivity : ComponentActivity() {
         val fmt = SimpleDateFormat("EEEEE", Locale.getDefault())
         val now = System.currentTimeMillis()
         return (6 downTo 0).map { back -> fmt.format(Date(now - back * Prefs.DAY_MS)) }
+    }
+
+    /** Les 7 derniers jours, heure par heure, du plus ancien à aujourd'hui. */
+    private fun weekDays(): List<DayDetail> {
+        val fmt = SimpleDateFormat("EEEE d MMMM", Locale.getDefault())
+        val now = System.currentTimeMillis()
+        return (6 downTo 0).map { back ->
+            val t = now - back * Prefs.DAY_MS
+            val h = prefs.hoursOf(t)
+            DayDetail(
+                title = fmt.format(Date(t)).replaceFirstChar { it.titlecase(Locale.getDefault()) },
+                attempts = h.attempts,
+                giveUps = h.giveUps,
+                shorts = h.shorts,
+            )
+        }
     }
 
     private fun setShortForm(kind: ShortKind, on: Boolean) {
