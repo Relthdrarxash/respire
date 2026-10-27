@@ -24,7 +24,7 @@ Respire réunit les techniques qui ont le plus de soutien dans la recherche sur 
 
 Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, sessions de 10 min, 6 ouvertures par appli et par jour. Les heures à risque restent désactivées tant que tu ne les actives pas.
 
-Touche un jour du graphique de la semaine pour le voir heure par heure et repérer ton moment le plus tentant.
+Touche un jour du graphique de la semaine pour le voir heure par heure et repérer ton moment le plus tentant. Touche une appli de la liste pour voir sa semaine : tentations, ouvertures, part de renoncements et heure la plus tentante.
 
 ## Installer
 

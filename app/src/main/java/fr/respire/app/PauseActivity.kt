@@ -137,7 +137,7 @@ class PauseActivity : ComponentActivity() {
     private fun giveUp() {
         if (decided) return
         decided = true
-        prefs.recordGiveUp(System.currentTimeMillis())
+        prefs.recordGiveUp(System.currentTimeMillis(), pkg)
         startActivity(
             Intent(Intent.ACTION_MAIN)
                 .addCategory(Intent.CATEGORY_HOME)

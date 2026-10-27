@@ -47,6 +47,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import fr.respire.app.Prefs
 import fr.respire.app.R
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -84,7 +85,9 @@ fun HomeScreen(
     onSaveRule: (Rule, Int) -> Unit,
     onSetShortForm: (ShortKind, Boolean) -> Unit,
     onSaveRisk: (Boolean, Int, Int, Int) -> Unit,
+    appWeek: (String) -> Prefs.AppWeek,
 ) {
+    var openApp by remember { mutableStateOf<AppItem?>(null) }
     var editing by remember { mutableStateOf<Rule?>(null) }
     var disabling by remember { mutableStateOf<ShortKind?>(null) }
     var showDiag by remember { mutableStateOf(false) }
@@ -120,7 +123,14 @@ fun HomeScreen(
                     }
                     ui.targets.forEachIndexed { index, stat ->
                         if (index > 0) HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
-                        TargetRow(stat, quota)
+                        TargetRow(stat, quota) { openApp = stat.app }
+                    }
+                    if (ui.targets.isNotEmpty()) {
+                        Text(
+                            stringResource(R.string.apps_tap_hint),
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                            fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
+                        )
                     }
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
                     Text(
@@ -197,6 +207,10 @@ fun HomeScreen(
                 editing = null
             },
         )
+    }
+
+    openApp?.let { app ->
+        AppDialog(app, appWeek(app.pkg), ui.weekLabels) { openApp = null }
     }
 
     if (showDiag) {
@@ -386,11 +400,12 @@ private fun StatsCard(ui: HomeUi) {
 }
 
 @Composable
-private fun TargetRow(stat: TargetStat, quota: Int) {
+private fun TargetRow(stat: TargetStat, quota: Int, onClick: () -> Unit) {
     val blocked = stat.blocked
     Row(
         Modifier
             .fillMaxWidth()
+            .clickable(role = Role.Button, onClick = onClick)
             .heightIn(min = 64.dp)
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,

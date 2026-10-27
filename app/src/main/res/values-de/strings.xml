@@ -93,6 +93,11 @@
     <string name="pause_title_risk">Risikozeit: gesperrt bis %1$s.</string>
     <string name="pause_hint_risk">Du hast entschieden, diese Tageszeit zu schützen.</string>
     <string name="pause_opens_risk">Risikozeit: %1$d / %2$d Öffnungen</string>
+    <string name="apps_tap_hint">Tippe auf eine App, um ihre Woche zu sehen.</string>
+    <string name="app_empty">Noch keine Daten für diese App.</string>
+    <string name="app_week_totals">Letzte 7 Tage: %1$d Versuchungen · %2$d Öffnungen · %3$d verzichtet</string>
+    <string name="app_giveup_rate">Du hast in %1$d %% der Fälle verzichtet</string>
+    <string name="app_note">Die Erfassung pro App begann mit Version 3.7.</string>
     <string name="back">Zurück</string>
     <plurals name="risk_desc_quota">
         <item quantity="one">Doppelte Wartezeit, bis zu %d Öffnung pro App.</item>

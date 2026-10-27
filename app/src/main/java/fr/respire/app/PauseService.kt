@@ -128,7 +128,7 @@ class PauseService : AccessibilityService() {
         consecutiveBacks++
         cooldownUntil = now + BACK_COOLDOWN_MS
         ShortFormBlocker.goBack(this)
-        prefs.recordShortBlocked(System.currentTimeMillis())
+        prefs.recordShortBlocked(System.currentTimeMillis(), pkg)
         if (consecutiveBacks == 1) {
             val msg = if (pkg == ShortFormBlocker.INSTAGRAM) R.string.toast_reels_blocked else R.string.toast_shorts_blocked
             handler.post { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }

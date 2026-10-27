@@ -50,6 +50,7 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
         prefs = Prefs(this)
+        prefs.pruneOldDays()
         selected = prefs.targets
         loadApps()
 
@@ -75,6 +76,7 @@ class MainActivity : ComponentActivity() {
                         onSaveRule = ::saveRule,
                         onSetShortForm = ::setShortForm,
                         onSaveRisk = ::saveRisk,
+                        appWeek = { pkg -> prefs.appWeek(pkg) },
                     )
                     else -> Box(Modifier.fillMaxSize().background(Calme.Ground))
                 }

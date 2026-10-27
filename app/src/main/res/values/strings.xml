@@ -97,6 +97,11 @@
     <string name="pause_title_risk">Risky hours: blocked until %1$s.</string>
     <string name="pause_hint_risk">You chose to protect this time of day.</string>
     <string name="pause_opens_risk">Risky hours: %1$d / %2$d opens</string>
+    <string name="apps_tap_hint">Tap an app to see its week.</string>
+    <string name="app_empty">No data for this app yet.</string>
+    <string name="app_week_totals">Last 7 days: %1$d temptations · %2$d opens · %3$d gave up</string>
+    <string name="app_giveup_rate">You gave up %1$d%% of the time</string>
+    <string name="app_note">Per-app tracking started with version 3.7.</string>
     <string name="back">Back</string>
     <plurals name="risk_desc_quota">
         <item quantity="one">Wait doubled, up to %d open per app.</item>

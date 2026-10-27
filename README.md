@@ -24,7 +24,7 @@ Respire combines the techniques with the most support in published research on r
 
 Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute sessions, 6 opens per app per day. Risky hours are off until you turn them on.
 
-Tap a day in the weekly chart to see it hour by hour and find your most tempting time.
+Tap a day in the weekly chart to see it hour by hour and find your most tempting time. Tap an app in the list to see its week: temptations, opens, how often you gave up, and its most tempting hour.
 
 ## Install
 

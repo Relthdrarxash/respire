@@ -93,6 +93,11 @@
     <string name="pause_title_risk">Horas de riesgo: bloqueado hasta las %1$s.</string>
     <string name="pause_hint_risk">Elegiste proteger este momento del día.</string>
     <string name="pause_opens_risk">Horas de riesgo: %1$d / %2$d aperturas</string>
+    <string name="apps_tap_hint">Toca una app para ver su semana.</string>
+    <string name="app_empty">Aún no hay datos para esta app.</string>
+    <string name="app_week_totals">Últimos 7 días: %1$d tentaciones · %2$d aperturas · %3$d renuncias</string>
+    <string name="app_giveup_rate">Renunciaste el %1$d %% de las veces</string>
+    <string name="app_note">El seguimiento por app empezó con la versión 3.7.</string>
     <string name="back">Atrás</string>
     <plurals name="risk_desc_quota">
         <item quantity="one">Espera doble, hasta %d apertura por app.</item>

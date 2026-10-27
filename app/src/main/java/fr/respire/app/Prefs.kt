@@ -125,16 +125,22 @@ class Prefs(context: Context) {
         appendLog("att_$pkg", now)
         bumpDay("d_att", now)
         bumpHour("h_att", now)
+        bumpDay("pd_att_$pkg", now)
+        bumpHour("ph_att_$pkg", now)
     }
 
     /** L'utilisateur a choisi d'ouvrir ou de prolonger. */
-    fun recordOpen(pkg: String, now: Long) = appendLog("open_$pkg", now)
+    fun recordOpen(pkg: String, now: Long) {
+        appendLog("open_$pkg", now)
+        bumpDay("pd_open_$pkg", now)
+    }
 
     /** L'utilisateur a renoncé. */
-    fun recordGiveUp(now: Long) {
+    fun recordGiveUp(now: Long, pkg: String? = null) {
         appendLog("giveup", now)
         bumpDay("d_give", now)
         bumpHour("h_give", now)
+        if (pkg != null) bumpDay("pd_give_$pkg", now)
     }
 
     // ---- Historique par jour (pour le graphique de la semaine) ----------------
@@ -175,9 +181,56 @@ class Prefs(context: Context) {
         .mapNotNull { sp.getString("diag_$it", null) }
         .joinToString("\n\n")
 
-    fun recordShortBlocked(now: Long) {
+    fun recordShortBlocked(now: Long, pkg: String? = null) {
         bumpDay("d_short", now)
         bumpHour("h_short", now)
+        if (pkg != null) {
+            bumpDay("pd_short_$pkg", now)
+            bumpHour("ph_short_$pkg", now)
+        }
+    }
+
+    /** Semaine d'une appli : 7 valeurs par jour (du plus ancien à aujourd'hui) et 24 par heure. */
+    data class AppWeek(
+        val attempts: List<Int>,
+        val opens: List<Int>,
+        val giveUps: List<Int>,
+        val shorts: List<Int>,
+        /** Tentations cumulées sur la semaine, heure par heure. */
+        val hours: List<Int>,
+    ) {
+        val isEmpty get() = attempts.sum() + opens.sum() + giveUps.sum() + shorts.sum() == 0
+    }
+
+    fun appWeek(pkg: String, now: Long = System.currentTimeMillis()): AppWeek {
+        val days = (6 downTo 0).map { now - it * DAY_MS }
+        fun daily(prefix: String) = days.map { sp.getInt(dayKey(prefix, it), 0) }
+        val hours = IntArray(24)
+        for (d in days) {
+            val a = readHours(dayKey("ph_att_$pkg", d))
+            val sh = readHours(dayKey("ph_short_$pkg", d))
+            for (h in 0 until 24) hours[h] += a[h] + sh[h]
+        }
+        return AppWeek(
+            attempts = daily("pd_att_$pkg"),
+            opens = daily("pd_open_$pkg"),
+            giveUps = daily("pd_give_$pkg"),
+            shorts = daily("pd_short_$pkg"),
+            hours = hours.toList(),
+        )
+    }
+
+    /** Supprime les compteurs journaliers de plus de 60 jours. */
+    fun pruneOldDays(now: Long = System.currentTimeMillis()) {
+        val c = Calendar.getInstance().apply { timeInMillis = now }
+        val today = c.get(Calendar.YEAR) * 366 + c.get(Calendar.DAY_OF_YEAR)
+        val old = sp.all.keys.filter { key ->
+            val parts = key.split('_')
+            val y = parts.getOrNull(parts.size - 2)?.toIntOrNull()
+            val d = parts.lastOrNull()?.toIntOrNull()
+            y != null && d != null && y in 2000..3000 && today - (y * 366 + d) > 60
+        }
+        if (old.isNotEmpty()) sp.edit().apply { old.forEach { remove(it) } }.apply()
     }
 
     // ---- Historique par heure (24 compteurs par jour) -------------------------------
