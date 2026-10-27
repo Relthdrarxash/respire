@@ -1,0 +1,23 @@
+Respire coloca una breve pausa para respirar delante de las apps que abres sin pensar. Ciérralas con un toque, o espera unos segundos y ábrelas a conciencia.
+
+Cada función se basa en la investigación sobre el uso excesivo del móvil:
+
+• Una pausa antes de abrir: una pantalla de respiración, una cuenta atrás y una sola pregunta, «¿Por qué la abres ahora?». Cerrar es posible al instante, abrir solo al final de la cuenta atrás.
+• Una espera que crece: cada nuevo intento en la misma hora añade unos segundos.
+• Fin de sesión: tras 10 minutos en una app frenada, la pausa vuelve en mitad del feed.
+• Límite diario: superado un número de aperturas, la app queda cerrada hasta mañana.
+• Horas de riesgo: reglas más estrictas en las horas que elijas, por ejemplo por la noche, con una sugerencia basada en tus propios datos.
+• Filtro de Reels y Shorts: sale de los Reels de Instagram y de los Shorts de YouTube en cuanto se abren, dejando disponibles los mensajes, la búsqueda y los vídeos normales.
+• Un bloqueo contra la relajación: quitar una app o relajar una regla requiere 30 segundos de espera, para no deshacer tus ajustes por impulso.
+• Tu semana de un vistazo: pausas y renuncias por día, por hora y por app.
+
+Privacidad
+Respire no tiene permiso de Internet: no puede enviar nada a ningún sitio. Sin anuncios, sin cuenta, sin analítica. Todo se queda en tu teléfono.
+
+Servicio de accesibilidad
+Respire utiliza la API del servicio de accesibilidad de Android, que necesita para funcionar. Solo lee el nombre de la app que pasa a primer plano y, si activas el filtro de Reels o Shorts, los identificadores técnicos de los elementos en pantalla de Instagram y YouTube. Nunca lee textos, mensajes ni imágenes. Esta información se usa solo en tu teléfono y nunca se recopila ni se comparte.
+
+Software libre
+Respire es de código abierto, bajo licencia GPL-3.0. Código fuente: https://github.com/Relthdrarxash/respire
+
+Disponible en español, inglés, francés y alemán.

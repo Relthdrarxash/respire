@@ -1,0 +1,1 @@
+Android 16 support, accessibility information screen, links to the privacy policy and to give feedback.

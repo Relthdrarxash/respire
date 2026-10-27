@@ -1,0 +1,1 @@
+Compatibilidad con Android 16, pantalla de información sobre accesibilidad, enlaces a la política de privacidad y para dar tu opinión.

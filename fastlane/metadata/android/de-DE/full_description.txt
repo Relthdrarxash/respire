@@ -1,0 +1,23 @@
+Respire legt eine kurze Atempause vor die Apps, die du öffnest, ohne nachzudenken. Schließe sie mit einem Tipp, oder warte ein paar Sekunden und öffne sie bewusst.
+
+Jede Funktion stützt sich auf Forschung zur übermäßigen Smartphone-Nutzung:
+
+• Eine Pause vor dem Öffnen: ein Atembildschirm, ein Countdown und eine einzige Frage: „Warum öffnest du sie gerade?“. Schließen geht sofort, Öffnen erst nach Ablauf des Countdowns.
+• Eine Wartezeit, die wächst: Jeder weitere Versuch innerhalb einer Stunde fügt ein paar Sekunden hinzu.
+• Sitzungsende: Nach 10 Minuten in einer gebremsten App kommt die Pause mitten im Feed zurück.
+• Tageslimit: Nach einer bestimmten Zahl von Öffnungen bleibt die App bis morgen geschlossen.
+• Risikozeiten: strengere Regeln zu den Zeiten, die du wählst, zum Beispiel abends, mit einem Vorschlag auf Basis deiner eigenen Daten.
+• Reels- und Shorts-Filter: verlässt Instagram Reels und YouTube Shorts, sobald sie sich öffnen. Nachrichten, Suche und normale Videos bleiben verfügbar.
+• Eine Sperre gegen das Lockern: Eine App zu entfernen oder eine Regel zu lockern erfordert 30 Sekunden Wartezeit, damit du deine Einstellungen nicht spontan rückgängig machst.
+• Deine Woche auf einen Blick: Pausen und Verzicht nach Tag, Stunde und App.
+
+Datenschutz
+Respire hat keine Internetberechtigung: Die App kann nichts senden. Keine Werbung, kein Konto, keine Analyse. Alles bleibt auf deinem Handy.
+
+Bedienungshilfendienst
+Respire nutzt die Schnittstelle des Android-Bedienungshilfendienstes, die die App zum Funktionieren braucht. Sie liest nur den Namen der App, die in den Vordergrund kommt, und, wenn du den Reels- oder Shorts-Filter aktivierst, die technischen IDs der Bildschirmelemente in Instagram und YouTube. Texte, Nachrichten und Bilder werden nie gelesen. Diese Informationen werden nur auf deinem Handy verwendet und nie erfasst oder geteilt.
+
+Freie Software
+Respire ist Open Source unter der GPL-3.0-Lizenz. Quellcode: https://github.com/Relthdrarxash/respire
+
+Verfügbar auf Deutsch, Englisch, Französisch und Spanisch.
