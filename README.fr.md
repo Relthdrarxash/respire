@@ -56,11 +56,24 @@ Pour compiler en local, ouvre le dossier dans Android Studio, ou lance :
 
 Prérequis : JDK 17. L'appli est écrite en Kotlin avec Jetpack Compose et fonctionne à partir d'Android 8.0 (API 26).
 
+Pour lancer les tests unitaires : `./gradlew testReleaseUnitTest`.
+
 ## Limites connues
 
 - On peut toujours désactiver le service dans les paramètres d'accessibilité. Le verrou ne protège que les réglages de Respire.
 - Le filtre Reels et Shorts repose sur des identifiants de vues qu'Instagram ou YouTube peuvent modifier lors d'une mise à jour.
 - Les applis ouvertes via un lien depuis une autre appli déclenchent aussi la pause. C'est voulu.
+
+## Comment Respire est fait
+
+Respire est un projet personnel de Relthdrarxash. L'essentiel du code a été écrit avec un assistant IA (Claude, d'Anthropic), et je préfère le dire clairement.
+
+Concrètement :
+
+- **Les décisions sont humaines.** Le problème à régler, les fonctions retenues à partir des études citées plus bas, ce qui a été écarté (séries, badges, notifications), le design, et chaque correction après des tests sur un vrai téléphone.
+- **Pas besoin de me croire sur parole.** Tout le code est ici, sous licence GPL-3.0. Le manifeste ne déclare pas la permission `INTERNET` : même un bug ne peut rien envoyer nulle part. Le code lié à l'accessibilité se trouve dans [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) et [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
+- **Les règles sont testées.** Tout ce qui décide d'une attente ou d'un blocage se trouve dans [`Rules.kt`](app/src/main/java/fr/respire/app/Rules.kt), sans dépendance à Android, et est couvert par des tests lancés à chaque compilation (y compris les changements d'heure et les plages qui passent minuit).
+- **Quelqu'un en répond.** Si tu trouves un bug, un souci de vie privée ou quelque chose de flou, [ouvre une issue](https://github.com/Relthdrarxash/respire/issues). Les relectures du code d'accessibilité sont particulièrement bienvenues.
 
 ## Licence
 

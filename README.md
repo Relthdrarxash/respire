@@ -56,11 +56,24 @@ To build locally, open the folder in Android Studio, or run:
 
 Requirements: JDK 17. The app uses Kotlin and Jetpack Compose, with a minimum of Android 8.0 (API 26).
 
+Run the unit tests with `./gradlew testReleaseUnitTest`.
+
 ## Known limits
 
 - Anyone can turn the service off in Accessibility settings. The lock only protects Respire's own settings.
 - The Reels and Shorts filter relies on view IDs that Instagram or YouTube may change in an update.
 - Apps opened from a link inside another app also trigger the pause. This is intended.
+
+## How Respire is made
+
+Respire is a personal project by Relthdrarxash. Most of the code was written with an AI assistant (Claude, by Anthropic), and I want to say so plainly.
+
+What that means in practice:
+
+- **The decisions are human.** Which problem to solve, which features to keep based on the studies cited below, what to leave out (streaks, badges, notifications), the design, and every fix after testing on a real phone.
+- **You don't have to take my word for it.** The full source is here under the GPL-3.0. The manifest declares no `INTERNET` permission, so even a bug cannot send data anywhere. The accessibility code is in [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) and [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
+- **The rules are tested.** Everything that decides a wait or a block lives in [`Rules.kt`](app/src/main/java/fr/respire/app/Rules.kt), with no Android dependency, and is covered by unit tests run on every build (including daylight saving time changes and time ranges that cross midnight).
+- **Someone answers for it.** If you find a bug, a privacy concern or something unclear, [open an issue](https://github.com/Relthdrarxash/respire/issues). Reviews of the accessibility code are especially welcome.
 
 ## License
 
