@@ -103,11 +103,21 @@ class Prefs(context: Context) {
         val time = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.ROOT).format(java.util.Date())
         val text = buildString {
             append(time).append("  ").append(pkg).append('\n')
-            append("fenêtres ").append(r.windows).append(", nœuds ").append(r.nodes).append('\n')
+            append("fenêtres ").append(r.windows).append(", méthode ").append(r.method)
+            append(", ").append(r.durationMs).append(" ms")
+            if (r.nodes > 0) append(", nœuds ").append(r.nodes)
+            append('\n')
             append("résultat : ").append(r.reason).append('\n')
             append("identifiants : ").append(if (r.seen.isEmpty()) "aucun" else r.seen.joinToString(", "))
         }
         sp.edit().putString("diag_$pkg", text).apply()
+    }
+
+    fun learnedShortIds(pkg: String): Set<String> =
+        sp.getStringSet("learned_$pkg", emptySet())?.toSet() ?: emptySet()
+
+    fun addLearnedShortId(pkg: String, id: String) {
+        sp.edit().putStringSet("learned_$pkg", HashSet(learnedShortIds(pkg) + id)).apply()
     }
 
     fun shortDiagnostic(): String = listOf(ShortFormBlocker.YOUTUBE, ShortFormBlocker.INSTAGRAM)

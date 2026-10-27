@@ -12,8 +12,8 @@ android {
         applicationId = "fr.respire.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 5
-        versionName = "3.1"
+        versionCode = 6
+        versionName = "3.2"
     }
 
     // Clé fixe : chaque compilation est signée pareil, donc les mises à jour

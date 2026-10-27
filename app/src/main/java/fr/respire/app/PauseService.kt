@@ -39,6 +39,9 @@ class PauseService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         ignored = computeIgnored()
+        for (pkg in listOf(ShortFormBlocker.INSTAGRAM, ShortFormBlocker.YOUTUBE)) {
+            ShortFormBlocker.learn(pkg, prefs.learnedShortIds(pkg))
+        }
     }
 
     /** Fenêtres qui ne doivent pas compter comme « changer d'appli » (clavier, barre système). */
@@ -54,7 +57,6 @@ class PauseService : AccessibilityService() {
 
     private var shortPkg: String? = null
     private var shortScheduled = false
-    private var lastShortBack = 0L
     private val shortCheck = Runnable { runShortCheck() }
 
     private fun onShortFormCandidate(pkg: String) {
@@ -65,7 +67,7 @@ class PauseService : AccessibilityService() {
         }
         if (!enabled) return
         shortPkg = pkg
-        // Au plus une vérification toutes les 400 ms, même si les événements s'enchaînent.
+        // Au plus une vérification toutes les 120 ms, même si les événements s'enchaînent.
         if (!shortScheduled) {
             shortScheduled = true
             handler.postDelayed(shortCheck, SHORT_CHECK_MS)
@@ -73,24 +75,59 @@ class PauseService : AccessibilityService() {
     }
 
     private var lastDiag = 0L
+    private var lastExplore = 0L
+    private var cooldownUntil = 0L
+    private var consecutiveBacks = 0
 
     private fun runShortCheck() {
         shortScheduled = false
         val pkg = shortPkg ?: return
-        val result = ShortFormBlocker.scan(ShortFormBlocker.roots(this, pkg), pkg)
-
         val now = SystemClock.uptimeMillis()
-        if (result.blocked || now - lastDiag > DIAG_EVERY_MS) {
+
+        // Juste après un « retour », l'écran est encore en transition : on attend,
+        // puis on vérifie une seule fois si le lecteur est toujours là.
+        if (now < cooldownUntil) {
+            shortScheduled = true
+            handler.postDelayed(shortCheck, cooldownUntil - now)
+            return
+        }
+
+        val roots = ShortFormBlocker.roots(this, pkg)
+        if (roots.isEmpty()) return
+
+        val explore = now - lastExplore > EXPLORE_EVERY_MS
+        if (explore) lastExplore = now
+        val result = ShortFormBlocker.scan(roots, pkg, explore)
+
+        if (result.method == "exploration" && result.blocked) {
+            val id = result.reason.substringAfter("via ", "")
+            if (id.isNotEmpty()) {
+                ShortFormBlocker.learn(pkg, listOf(id))
+                prefs.addLearnedShortId(pkg, id)
+            }
+        }
+        if (result.blocked || result.method == "exploration" || now - lastDiag > DIAG_EVERY_MS) {
             lastDiag = now
             prefs.saveShortDiagnostic(pkg, result)
         }
-        if (!result.blocked) return
-        if (now - lastShortBack < SHORT_BACK_DEBOUNCE_MS) return
-        lastShortBack = now
+
+        if (!result.blocked) {
+            consecutiveBacks = 0
+            return
+        }
+        // Garde-fou : jamais plus de quelques « retour » d'affilée, pour ne pas sortir de l'appli.
+        if (consecutiveBacks >= MAX_CONSECUTIVE_BACKS) return
+        consecutiveBacks++
+        cooldownUntil = now + BACK_COOLDOWN_MS
         ShortFormBlocker.goBack(this)
         prefs.recordShortBlocked(System.currentTimeMillis())
-        val msg = if (pkg == ShortFormBlocker.INSTAGRAM) R.string.toast_reels_blocked else R.string.toast_shorts_blocked
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        if (consecutiveBacks == 1) {
+            val msg = if (pkg == ShortFormBlocker.INSTAGRAM) R.string.toast_reels_blocked else R.string.toast_shorts_blocked
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
+        // Vérification de contrôle à la fin de la transition.
+        shortScheduled = true
+        handler.postDelayed(shortCheck, BACK_COOLDOWN_MS)
     }
 
     // ---- Pauses -----------------------------------------------------------------
@@ -170,8 +207,10 @@ class PauseService : AccessibilityService() {
 
     companion object {
         private const val DEBOUNCE_MS = 1500L
-        private const val SHORT_CHECK_MS = 400L
+        private const val SHORT_CHECK_MS = 120L
         private const val DIAG_EVERY_MS = 2000L
-        private const val SHORT_BACK_DEBOUNCE_MS = 1500L
+        private const val EXPLORE_EVERY_MS = 6000L
+        private const val BACK_COOLDOWN_MS = 900L
+        private const val MAX_CONSECUTIVE_BACKS = 3
     }
 }
