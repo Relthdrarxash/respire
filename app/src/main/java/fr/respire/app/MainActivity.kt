@@ -27,8 +27,11 @@ import fr.respire.app.ui.HomeUi
 import fr.respire.app.ui.PickerScreen
 import fr.respire.app.ui.RespireTheme
 import fr.respire.app.ui.Rule
+import fr.respire.app.ui.ShortKind
 import fr.respire.app.ui.TargetStat
-import java.util.Calendar
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
 
@@ -68,6 +71,7 @@ class MainActivity : ComponentActivity() {
                         },
                         onPickApps = { picking = true },
                         onSaveRule = ::saveRule,
+                        onSetShortForm = ::setShortForm,
                     )
                     else -> Box(Modifier.fillMaxSize().background(Calme.Ground))
                 }
@@ -108,16 +112,25 @@ class MainActivity : ComponentActivity() {
                 Rule.SESSION to prefs.sessionMinutes,
                 Rule.QUOTA to prefs.dailyQuota,
             ),
+            blockReels = prefs.blockReels,
+            blockShorts = prefs.blockShorts,
+            shortsBlockedToday = prefs.shortsBlockedToday(),
         )
     }
 
+    /** Initiale du jour dans la langue du téléphone (L, M, M... / M, T, W...). */
     private fun weekLabels(): List<String> {
-        val letters = arrayOf("D", "L", "M", "M", "J", "V", "S") // index = DAY_OF_WEEK - 1
+        val fmt = SimpleDateFormat("EEEEE", Locale.getDefault())
         val now = System.currentTimeMillis()
-        return (6 downTo 0).map { back ->
-            val c = Calendar.getInstance().apply { timeInMillis = now - back * Prefs.DAY_MS }
-            letters[c.get(Calendar.DAY_OF_WEEK) - 1]
+        return (6 downTo 0).map { back -> fmt.format(Date(now - back * Prefs.DAY_MS)) }
+    }
+
+    private fun setShortForm(kind: ShortKind, on: Boolean) {
+        when (kind) {
+            ShortKind.REELS -> prefs.blockReels = on
+            ShortKind.SHORTS -> prefs.blockShorts = on
         }
+        refresh()
     }
 
     private fun setTarget(pkg: String, on: Boolean) {

@@ -23,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.res.stringResource
+import fr.respire.app.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -76,9 +78,9 @@ fun PauseScreen(
 
         Text(
             text = when {
-                ui.blocked -> "Reviens demain."
-                remaining > 0 -> "Inspire quand le cercle grandit, expire quand il rétrécit."
-                else -> "Si c’est vraiment utile, tu peux y aller."
+                ui.blocked -> stringResource(R.string.pause_hint_blocked)
+                remaining > 0 -> stringResource(R.string.pause_hint_breathe)
+                else -> stringResource(R.string.pause_hint_ready)
             },
             modifier = Modifier.padding(top = 20.dp),
             fontFamily = Nunito,
@@ -89,9 +91,9 @@ fun PauseScreen(
 
         Text(
             text = when {
-                ui.blocked -> "Quota du jour atteint."
-                ui.sessionEnd -> "Ça fait ${ui.sessionMinutes} min.\nTu continues vraiment ?"
-                else -> "Pourquoi tu l’ouvres maintenant ?"
+                ui.blocked -> stringResource(R.string.pause_title_blocked)
+                ui.sessionEnd -> stringResource(R.string.pause_title_session, ui.sessionMinutes)
+                else -> stringResource(R.string.pause_title_open)
             },
             modifier = Modifier.padding(top = 32.dp),
             fontFamily = Fraunces,
@@ -104,9 +106,9 @@ fun PauseScreen(
 
         Text(
             text = if (ui.quota > 0) {
-                "${ui.opensToday} sur ${ui.quota} ouvertures aujourd’hui"
+                stringResource(R.string.pause_opens_quota, ui.opensToday, ui.quota)
             } else {
-                "${ui.opensToday} ouvertures aujourd’hui"
+                stringResource(R.string.pause_opens, ui.opensToday)
             },
             modifier = Modifier.padding(top = 12.dp),
             fontFamily = Nunito,
@@ -116,10 +118,10 @@ fun PauseScreen(
 
         Spacer(Modifier.weight(1f))
 
-        PillButton("Non, je ferme", onClick = onClose)
+        PillButton(stringResource(R.string.pause_close), onClick = onClose)
 
         if (!ui.blocked) {
-            val verb = if (ui.sessionEnd) "Continuer" else "Ouvrir quand même"
+            val verb = stringResource(if (ui.sessionEnd) R.string.pause_continue else R.string.pause_open)
             TextButton(
                 onClick = onOpen,
                 enabled = remaining == 0,
@@ -129,7 +131,7 @@ fun PauseScreen(
                     .height(48.dp),
             ) {
                 Text(
-                    if (remaining > 0) "$verb dans $remaining s" else verb,
+                    if (remaining > 0) stringResource(R.string.pause_wait, verb, remaining) else verb,
                     fontFamily = Nunito,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,

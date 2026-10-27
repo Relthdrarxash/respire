@@ -32,7 +32,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import fr.respire.app.R
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -63,9 +65,9 @@ fun PickerScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Retour", tint = Calme.Ink)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back), tint = Calme.Ink)
             }
-            Text("Applis à freiner", fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, color = Calme.Ink)
+            Text(stringResource(R.string.picker_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, color = Calme.Ink)
         }
 
         OutlinedTextField(
@@ -74,7 +76,7 @@ fun PickerScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 12.dp),
-            placeholder = { Text("Rechercher une appli", fontFamily = Nunito, color = Calme.Muted) },
+            placeholder = { Text(stringResource(R.string.picker_search), fontFamily = Nunito, color = Calme.Muted) },
             singleLine = true,
             shape = RoundedCornerShape(50),
             textStyle = TextStyle(fontFamily = Nunito, fontSize = 16.sp, color = Calme.Ink),
@@ -89,7 +91,7 @@ fun PickerScreen(
 
         if (apps.isEmpty()) {
             Text(
-                "Chargement des applis…",
+                stringResource(R.string.picker_loading),
                 modifier = Modifier.padding(24.dp),
                 fontFamily = Nunito, fontSize = 15.sp, color = Calme.Muted,
             )
@@ -139,8 +141,10 @@ fun PickerScreen(
     }
 
     pendingRemoval?.let { app ->
-        LoosenAppDialog(
-            label = app.label,
+        LoosenDialog(
+            title = stringResource(R.string.loosen_app_title, app.label),
+            what = stringResource(R.string.loosen_app_what, app.label),
+            confirmLabel = stringResource(R.string.loosen_app_confirm),
             onDismiss = { pendingRemoval = null },
             onConfirm = {
                 onToggle(app.pkg, false)

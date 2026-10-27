@@ -39,6 +39,16 @@ class Prefs(context: Context) {
         get() = sp.getInt(K_QUOTA, 6)
         set(v) = sp.edit().putInt(K_QUOTA, v).apply()
 
+    /** Masquer les Reels d'Instagram. */
+    var blockReels: Boolean
+        get() = sp.getBoolean(K_REELS, false)
+        set(v) = sp.edit().putBoolean(K_REELS, v).apply()
+
+    /** Masquer les Shorts de YouTube. */
+    var blockShorts: Boolean
+        get() = sp.getBoolean(K_SHORTS, false)
+        set(v) = sp.edit().putBoolean(K_SHORTS, v).apply()
+
     // ---- Autorisations temporaires -----------------------------------------
 
     fun allowedUntil(pkg: String): Long = sp.getLong("allow_$pkg", 0L)
@@ -88,6 +98,11 @@ class Prefs(context: Context) {
         sp.edit().putInt(key, sp.getInt(key, 0) + 1).apply()
     }
 
+    fun recordShortBlocked(now: Long) = bumpDay("d_short", now)
+
+    fun shortsBlockedToday(now: Long = System.currentTimeMillis()): Int =
+        sp.getInt(dayKey("d_short", now), 0)
+
     /** Renoncements des 7 derniers jours, du plus ancien à aujourd'hui. */
     fun giveUpsLastWeek(now: Long = System.currentTimeMillis()): List<Int> =
         (6 downTo 0).map { back -> sp.getInt(dayKey("d_give", now - back * DAY_MS), 0) }
@@ -125,6 +140,8 @@ class Prefs(context: Context) {
         private const val K_STEP = "step_delay"
         private const val K_SESSION = "session_minutes"
         private const val K_QUOTA = "daily_quota"
+        private const val K_REELS = "block_reels"
+        private const val K_SHORTS = "block_shorts"
 
         const val HOUR_MS = 60L * 60 * 1000
         const val DAY_MS = 24 * HOUR_MS

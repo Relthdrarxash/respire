@@ -1,5 +1,6 @@
 package fr.respire.app.ui
 
+import android.content.res.Resources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +22,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,9 +31,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import fr.respire.app.R
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,7 +58,12 @@ data class HomeUi(
     val weekLabels: List<String>,
     val targets: List<TargetStat>,
     val rules: Map<Rule, Int>,
+    val blockReels: Boolean,
+    val blockShorts: Boolean,
+    val shortsBlockedToday: Int,
 )
+
+enum class ShortKind { REELS, SHORTS }
 
 @Composable
 fun HomeScreen(
@@ -57,8 +71,11 @@ fun HomeScreen(
     onOpenAccessibility: () -> Unit,
     onPickApps: () -> Unit,
     onSaveRule: (Rule, Int) -> Unit,
+    onSetShortForm: (ShortKind, Boolean) -> Unit,
 ) {
     var editing by remember { mutableStateOf<Rule?>(null) }
+    var disabling by remember { mutableStateOf<ShortKind?>(null) }
+    val res = LocalContext.current.resources
     val quota = ui.rules[Rule.QUOTA] ?: 0
 
     LazyColumn(
@@ -79,11 +96,11 @@ fun HomeScreen(
 
         item {
             Column {
-                SectionTitle("Applis freinées")
+                SectionTitle(stringResource(R.string.section_apps))
                 CalmeCard(radius = 24.dp, padding = 0.dp) {
                     if (ui.targets.isEmpty()) {
                         Text(
-                            "Aucune appli pour l’instant. Commence par celles que tu ouvres sans y penser.",
+                            stringResource(R.string.apps_empty),
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 18.dp, bottom = 6.dp),
                             fontFamily = Nunito, fontSize = 15.sp, color = Calme.Muted,
                         )
@@ -94,7 +111,7 @@ fun HomeScreen(
                     }
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
                     Text(
-                        "Choisir les applis",
+                        stringResource(R.string.apps_choose),
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable(role = Role.Button, onClick = onPickApps)
@@ -107,15 +124,35 @@ fun HomeScreen(
 
         item {
             Column {
-                SectionTitle("Règles")
+                SectionTitle(stringResource(R.string.section_short))
+                CalmeCard(radius = 24.dp, padding = 0.dp) {
+                    ShortRow(stringResource(R.string.short_reels_title), ui.blockReels) { on ->
+                        if (on) onSetShortForm(ShortKind.REELS, true) else disabling = ShortKind.REELS
+                    }
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
+                    ShortRow(stringResource(R.string.short_shorts_title), ui.blockShorts) { on ->
+                        if (on) onSetShortForm(ShortKind.SHORTS, true) else disabling = ShortKind.SHORTS
+                    }
+                    Text(
+                        stringResource(R.string.short_note),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 4.dp),
+                        fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
+                    )
+                }
+            }
+        }
+
+        item {
+            Column {
+                SectionTitle(stringResource(R.string.section_rules))
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        RuleTile(Rule.DELAY, ui.rules, Modifier.weight(1f)) { editing = it }
-                        RuleTile(Rule.STEP, ui.rules, Modifier.weight(1f)) { editing = it }
+                        RuleTile(Rule.DELAY, ui.rules, res, Modifier.weight(1f)) { editing = it }
+                        RuleTile(Rule.STEP, ui.rules, res, Modifier.weight(1f)) { editing = it }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        RuleTile(Rule.SESSION, ui.rules, Modifier.weight(1f)) { editing = it }
-                        RuleTile(Rule.QUOTA, ui.rules, Modifier.weight(1f)) { editing = it }
+                        RuleTile(Rule.SESSION, ui.rules, res, Modifier.weight(1f)) { editing = it }
+                        RuleTile(Rule.QUOTA, ui.rules, res, Modifier.weight(1f)) { editing = it }
                     }
                 }
             }
@@ -131,6 +168,49 @@ fun HomeScreen(
                 onSaveRule(rule, value)
                 editing = null
             },
+        )
+    }
+
+    disabling?.let { kind ->
+        val name = if (kind == ShortKind.REELS) "Reels" else "Shorts"
+        LoosenDialog(
+            title = stringResource(R.string.loosen_short_title),
+            what = stringResource(R.string.loosen_short_what, name),
+            confirmLabel = stringResource(R.string.loosen_short_confirm),
+            onDismiss = { disabling = null },
+            onConfirm = {
+                onSetShortForm(kind, false)
+                disabling = null
+            },
+        )
+    }
+}
+
+@Composable
+private fun ShortRow(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 60.dp)
+            .clickable(role = Role.Switch) { onChange(!checked) }
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            title,
+            modifier = Modifier.weight(1f),
+            fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = Calme.Ink,
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = null,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = Calme.Sage,
+                uncheckedThumbColor = Calme.Muted,
+                uncheckedTrackColor = Calme.Chip,
+                uncheckedBorderColor = Calme.Ring2,
+            ),
         )
     }
 }
@@ -156,7 +236,7 @@ private fun Header(serviceOn: Boolean, onOpenAccessibility: () -> Unit) {
         ) {
             Box(Modifier.size(8.dp).background(if (serviceOn) Calme.Sage else Calme.Clay, CircleShape))
             Text(
-                if (serviceOn) "Actif" else "Inactif",
+                stringResource(if (serviceOn) R.string.home_active else R.string.home_inactive),
                 fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 13.sp,
                 color = if (serviceOn) Calme.SageDark else Calme.ClayText,
             )
@@ -167,27 +247,28 @@ private fun Header(serviceOn: Boolean, onOpenAccessibility: () -> Unit) {
 @Composable
 private fun ActivationCard(onOpenAccessibility: () -> Unit) {
     CalmeCard {
-        Text("Une étape avant de commencer", fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Calme.Ink)
+        Text(stringResource(R.string.activation_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Calme.Ink)
         Text(
-            "Active « Respire » dans les paramètres d’accessibilité pour que les pauses s’affichent. L’appli ne lit pas le contenu de ton écran et n’a pas accès à Internet.",
+            stringResource(R.string.activation_body),
             modifier = Modifier.padding(top = 8.dp),
             fontFamily = Nunito, fontSize = 15.sp, color = Calme.Muted,
         )
         Text(
-            "Option grisée ? Paramètres > Applications > Respire > menu ⋮ > Autoriser les paramètres restreints.",
+            stringResource(R.string.activation_restricted),
             modifier = Modifier.padding(top = 8.dp),
             fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
         )
         Spacer(Modifier.height(16.dp))
-        PillButton("Ouvrir les paramètres", onClick = onOpenAccessibility, height = 52.dp)
+        PillButton(stringResource(R.string.activation_button), onClick = onOpenAccessibility, height = 52.dp)
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun StatsCard(ui: HomeUi) {
     CalmeCard {
         Text(
-            "AUJOURD’HUI",
+            stringResource(R.string.stats_today),
             fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 13.sp,
             letterSpacing = 0.8.sp, color = Calme.Muted,
         )
@@ -198,9 +279,10 @@ private fun StatsCard(ui: HomeUi) {
         ) {
             Text(ui.giveUps.toString(), fontFamily = Fraunces, fontSize = 56.sp, lineHeight = 56.sp, color = Calme.Sage)
             Text(
-                when {
-                    ui.pauses == 0 -> "aucune pause\npour l’instant"
-                    else -> "fois où tu as renoncé\nsur ${ui.pauses} pauses"
+                if (ui.pauses == 0) {
+                    stringResource(R.string.stats_none)
+                } else {
+                    pluralStringResource(R.plurals.stats_gave_up, ui.pauses, ui.pauses)
                 },
                 modifier = Modifier.padding(bottom = 6.dp),
                 fontFamily = Nunito, fontSize = 16.sp, lineHeight = 21.sp, color = Calme.Ink,
@@ -236,10 +318,17 @@ private fun StatsCard(ui: HomeUi) {
             }
         }
         Text(
-            "Renoncements sur 7 jours",
+            stringResource(R.string.stats_week),
             modifier = Modifier.padding(top = 4.dp),
             fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
         )
+        if (ui.blockReels || ui.blockShorts) {
+            Text(
+                stringResource(R.string.stats_shorts, ui.shortsBlockedToday),
+                modifier = Modifier.padding(top = 10.dp),
+                fontFamily = Nunito, fontSize = 14.sp, color = Calme.Ink,
+            )
+        }
     }
 }
 
@@ -277,7 +366,7 @@ private fun TargetRow(stat: TargetStat, quota: Int) {
         }
         Text(
             when {
-                blocked -> "Bloqué"
+                blocked -> stringResource(R.string.target_blocked)
                 quota > 0 -> "${stat.opens} / $quota"
                 else -> "${stat.opens}"
             },
@@ -290,7 +379,7 @@ private fun TargetRow(stat: TargetStat, quota: Int) {
 }
 
 @Composable
-private fun RuleTile(rule: Rule, rules: Map<Rule, Int>, modifier: Modifier, onClick: (Rule) -> Unit) {
+private fun RuleTile(rule: Rule, rules: Map<Rule, Int>, res: Resources, modifier: Modifier, onClick: (Rule) -> Unit) {
     Column(
         modifier
             .clip(RoundedCornerShape(20.dp))
@@ -299,8 +388,8 @@ private fun RuleTile(rule: Rule, rules: Map<Rule, Int>, modifier: Modifier, onCl
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Text(rule.title, fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted)
-        Text(rule.format(rules[rule] ?: rule.min), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Calme.Ink)
+        Text(stringResource(rule.title), fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted)
+        Text(rule.format(res, rules[rule] ?: rule.min), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Calme.Ink)
     }
 }
 

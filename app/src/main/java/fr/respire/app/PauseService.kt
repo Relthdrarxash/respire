@@ -4,16 +4,20 @@ import android.accessibilityservice.AccessibilityService
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
+import android.widget.Toast
 import android.view.inputmethod.InputMethodManager
 
 /**
- * Service d'accessibilité : il ne lit QUE le nom du paquet de l'appli au premier plan
- * (aucun contenu d'écran, canRetrieveWindowContent = false).
+ * Service d'accessibilité.
  *
- * Deux déclencheurs :
+ * Pauses : seul le nom du paquet de l'appli au premier plan est utilisé.
  *  1. Ouverture : passage d'une autre appli vers une appli ciblée.
  *  2. Fin de session : l'utilisateur est toujours dans l'appli quand la session autorisée expire.
+ *
+ * Reels / Shorts (options) : dans Instagram et YouTube uniquement, les identifiants
+ * techniques des vues sont consultés pour repérer le lecteur plein écran (voir ShortFormBlocker).
  */
 class PauseService : AccessibilityService() {
 
@@ -46,9 +50,52 @@ class PauseService : AccessibilityService() {
         return set
     }
 
+    // ---- Reels / Shorts ---------------------------------------------------------
+
+    private var shortPkg: String? = null
+    private var shortScheduled = false
+    private var lastShortBack = 0L
+    private val shortCheck = Runnable { runShortCheck() }
+
+    private fun onShortFormCandidate(pkg: String) {
+        val enabled = when (pkg) {
+            ShortFormBlocker.INSTAGRAM -> prefs.blockReels
+            ShortFormBlocker.YOUTUBE -> prefs.blockShorts
+            else -> false
+        }
+        if (!enabled) return
+        shortPkg = pkg
+        // Au plus une vérification toutes les 300 ms, même si les événements s'enchaînent.
+        if (!shortScheduled) {
+            shortScheduled = true
+            handler.postDelayed(shortCheck, SHORT_CHECK_MS)
+        }
+    }
+
+    private fun runShortCheck() {
+        shortScheduled = false
+        val pkg = shortPkg ?: return
+        val root = rootInActiveWindow ?: return
+        if (root.packageName?.toString() != pkg) return
+        if (!ShortFormBlocker.isShortFormOnScreen(root, pkg)) return
+        val now = SystemClock.uptimeMillis()
+        if (now - lastShortBack < SHORT_BACK_DEBOUNCE_MS) return
+        lastShortBack = now
+        ShortFormBlocker.goBack(this)
+        prefs.recordShortBlocked(System.currentTimeMillis())
+        val msg = if (pkg == ShortFormBlocker.INSTAGRAM) R.string.toast_reels_blocked else R.string.toast_shorts_blocked
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    // ---- Pauses -----------------------------------------------------------------
+
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        if (event?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
+        if (event == null) return
         val pkg = event.packageName?.toString() ?: return
+        if (pkg == ShortFormBlocker.INSTAGRAM || pkg == ShortFormBlocker.YOUTUBE) {
+            onShortFormCandidate(pkg)
+        }
+        if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         if (pkg in ignored) return
 
         if (pkg == packageName) {
@@ -117,5 +164,7 @@ class PauseService : AccessibilityService() {
 
     companion object {
         private const val DEBOUNCE_MS = 1500L
+        private const val SHORT_CHECK_MS = 300L
+        private const val SHORT_BACK_DEBOUNCE_MS = 1500L
     }
 }

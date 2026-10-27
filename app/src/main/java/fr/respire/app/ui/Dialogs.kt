@@ -1,5 +1,7 @@
 package fr.respire.app.ui
 
+import android.content.res.Resources
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
@@ -15,9 +17,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.respire.app.R
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
@@ -25,22 +30,22 @@ import kotlin.math.roundToInt
 const val LOOSEN_DELAY_S = 30
 
 enum class Rule(
-    val title: String,
-    val help: String,
+    @StringRes val title: Int,
+    @StringRes val help: Int,
     val min: Int,
     val max: Int,
     private val looserWhenHigher: Boolean,
 ) {
-    DELAY("Attente", "Temps à patienter avant de pouvoir ouvrir une appli freinée.", 3, 60, false),
-    STEP("Allongement", "Secondes ajoutées à chaque nouvelle tentative dans l’heure.", 0, 15, false),
-    SESSION("Session", "Au bout de cette durée, la pause revient même si tu es encore dans l’appli.", 1, 30, true),
-    QUOTA("Quota", "Ouvertures (et prolongations) autorisées par appli et par jour. Au-delà, l’appli est bloquée jusqu’au lendemain.", 0, 20, true);
+    DELAY(R.string.rule_delay_title, R.string.rule_delay_help, 3, 60, false),
+    STEP(R.string.rule_step_title, R.string.rule_step_help, 0, 15, false),
+    SESSION(R.string.rule_session_title, R.string.rule_session_help, 1, 30, true),
+    QUOTA(R.string.rule_quota_title, R.string.rule_quota_help, 0, 20, true);
 
-    fun format(value: Int): String = when (this) {
-        DELAY -> "$value s"
-        STEP -> "+$value s"
-        SESSION -> "$value min"
-        QUOTA -> if (value == 0) "illimité" else "$value / jour"
+    fun format(res: Resources, value: Int): String = when (this) {
+        DELAY -> res.getString(R.string.fmt_seconds, value)
+        STEP -> res.getString(R.string.fmt_plus_seconds, value)
+        SESSION -> res.getString(R.string.fmt_minutes, value)
+        QUOTA -> if (value == 0) res.getString(R.string.fmt_unlimited) else res.getString(R.string.fmt_per_day, value)
     }
 
     fun isLooser(old: Int, new: Int): Boolean = when (this) {
@@ -49,14 +54,12 @@ enum class Rule(
     }
 }
 
+/** Compte à rebours partagé par toutes les confirmations d'assouplissement. */
 @Composable
-fun RuleDialog(rule: Rule, current: Int, onDismiss: () -> Unit, onSave: (Int) -> Unit) {
-    var value by remember { mutableIntStateOf(current) }
-    var waiting by remember { mutableStateOf(false) }
+private fun rememberCountdown(start: Boolean): Int {
     var left by remember { mutableIntStateOf(LOOSEN_DELAY_S) }
-
-    LaunchedEffect(waiting) {
-        if (waiting) {
+    LaunchedEffect(start) {
+        if (start) {
             left = LOOSEN_DELAY_S
             while (left > 0) {
                 delay(1000)
@@ -64,17 +67,27 @@ fun RuleDialog(rule: Rule, current: Int, onDismiss: () -> Unit, onSave: (Int) ->
             }
         }
     }
+    return left
+}
+
+@Composable
+fun RuleDialog(rule: Rule, current: Int, onDismiss: () -> Unit, onSave: (Int) -> Unit) {
+    val res = LocalContext.current.resources
+    var value by remember { mutableIntStateOf(current) }
+    var waiting by remember { mutableStateOf(false) }
+    val left = rememberCountdown(waiting)
+    val title = stringResource(rule.title)
 
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = Calme.Card,
-        title = { Text(rule.title, fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, color = Calme.Ink) },
+        title = { Text(title, fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, color = Calme.Ink) },
         text = {
             Column {
                 if (!waiting) {
-                    Text(rule.help, fontFamily = Nunito, fontSize = 15.sp, color = Calme.Muted)
+                    Text(stringResource(rule.help), fontFamily = Nunito, fontSize = 15.sp, color = Calme.Muted)
                     Text(
-                        rule.format(value),
+                        rule.format(res, value),
                         modifier = Modifier.padding(top = 20.dp),
                         fontFamily = Fraunces,
                         fontSize = 40.sp,
@@ -94,7 +107,10 @@ fun RuleDialog(rule: Rule, current: Int, onDismiss: () -> Unit, onSave: (Int) ->
                         ),
                     )
                 } else {
-                    LoosenText("Tu rends la règle « ${rule.title} » plus permissive (${rule.format(current)} → ${rule.format(value)}).", left)
+                    LoosenText(
+                        stringResource(R.string.loosen_rule, title, rule.format(res, current), rule.format(res, value)),
+                        left,
+                    )
                 }
             }
         },
@@ -106,41 +122,45 @@ fun RuleDialog(rule: Rule, current: Int, onDismiss: () -> Unit, onSave: (Int) ->
                 },
             ) {
                 Text(
-                    if (waiting && left > 0) "Patiente ($left s)" else "Enregistrer",
+                    if (waiting && left > 0) stringResource(R.string.dialog_wait, left) else stringResource(R.string.dialog_save),
                     fontFamily = Nunito, fontWeight = FontWeight.Bold,
                 )
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Annuler", fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
+                Text(stringResource(R.string.dialog_cancel), fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
             }
         },
     )
 }
 
+/** Confirmation avec attente imposée (retirer une appli, couper un filtre...). */
 @Composable
-fun LoosenAppDialog(label: String, onDismiss: () -> Unit, onConfirm: () -> Unit) {
-    var left by remember { mutableIntStateOf(LOOSEN_DELAY_S) }
-    LaunchedEffect(Unit) {
-        while (left > 0) {
-            delay(1000)
-            left--
-        }
-    }
+fun LoosenDialog(
+    title: String,
+    what: String,
+    confirmLabel: String,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    val left = rememberCountdown(true)
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = Calme.Card,
-        title = { Text("Retirer $label ?", fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, color = Calme.Ink) },
-        text = { LoosenText("$label ne sera plus freinée.", left) },
+        title = { Text(title, fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, color = Calme.Ink) },
+        text = { LoosenText(what, left) },
         confirmButton = {
             TextButton(enabled = left == 0, onClick = onConfirm) {
-                Text(if (left > 0) "Patiente ($left s)" else "Retirer", fontFamily = Nunito, fontWeight = FontWeight.Bold)
+                Text(
+                    if (left > 0) stringResource(R.string.dialog_wait, left) else confirmLabel,
+                    fontFamily = Nunito, fontWeight = FontWeight.Bold,
+                )
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Garder", fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
+                Text(stringResource(R.string.loosen_keep), fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
             }
         },
     )
@@ -151,7 +171,7 @@ private fun LoosenText(what: String, left: Int) {
     Column {
         Text(what, fontFamily = Nunito, fontSize = 15.sp, color = Calme.Ink)
         Text(
-            "Les rechutes arrivent surtout quand on assouplit ses règles sur un coup de tête. Prends ces quelques secondes pour vérifier que tu le veux vraiment.",
+            stringResource(R.string.loosen_why),
             modifier = Modifier.padding(top = 12.dp),
             fontFamily = Nunito,
             fontSize = 14.sp,
