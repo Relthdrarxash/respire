@@ -38,6 +38,12 @@ data class PauseUi(
     val opensToday: Int,
     val quota: Int,
     val sessionMinutes: Int,
+    /** Bloqué par les heures à risque (et non par le quota du jour). */
+    val riskBlocked: Boolean = false,
+    val riskEnd: String = "",
+    /** Ouvertures depuis le début de la plage en cours, ou null hors plage. */
+    val riskOpens: Int? = null,
+    val riskQuota: Int = 0,
 )
 
 @Composable
@@ -78,6 +84,7 @@ fun PauseScreen(
 
         Text(
             text = when {
+                ui.riskBlocked -> stringResource(R.string.pause_hint_risk)
                 ui.blocked -> stringResource(R.string.pause_hint_blocked)
                 remaining > 0 -> stringResource(R.string.pause_hint_breathe)
                 else -> stringResource(R.string.pause_hint_ready)
@@ -91,6 +98,7 @@ fun PauseScreen(
 
         Text(
             text = when {
+                ui.riskBlocked -> stringResource(R.string.pause_title_risk, ui.riskEnd)
                 ui.blocked -> stringResource(R.string.pause_title_blocked)
                 ui.sessionEnd -> stringResource(R.string.pause_title_session, ui.sessionMinutes)
                 else -> stringResource(R.string.pause_title_open)
@@ -105,7 +113,9 @@ fun PauseScreen(
         )
 
         Text(
-            text = if (ui.quota > 0) {
+            text = if (ui.riskOpens != null) {
+                stringResource(R.string.pause_opens_risk, ui.riskOpens, ui.riskQuota)
+            } else if (ui.quota > 0) {
                 stringResource(R.string.pause_opens_quota, ui.opensToday, ui.quota)
             } else {
                 stringResource(R.string.pause_opens, ui.opensToday)

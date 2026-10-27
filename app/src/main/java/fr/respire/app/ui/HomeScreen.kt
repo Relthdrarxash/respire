@@ -56,7 +56,7 @@ import androidx.compose.ui.unit.sp
 
 data class AppItem(val pkg: String, val label: String, val icon: ImageBitmap?)
 
-data class TargetStat(val app: AppItem, val opens: Int)
+data class TargetStat(val app: AppItem, val opens: Int, val blocked: Boolean = false)
 
 data class HomeUi(
     val serviceOn: Boolean,
@@ -71,6 +71,7 @@ data class HomeUi(
     val shortsBlockedToday: Int,
     val diagnostic: String,
     val days: List<DayDetail>,
+    val risk: RiskUi,
 )
 
 enum class ShortKind { REELS, SHORTS }
@@ -82,6 +83,7 @@ fun HomeScreen(
     onPickApps: () -> Unit,
     onSaveRule: (Rule, Int) -> Unit,
     onSetShortForm: (ShortKind, Boolean) -> Unit,
+    onSaveRisk: (Boolean, Int, Int, Int) -> Unit,
 ) {
     var editing by remember { mutableStateOf<Rule?>(null) }
     var disabling by remember { mutableStateOf<ShortKind?>(null) }
@@ -130,6 +132,13 @@ fun HomeScreen(
                         fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Calme.Sage,
                     )
                 }
+            }
+        }
+
+        item {
+            Column {
+                SectionTitle(stringResource(R.string.section_risk))
+                RiskCard(ui.risk, ui.days, onSaveRisk)
             }
         }
 
@@ -378,7 +387,7 @@ private fun StatsCard(ui: HomeUi) {
 
 @Composable
 private fun TargetRow(stat: TargetStat, quota: Int) {
-    val blocked = quota > 0 && stat.opens >= quota
+    val blocked = stat.blocked
     Row(
         Modifier
             .fillMaxWidth()

@@ -49,6 +49,57 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(K_SHORTS, false)
         set(v) = sp.edit().putBoolean(K_SHORTS, v).apply()
 
+    // ---- Heures à risque --------------------------------------------------------
+
+    /** Plage où les règles se durcissent (attente doublée, ouvertures plafonnées). */
+    var riskEnabled: Boolean
+        get() = sp.getBoolean(K_RISK_ON, false)
+        set(v) = sp.edit().putBoolean(K_RISK_ON, v).apply()
+
+    /** Heure de début (0-23). */
+    var riskStart: Int
+        get() = sp.getInt(K_RISK_START, 22)
+        set(v) = sp.edit().putInt(K_RISK_START, v).apply()
+
+    /** Heure de fin (0-23), exclue. Peut être avant le début : la plage passe minuit. */
+    var riskEnd: Int
+        get() = sp.getInt(K_RISK_END, 7)
+        set(v) = sp.edit().putInt(K_RISK_END, v).apply()
+
+    /** Ouvertures autorisées par appli pendant une plage. 0 = applis bloquées. */
+    var riskQuota: Int
+        get() = sp.getInt(K_RISK_QUOTA, 0)
+        set(v) = sp.edit().putInt(K_RISK_QUOTA, v).apply()
+
+    /** Début de la plage en cours, ou null si on n'est pas dans une plage. */
+    fun riskWindowStart(now: Long = System.currentTimeMillis()): Long? {
+        if (!riskEnabled) return null
+        val hours = riskHours(riskStart, riskEnd)
+        val c = Calendar.getInstance().apply { timeInMillis = now }
+        if (c.get(Calendar.HOUR_OF_DAY) !in hours) return null
+        // On remonte heure par heure jusqu'au début de la plage.
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        c.set(Calendar.MILLISECOND, 0)
+        while (c.get(Calendar.HOUR_OF_DAY) != riskStart) c.add(Calendar.HOUR_OF_DAY, -1)
+        return c.timeInMillis
+    }
+
+    fun inRiskWindow(now: Long = System.currentTimeMillis()) = riskWindowStart(now) != null
+
+    fun opensSince(pkg: String, since: Long) = readLog("open_$pkg").count { it >= since }
+
+    enum class Block { NONE, DAILY, RISK }
+
+    /** Pourquoi l'appli est bloquée maintenant, s'il y a lieu. */
+    fun blockReason(pkg: String, now: Long = System.currentTimeMillis()): Block {
+        val quota = dailyQuota
+        if (quota > 0 && opensToday(pkg) >= quota) return Block.DAILY
+        val start = riskWindowStart(now)
+        if (start != null && opensSince(pkg, start) >= riskQuota) return Block.RISK
+        return Block.NONE
+    }
+
     // ---- Autorisations temporaires -----------------------------------------
 
     fun allowedUntil(pkg: String): Long = sp.getLong("allow_$pkg", 0L)
@@ -176,10 +227,7 @@ class Prefs(context: Context) {
             .sumOf { key -> readLog(key).count { it >= start } }
     }
 
-    fun quotaReached(pkg: String): Boolean {
-        val quota = dailyQuota
-        return quota > 0 && opensToday(pkg) >= quota
-    }
+    fun quotaReached(pkg: String): Boolean = blockReason(pkg) != Block.NONE
 
     /**
      * Délai croissant : base + pas x (tentatives précédentes dans l'heure).
@@ -187,7 +235,9 @@ class Prefs(context: Context) {
      */
     fun delayFor(pkg: String, now: Long): Int {
         val previous = (attemptsSince(pkg, now - HOUR_MS) - 1).coerceAtLeast(0)
-        return (baseDelay + stepDelay * previous).coerceAtMost(MAX_DELAY_S)
+        val delay = baseDelay + stepDelay * previous
+        val factor = if (inRiskWindow(now)) 2 else 1
+        return (delay * factor).coerceAtMost(MAX_DELAY_S)
     }
 
     companion object {
@@ -198,6 +248,22 @@ class Prefs(context: Context) {
         private const val K_QUOTA = "daily_quota"
         private const val K_REELS = "block_reels"
         private const val K_SHORTS = "block_shorts"
+        private const val K_RISK_ON = "risk_on"
+        private const val K_RISK_START = "risk_start"
+        private const val K_RISK_END = "risk_end"
+        private const val K_RISK_QUOTA = "risk_quota"
+
+        /** Heures couvertes par une plage [start, end[, en passant minuit si besoin. start == end : toute la journée. */
+        fun riskHours(start: Int, end: Int): Set<Int> {
+            if (start == end) return (0 until 24).toSet()
+            val out = mutableSetOf<Int>()
+            var h = start
+            while (h != end) {
+                out.add(h)
+                h = (h + 1) % 24
+            }
+            return out
+        }
 
         const val HOUR_MS = 60L * 60 * 1000
         const val DAY_MS = 24 * HOUR_MS

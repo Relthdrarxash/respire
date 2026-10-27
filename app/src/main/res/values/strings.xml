@@ -79,7 +79,29 @@
     <string name="hours_giveups">Gave up</string>
     <string name="hours_totals">Pauses: %1$d · gave up: %2$d · Reels/Shorts skipped: %3$d</string>
     <string name="hours_note">Hourly tracking started with version 3.5. Earlier days only have daily totals.</string>
+    <string name="section_risk">Risky hours</string>
+    <string name="risk_title">Stricter rules at set hours</string>
+    <string name="risk_range" translatable="false">%1$s → %2$s</string>
+    <string name="risk_now">Now</string>
+    <string name="risk_edit">Change the time range</string>
+    <string name="risk_desc_blocked">Wait doubled, apps blocked.</string>
+    <string name="risk_help">During this time, the wait is doubled and opens are capped. Pick the hours when you give in most.</string>
+    <string name="risk_suggest">From your week: %1$s → %2$s</string>
+    <string name="risk_use">Use</string>
+    <string name="risk_start">Start: %1$s</string>
+    <string name="risk_end">End: %1$s</string>
+    <string name="risk_quota">Opens per app during this time: %1$d</string>
+    <string name="risk_quota_zero_hint">0 means the apps stay blocked.</string>
+    <string name="risk_off_title">Turn off risky hours?</string>
+    <string name="loosen_risk">You’re loosening your risky hours.</string>
+    <string name="pause_title_risk">Risky hours: blocked until %1$s.</string>
+    <string name="pause_hint_risk">You chose to protect this time of day.</string>
+    <string name="pause_opens_risk">Risky hours: %1$d / %2$d opens</string>
     <string name="back">Back</string>
+    <plurals name="risk_desc_quota">
+        <item quantity="one">Wait doubled, up to %d open per app.</item>
+        <item quantity="other">Wait doubled, up to %d opens per app.</item>
+    </plurals>
     <plurals name="stats_gave_up">
         <item quantity="one">time you gave up\nout of %d pause</item>
         <item quantity="other">times you gave up\nout of %d pauses</item>

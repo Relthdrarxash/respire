@@ -27,6 +27,7 @@ import fr.respire.app.ui.HomeScreen
 import fr.respire.app.ui.HomeUi
 import fr.respire.app.ui.PickerScreen
 import fr.respire.app.ui.RespireTheme
+import fr.respire.app.ui.RiskUi
 import fr.respire.app.ui.Rule
 import fr.respire.app.ui.ShortKind
 import fr.respire.app.ui.TargetStat
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
                         onPickApps = { picking = true },
                         onSaveRule = ::saveRule,
                         onSetShortForm = ::setShortForm,
+                        onSaveRisk = ::saveRisk,
                     )
                     else -> Box(Modifier.fillMaxSize().background(Calme.Ground))
                 }
@@ -98,7 +100,7 @@ class MainActivity : ComponentActivity() {
         val targets = selected
             .map { pkg -> byPkg[pkg] ?: AppItem(pkg, pkg, null) }
             .sortedBy { it.label.lowercase() }
-            .map { TargetStat(it, prefs.opensToday(it.pkg)) }
+            .map { TargetStat(it, prefs.opensToday(it.pkg), prefs.quotaReached(it.pkg)) }
 
         home = HomeUi(
             serviceOn = serviceEnabled(),
@@ -118,6 +120,13 @@ class MainActivity : ComponentActivity() {
             shortsBlockedToday = prefs.shortsBlockedToday(),
             diagnostic = prefs.shortDiagnostic(),
             days = weekDays(),
+            risk = RiskUi(
+                enabled = prefs.riskEnabled,
+                start = prefs.riskStart,
+                end = prefs.riskEnd,
+                quota = prefs.riskQuota,
+                active = prefs.inRiskWindow(),
+            ),
         )
     }
 
@@ -142,6 +151,14 @@ class MainActivity : ComponentActivity() {
                 shorts = h.shorts,
             )
         }
+    }
+
+    private fun saveRisk(enabled: Boolean, start: Int, end: Int, quota: Int) {
+        prefs.riskEnabled = enabled
+        prefs.riskStart = start
+        prefs.riskEnd = end
+        prefs.riskQuota = quota
+        refresh()
     }
 
     private fun setShortForm(kind: ShortKind, on: Boolean) {

@@ -18,10 +18,13 @@ Respire réunit les techniques qui ont le plus de soutien dans la recherche sur 
 | **Délai croissant** | Chaque nouvelle tentative dans l'heure ajoute quelques secondes. | Même principe de friction, renforcé quand l'envie revient. |
 | **Fin de session** | Une ouverture ne vaut que pour une durée fixée (10 min par défaut). Si tu es toujours dans l'appli, la pause revient en plein défilement. | Vise le défilement lui-même, pas seulement l'ouverture. |
 | **Quota quotidien** | Au-delà d'un nombre d'ouvertures par appli et par jour, l'appli est bloquée jusqu'au lendemain. Prolonger une session compte comme une ouverture. | Des limites difficiles à contourner ont réduit l'usage des réseaux sociaux d'environ 16 % sur 12 semaines, et la plupart des participants les ont gardées (Allcott, Gentzkow et Song, NBER 2021). |
+| **Heures à risque** | Sur une plage que tu choisis (22 h à 7 h par défaut, avec une suggestion tirée de ton propre suivi par heure), l'attente est doublée et les ouvertures plafonnées, à zéro par défaut. | Changer le contexte aux moments où tu craques le plus marche mieux que compter sur la volonté. |
 | **Verrou d'assouplissement** | Retirer une appli ou relâcher une règle impose 30 secondes d'attente. | Les utilisateurs ont tendance à mettre ces outils en pause et à rechuter vite (Haliburton et al., 2024). |
 | **Filtre Reels et Shorts** | Quitte le lecteur plein écran de vidéos courtes dès qu'il apparaît dans Instagram ou YouTube. Un Reel reçu en message s'ouvre quand même. | Supprime le flux sans fin tout en gardant les messages, la recherche et les vidéos classiques. |
 
-Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, sessions de 10 min, 6 ouvertures par appli et par jour.
+Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, sessions de 10 min, 6 ouvertures par appli et par jour. Les heures à risque restent désactivées tant que tu ne les actives pas.
+
+Touche un jour du graphique de la semaine pour le voir heure par heure et repérer ton moment le plus tentant.
 
 ## Installer
 

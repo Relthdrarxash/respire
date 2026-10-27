@@ -18,10 +18,13 @@ Respire combines the techniques with the most support in published research on r
 | **Growing delay** | Each new attempt within the hour adds a few seconds. | Same friction principle, stronger when the urge repeats. |
 | **Session end** | An opening only lasts a set time (10 min by default). If you are still in the app, the pause comes back mid-scroll. | Targets the scrolling itself, not just the opening. |
 | **Daily limit** | After a set number of opens per app per day, the app is blocked until tomorrow. Extending a session counts as an open. | Hard-to-override limits cut social media use by about 16% over 12 weeks, and most people kept them (Allcott, Gentzkow & Song, NBER 2021). |
+| **Risky hours** | During a time range you choose (10 pm to 7 am by default, suggested from your own hourly data), the wait is doubled and opens are capped, at zero by default. | Changing the context at the moments you give in most works better than relying on willpower. |
 | **Loosening lock** | Removing an app or relaxing a rule requires a 30-second wait. | People tend to pause such tools and relapse quickly (Haliburton et al., 2024). |
 | **Reels and Shorts filter** | Leaves Instagram or YouTube when the full-screen short-video player appears. Reels sent in a direct message still open. | Removes the endless feed itself while keeping messages, search and regular videos. |
 
-Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute sessions, 6 opens per app per day.
+Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute sessions, 6 opens per app per day. Risky hours are off until you turn them on.
+
+Tap a day in the weekly chart to see it hour by hour and find your most tempting time.
 
 ## Install
 

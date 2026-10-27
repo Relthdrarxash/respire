@@ -18,6 +18,7 @@ import androidx.core.graphics.drawable.toBitmap
 import fr.respire.app.ui.PauseScreen
 import fr.respire.app.ui.PauseUi
 import fr.respire.app.ui.RespireTheme
+import fr.respire.app.ui.hourLabel
 
 /**
  * Écran de pause : respiration guidée + question d'intention + compte à rebours.
@@ -69,10 +70,12 @@ class PauseActivity : ComponentActivity() {
         }
 
         val now = System.currentTimeMillis()
-        blocked = prefs.quotaReached(pkg)
+        val reason = prefs.blockReason(pkg, now)
+        blocked = reason != Prefs.Block.NONE
+        val riskStart = prefs.riskWindowStart(now)
         remaining.intValue = when {
             blocked -> 0
-            mode == MODE_SESSION_END -> prefs.baseDelay
+            mode == MODE_SESSION_END -> prefs.baseDelay * (if (riskStart != null) 2 else 1)
             else -> prefs.delayFor(pkg, now)
         }
 
@@ -84,6 +87,10 @@ class PauseActivity : ComponentActivity() {
             opensToday = prefs.opensToday(pkg),
             quota = prefs.dailyQuota,
             sessionMinutes = prefs.sessionMinutes,
+            riskBlocked = reason == Prefs.Block.RISK,
+            riskEnd = hourLabel(prefs.riskEnd),
+            riskOpens = riskStart?.let { prefs.opensSince(pkg, it) },
+            riskQuota = prefs.riskQuota,
         )
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {

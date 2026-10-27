@@ -56,7 +56,7 @@ enum class Rule(
 
 /** Compte à rebours partagé par toutes les confirmations d'assouplissement. */
 @Composable
-private fun rememberCountdown(start: Boolean): Int {
+internal fun rememberCountdown(start: Boolean): Int {
     var left by remember { mutableIntStateOf(LOOSEN_DELAY_S) }
     LaunchedEffect(start) {
         if (start) {
@@ -167,7 +167,7 @@ fun LoosenDialog(
 }
 
 @Composable
-private fun LoosenText(what: String, left: Int) {
+internal fun LoosenText(what: String, left: Int) {
     Column {
         Text(what, fontFamily = Nunito, fontSize = 15.sp, color = Calme.Ink)
         Text(
