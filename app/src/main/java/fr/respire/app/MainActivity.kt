@@ -160,16 +160,13 @@ class MainActivity : ComponentActivity() {
     /** Initiale du jour dans la langue du téléphone (L, M, M... / M, T, W...). */
     private fun weekLabels(): List<String> {
         val fmt = SimpleDateFormat("EEEEE", Locale.getDefault())
-        val now = System.currentTimeMillis()
-        return (6 downTo 0).map { back -> fmt.format(Date(now - back * Prefs.DAY_MS)) }
+        return Rules.pastDays(System.currentTimeMillis()).map { fmt.format(Date(it)) }
     }
 
     /** Les 7 derniers jours, heure par heure, du plus ancien à aujourd'hui. */
     private fun weekDays(): List<DayDetail> {
         val fmt = SimpleDateFormat("EEEE d MMMM", Locale.getDefault())
-        val now = System.currentTimeMillis()
-        return (6 downTo 0).map { back ->
-            val t = now - back * Prefs.DAY_MS
+        return Rules.pastDays(System.currentTimeMillis()).map { t ->
             val h = prefs.hoursOf(t)
             DayDetail(
                 title = fmt.format(Date(t)).replaceFirstChar { it.titlecase(Locale.getDefault()) },

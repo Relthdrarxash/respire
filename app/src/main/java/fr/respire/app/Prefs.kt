@@ -77,18 +77,8 @@ class Prefs(context: Context) {
         set(v) = sp.edit().putInt(K_RISK_QUOTA, v).apply()
 
     /** Début de la plage en cours, ou null si on n'est pas dans une plage. */
-    fun riskWindowStart(now: Long = System.currentTimeMillis()): Long? {
-        if (!riskEnabled) return null
-        val hours = riskHours(riskStart, riskEnd)
-        val c = Calendar.getInstance().apply { timeInMillis = now }
-        if (c.get(Calendar.HOUR_OF_DAY) !in hours) return null
-        // On remonte heure par heure jusqu'au début de la plage.
-        c.set(Calendar.MINUTE, 0)
-        c.set(Calendar.SECOND, 0)
-        c.set(Calendar.MILLISECOND, 0)
-        while (c.get(Calendar.HOUR_OF_DAY) != riskStart) c.add(Calendar.HOUR_OF_DAY, -1)
-        return c.timeInMillis
-    }
+    fun riskWindowStart(now: Long = System.currentTimeMillis()): Long? =
+        if (riskEnabled) Rules.riskWindowStart(now, riskStart, riskEnd) else null
 
     fun inRiskWindow(now: Long = System.currentTimeMillis()) = riskWindowStart(now) != null
 
@@ -98,11 +88,14 @@ class Prefs(context: Context) {
 
     /** Pourquoi l'appli est bloquée maintenant, s'il y a lieu. */
     fun blockReason(pkg: String, now: Long = System.currentTimeMillis()): Block {
-        val quota = dailyQuota
-        if (quota > 0 && opensToday(pkg) >= quota) return Block.DAILY
         val start = riskWindowStart(now)
-        if (start != null && opensSince(pkg, start) >= riskQuota) return Block.RISK
-        return Block.NONE
+        return Rules.blockReason(
+            dailyQuota = dailyQuota,
+            opensToday = opensToday(pkg),
+            riskStart = start,
+            opensSinceRisk = if (start != null) opensSince(pkg, start) else 0,
+            riskQuota = riskQuota,
+        )
     }
 
     // ---- Autorisations temporaires -----------------------------------------
@@ -208,7 +201,7 @@ class Prefs(context: Context) {
     }
 
     fun appWeek(pkg: String, now: Long = System.currentTimeMillis()): AppWeek {
-        val days = (6 downTo 0).map { now - it * DAY_MS }
+        val days = Rules.pastDays(now)
         fun daily(prefix: String) = days.map { sp.getInt(dayKey(prefix, it), 0) }
         val hours = IntArray(24)
         for (d in days) {
@@ -270,7 +263,7 @@ class Prefs(context: Context) {
 
     /** Renoncements des 7 derniers jours, du plus ancien à aujourd'hui. */
     fun giveUpsLastWeek(now: Long = System.currentTimeMillis()): List<Int> =
-        (6 downTo 0).map { back -> sp.getInt(dayKey("d_give", now - back * DAY_MS), 0) }
+        Rules.pastDays(now).map { day -> sp.getInt(dayKey("d_give", day), 0) }
 
     fun attemptsSince(pkg: String, since: Long) = readLog("att_$pkg").count { it >= since }
 
@@ -291,12 +284,8 @@ class Prefs(context: Context) {
      * Délai croissant : base + pas x (tentatives précédentes dans l'heure).
      * À appeler après recordAttempt, la tentative en cours est donc déjà comptée.
      */
-    fun delayFor(pkg: String, now: Long): Int {
-        val previous = (attemptsSince(pkg, now - HOUR_MS) - 1).coerceAtLeast(0)
-        val delay = baseDelay + stepDelay * previous
-        val factor = if (inRiskWindow(now)) 2 else 1
-        return (delay * factor).coerceAtMost(MAX_DELAY_S)
-    }
+    fun delayFor(pkg: String, now: Long): Int =
+        Rules.delay(baseDelay, stepDelay, attemptsSince(pkg, now - HOUR_MS), inRiskWindow(now))
 
     companion object {
         private const val K_TARGETS = "targets"
@@ -311,29 +300,12 @@ class Prefs(context: Context) {
         private const val K_RISK_END = "risk_end"
         private const val K_RISK_QUOTA = "risk_quota"
 
-        /** Heures couvertes par une plage [start, end[, en passant minuit si besoin. start == end : toute la journée. */
-        fun riskHours(start: Int, end: Int): Set<Int> {
-            if (start == end) return (0 until 24).toSet()
-            val out = mutableSetOf<Int>()
-            var h = start
-            while (h != end) {
-                out.add(h)
-                h = (h + 1) % 24
-            }
-            return out
-        }
+        fun riskHours(start: Int, end: Int): Set<Int> = Rules.riskHours(start, end)
 
-        const val HOUR_MS = 60L * 60 * 1000
-        const val DAY_MS = 24 * HOUR_MS
-        const val MAX_DELAY_S = 90
+        const val HOUR_MS = Rules.HOUR_MS
+        const val DAY_MS = Rules.DAY_MS
+        const val MAX_DELAY_S = Rules.MAX_DELAY_S
 
-        fun startOfDay(now: Long = System.currentTimeMillis()): Long =
-            Calendar.getInstance().apply {
-                timeInMillis = now
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.timeInMillis
+        fun startOfDay(now: Long = System.currentTimeMillis()): Long = Rules.startOfDay(now)
     }
 }

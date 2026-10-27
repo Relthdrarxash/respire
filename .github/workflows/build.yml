@@ -17,6 +17,11 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Lancer les tests
+        run: |
+          chmod +x gradlew
+          ./gradlew testReleaseUnitTest --no-daemon
+
       - name: Récupérer la clé d'envoi (si les secrets existent)
         env:
           KEYSTORE_B64: ${{ secrets.RELEASE_KEYSTORE_B64 }}

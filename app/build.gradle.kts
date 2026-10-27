@@ -12,8 +12,8 @@ android {
         applicationId = "fr.respire.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 12
-        versionName = "4.0"
+        versionCode = 13
+        versionName = "4.1"
     }
 
     // Clé fixe : chaque compilation est signée pareil, donc les mises à jour
@@ -69,4 +69,6 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core")
     implementation("androidx.activity:activity-compose:1.9.3")
     implementation("androidx.core:core-ktx:1.13.1")
+
+    testImplementation("junit:junit:4.13.2")
 }

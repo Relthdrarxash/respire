@@ -34,7 +34,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.respire.app.Prefs
+import fr.respire.app.Rules
 import fr.respire.app.R
 import kotlin.math.roundToInt
 
@@ -173,9 +173,9 @@ private fun RiskDialog(
     val left = rememberCountdown(waiting)
 
     // Assouplir = plage active qui perd des heures, ou quota de plage relevé.
-    fun looser(): Boolean = risk.enabled && (
-        !Prefs.riskHours(start, end).containsAll(Prefs.riskHours(risk.start, risk.end)) || quota > risk.quota
-        )
+    fun looser(): Boolean = Rules.isRiskLooser(
+        risk.enabled, risk.start, risk.end, risk.quota, start, end, quota,
+    )
 
     AlertDialog(
         onDismissRequest = onDismiss,
