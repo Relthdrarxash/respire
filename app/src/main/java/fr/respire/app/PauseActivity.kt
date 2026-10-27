@@ -1,132 +1,104 @@
 package fr.respire.app
 
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.animation.ValueAnimator
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
+import fr.respire.app.ui.PauseScreen
+import fr.respire.app.ui.PauseUi
+import fr.respire.app.ui.RespireTheme
 
 /**
  * Écran de pause : respiration guidée + question d'intention + compte à rebours.
  * « Fermer » est disponible tout de suite, « Ouvrir » seulement à la fin de l'attente.
  * Si le quota du jour est atteint, seule la fermeture est possible.
  */
-class PauseActivity : Activity() {
+class PauseActivity : ComponentActivity() {
 
     private lateinit var prefs: Prefs
-    private lateinit var pkg: String
-    private lateinit var mode: String
-
-    private lateinit var tvCountdown: TextView
-    private lateinit var tvHint: TextView
-    private lateinit var btnOpen: Button
-    private var breath: ObjectAnimator? = null
-
-    private val handler = Handler(Looper.getMainLooper())
-    private var remaining = 0
+    private var pkg: String = ""
     private var decided = false
     private var blocked = false
 
+    private val remaining = mutableIntStateOf(0)
+    private val handler = Handler(Looper.getMainLooper())
     private val tick = object : Runnable {
         override fun run() {
-            if (remaining <= 0) {
-                tvCountdown.text = ""
-                tvHint.text = getString(R.string.pause_ready)
-                btnOpen.isEnabled = true
-                return
+            if (remaining.intValue > 0) {
+                remaining.intValue -= 1
+                if (remaining.intValue > 0) handler.postDelayed(this, 1000L)
             }
-            tvCountdown.text = remaining.toString()
-            remaining--
-            handler.postDelayed(this, 1000L)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+        )
         super.onCreate(savedInstanceState)
+
         val target = intent.getStringExtra(EXTRA_PKG)
         if (target == null) {
             finish()
             return
         }
         pkg = target
-        mode = intent.getStringExtra(EXTRA_MODE) ?: MODE_OPEN
+        val mode = intent.getStringExtra(EXTRA_MODE) ?: MODE_OPEN
         prefs = Prefs(this)
-        setContentView(R.layout.activity_pause)
 
-        val icon = findViewById<ImageView>(R.id.appIcon)
-        val name = findViewById<TextView>(R.id.appName)
-        val question = findViewById<TextView>(R.id.question)
-        val stats = findViewById<TextView>(R.id.stats)
-        tvCountdown = findViewById(R.id.countdown)
-        tvHint = findViewById(R.id.hint)
-        btnOpen = findViewById(R.id.btnOpen)
-        val btnClose = findViewById<Button>(R.id.btnClose)
-
-        val label = try {
+        var label = pkg
+        var icon: ImageBitmap? = null
+        try {
             val ai = packageManager.getApplicationInfo(pkg, 0)
-            icon.setImageDrawable(packageManager.getApplicationIcon(ai))
-            packageManager.getApplicationLabel(ai).toString()
+            label = packageManager.getApplicationLabel(ai).toString()
+            icon = packageManager.getApplicationIcon(ai).toBitmap(96, 96).asImageBitmap()
         } catch (e: PackageManager.NameNotFoundException) {
-            pkg
+            // Appli désinstallée entre-temps : on garde le nom du paquet.
         }
-        name.text = label
 
         val now = System.currentTimeMillis()
-        val opens = prefs.opensToday(pkg)
-        val quota = prefs.dailyQuota
         blocked = prefs.quotaReached(pkg)
-
-        stats.text = if (quota > 0) {
-            getString(R.string.pause_stats_quota, opens, quota)
-        } else {
-            getString(R.string.pause_stats, opens)
+        remaining.intValue = when {
+            blocked -> 0
+            mode == MODE_SESSION_END -> prefs.baseDelay
+            else -> prefs.delayFor(pkg, now)
         }
 
-        when {
-            blocked -> {
-                question.text = getString(R.string.pause_blocked)
-                tvHint.text = getString(R.string.pause_blocked_hint)
-                btnOpen.visibility = View.GONE
-                remaining = 0
-                tvCountdown.text = ""
-            }
-            mode == MODE_SESSION_END -> {
-                question.text = getString(R.string.pause_session_question, prefs.sessionMinutes)
-                tvHint.text = getString(R.string.pause_breathe)
-                btnOpen.text = getString(R.string.pause_continue)
-                remaining = prefs.baseDelay
-            }
-            else -> {
-                question.text = getString(R.string.pause_question)
-                tvHint.text = getString(R.string.pause_breathe)
-                btnOpen.text = getString(R.string.pause_open)
-                remaining = prefs.delayFor(pkg, now)
-            }
-        }
-        btnOpen.isEnabled = false
+        val ui = PauseUi(
+            appLabel = label,
+            appIcon = icon,
+            sessionEnd = mode == MODE_SESSION_END,
+            blocked = blocked,
+            opensToday = prefs.opensToday(pkg),
+            quota = prefs.dailyQuota,
+            sessionMinutes = prefs.sessionMinutes,
+        )
 
-        btnClose.setOnClickListener { giveUp() }
-        btnOpen.setOnClickListener { openAnyway() }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() = giveUp()
+        })
 
-        breath = ObjectAnimator.ofPropertyValuesHolder(
-            findViewById<View>(R.id.breath),
-            PropertyValuesHolder.ofFloat(View.SCALE_X, 0.55f, 1f),
-            PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.55f, 1f),
-        ).apply {
-            duration = 4000L // 4 s inspiration, 4 s expiration
-            repeatCount = ValueAnimator.INFINITE
-            repeatMode = ValueAnimator.REVERSE
-            interpolator = AccelerateDecelerateInterpolator()
-            start()
+        setContent {
+            RespireTheme {
+                PauseScreen(
+                    ui = ui,
+                    remaining = remaining.intValue,
+                    onClose = ::giveUp,
+                    onOpen = ::openAnyway,
+                )
+            }
         }
     }
 
@@ -134,10 +106,8 @@ class PauseActivity : Activity() {
         super.onResume()
         showingFor = pkg
         // Le compte à rebours n'avance que si l'écran est visible.
-        if (!blocked) {
-            handler.removeCallbacks(tick)
-            handler.post(tick)
-        }
+        handler.removeCallbacks(tick)
+        if (remaining.intValue > 0) handler.postDelayed(tick, 1000L)
     }
 
     override fun onPause() {
@@ -148,19 +118,13 @@ class PauseActivity : Activity() {
 
     override fun onStop() {
         super.onStop()
-        // Parti sans choisir (bouton Accueil, appli récente...) : on ne laisse pas traîner l'écran.
+        // Parti sans choisir (Accueil, applis récentes...) : on ne laisse pas traîner l'écran.
         if (!decided) finish()
     }
 
     override fun onDestroy() {
-        breath?.cancel()
         handler.removeCallbacksAndMessages(null)
         super.onDestroy()
-    }
-
-    @Deprecated("Retour = renoncer")
-    override fun onBackPressed() {
-        giveUp()
     }
 
     private fun giveUp() {
@@ -176,7 +140,7 @@ class PauseActivity : Activity() {
     }
 
     private fun openAnyway() {
-        if (decided || blocked || remaining > 0) return
+        if (decided || blocked || remaining.intValue > 0) return
         decided = true
         val now = System.currentTimeMillis()
         prefs.recordOpen(pkg, now)

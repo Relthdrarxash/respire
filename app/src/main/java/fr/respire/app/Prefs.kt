@@ -60,13 +60,37 @@ class Prefs(context: Context) {
     }
 
     /** Tentative d'ouverture (la pause s'est affichée). */
-    fun recordAttempt(pkg: String, now: Long) = appendLog("att_$pkg", now)
+    fun recordAttempt(pkg: String, now: Long) {
+        appendLog("att_$pkg", now)
+        bumpDay("d_att", now)
+    }
 
     /** L'utilisateur a choisi d'ouvrir ou de prolonger. */
     fun recordOpen(pkg: String, now: Long) = appendLog("open_$pkg", now)
 
     /** L'utilisateur a renoncé. */
-    fun recordGiveUp(now: Long) = appendLog("giveup", now)
+    fun recordGiveUp(now: Long) {
+        appendLog("giveup", now)
+        bumpDay("d_give", now)
+    }
+
+    // ---- Historique par jour (pour le graphique de la semaine) ----------------
+
+    private fun dayKey(prefix: String, time: Long): String {
+        val c = Calendar.getInstance().apply { timeInMillis = time }
+        val y = c.get(Calendar.YEAR)
+        val d = c.get(Calendar.DAY_OF_YEAR)
+        return "${prefix}_${y}_$d"
+    }
+
+    private fun bumpDay(prefix: String, now: Long) {
+        val key = dayKey(prefix, now)
+        sp.edit().putInt(key, sp.getInt(key, 0) + 1).apply()
+    }
+
+    /** Renoncements des 7 derniers jours, du plus ancien à aujourd'hui. */
+    fun giveUpsLastWeek(now: Long = System.currentTimeMillis()): List<Int> =
+        (6 downTo 0).map { back -> sp.getInt(dayKey("d_give", now - back * DAY_MS), 0) }
 
     fun attemptsSince(pkg: String, since: Long) = readLog("att_$pkg").count { it >= since }
 
