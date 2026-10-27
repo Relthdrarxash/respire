@@ -81,6 +81,7 @@ enum class ShortKind { REELS, SHORTS }
 fun HomeScreen(
     ui: HomeUi,
     onOpenAccessibility: () -> Unit,
+    onOpenLink: (String) -> Unit,
     onPickApps: () -> Unit,
     onSaveRule: (Rule, Int) -> Unit,
     onSetShortForm: (ShortKind, Boolean) -> Unit,
@@ -193,6 +194,19 @@ fun HomeScreen(
                         RuleTile(Rule.QUOTA, ui.rules, res, Modifier.weight(1f)) { editing = it }
                     }
                 }
+            }
+        }
+        item {
+            val privacyUrl = stringResource(R.string.url_privacy)
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                FooterLink(stringResource(R.string.link_privacy)) { onOpenLink(privacyUrl) }
+                FooterLink(stringResource(R.string.link_feedback)) { onOpenLink("https://github.com/Relthdrarxash/respire/issues") }
+                FooterLink(stringResource(R.string.link_source)) { onOpenLink("https://github.com/Relthdrarxash/respire") }
             }
         }
     }
@@ -508,5 +522,17 @@ private fun DiagnosticDialog(text: String, onDismiss: () -> Unit) {
                 Text(stringResource(R.string.dialog_close), fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
             }
         },
+    )
+}
+
+@Composable
+private fun FooterLink(label: String, onClick: () -> Unit) {
+    Text(
+        label,
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 12.dp),
+        fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Calme.Muted,
     )
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 import fr.respire.app.ui.AppItem
 import fr.respire.app.ui.DayDetail
+import fr.respire.app.ui.DisclosureDialog
 import fr.respire.app.ui.Calme
 import fr.respire.app.ui.HomeScreen
 import fr.respire.app.ui.HomeUi
@@ -57,6 +58,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             RespireTheme {
                 var picking by rememberSaveable { mutableStateOf(false) }
+                var disclosing by rememberSaveable { mutableStateOf(false) }
+                if (disclosing) {
+                    DisclosureDialog(
+                        onAccept = {
+                            prefs.accessibilityConsent = true
+                            disclosing = false
+                            openAccessibilitySettings()
+                        },
+                        onDecline = { disclosing = false },
+                    )
+                }
                 BackHandler(enabled = picking) { picking = false }
 
                 val ui = home
@@ -70,8 +82,9 @@ class MainActivity : ComponentActivity() {
                     ui != null -> HomeScreen(
                         ui = ui,
                         onOpenAccessibility = {
-                            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                            if (prefs.accessibilityConsent) openAccessibilitySettings() else disclosing = true
                         },
+                        onOpenLink = ::openLink,
                         onPickApps = { picking = true },
                         onSaveRule = ::saveRule,
                         onSetShortForm = ::setShortForm,
@@ -87,6 +100,18 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         refresh()
+    }
+
+    private fun openAccessibilitySettings() {
+        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+    }
+
+    private fun openLink(url: String) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url)))
+        } catch (e: android.content.ActivityNotFoundException) {
+            // Pas de navigateur : rien à faire.
+        }
     }
 
     private fun serviceEnabled(): Boolean {

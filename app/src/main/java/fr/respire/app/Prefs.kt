@@ -49,6 +49,11 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(K_SHORTS, false)
         set(v) = sp.edit().putBoolean(K_SHORTS, v).apply()
 
+    /** L'utilisateur a accepté l'écran d'information sur l'accessibilité (exigé par Google Play). */
+    var accessibilityConsent: Boolean
+        get() = sp.getBoolean("a11y_consent", false)
+        set(v) = sp.edit().putBoolean("a11y_consent", v).apply()
+
     // ---- Heures à risque --------------------------------------------------------
 
     /** Plage où les règles se durcissent (attente doublée, ouvertures plafonnées). */

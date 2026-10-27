@@ -98,6 +98,20 @@
     <string name="app_week_totals">7 derniers jours : %1$d tentations · %2$d ouvertures · %3$d renoncements</string>
     <string name="app_giveup_rate">Tu as renoncé %1$d %% des fois</string>
     <string name="app_note">Le suivi par appli a commencé avec la version 3.7.</string>
+    <string name="disclosure_title">Avant d’activer Respire</string>
+    <string name="disclosure_body">Respire utilise l’API du service d’accessibilité d’Android. L’appli en a besoin pour fonctionner.
+
+Ce à quoi elle accède :
+• Le nom de l’appli qui passe au premier plan, pour afficher une pause avant les applis que tu as choisies.
+• Si tu actives le filtre Reels ou Shorts : les identifiants techniques des éléments affichés, uniquement dans Instagram et YouTube, pour repérer le lecteur de vidéos courtes. Les textes, messages et images ne sont jamais lus.
+
+Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniquement, au moment où elles sont lues. Rien n’est collecté, envoyé ni partagé. Respire n’a pas la permission Internet.</string>
+    <string name="disclosure_accept">J’accepte</string>
+    <string name="disclosure_decline">Pas maintenant</string>
+    <string name="link_privacy">Confidentialité</string>
+    <string name="link_feedback">Donner mon avis</string>
+    <string name="link_source">Code source</string>
+    <string name="url_privacy">https://relthdrarxash.github.io/respire/fr/confidentialite.html</string>
     <string name="back">Retour</string>
     <plurals name="risk_desc_quota">
         <item quantity="one">Attente doublée, jusqu’à %d ouverture par appli.</item>

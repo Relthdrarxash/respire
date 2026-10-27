@@ -1,4 +1,4 @@
-name: Build APK
+name: Build
 
 on:
   push:
@@ -16,19 +16,42 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - name: Compiler l'APK
+
+      - name: Récupérer la clé d'envoi (si les secrets existent)
+        env:
+          KEYSTORE_B64: ${{ secrets.RELEASE_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+            echo "RELEASE_KEYSTORE=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
+            echo "Clé d'envoi trouvée : build signé pour Google Play."
+          else
+            echo "::warning::Secrets absents : build release signé avec la clé de test (non publiable sur Google Play)."
+          fi
+
+      - name: Compiler l'APK et l'AAB
+        env:
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
-          cp app/build/outputs/apk/debug/app-debug.apk Respire.apk
+          ./gradlew assembleRelease bundleRelease --no-daemon
+          cp app/build/outputs/apk/release/app-release.apk Respire.apk
+          cp app/build/outputs/bundle/release/app-release.aab Respire.aab
+
       - uses: actions/upload-artifact@v4
         with:
-          name: respire-apk
-          path: Respire.apk
+          name: respire
+          path: |
+            Respire.apk
+            Respire.aab
+
       - name: Publier dans la release « latest »
         if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest Respire.apk --title "Respire (dernière version)" --notes "APK compilé automatiquement depuis main (${GITHUB_SHA::7})."
+          gh release create latest Respire.apk Respire.aab \
+            --title "Respire (dernière version)" \
+            --notes "Compilé automatiquement depuis main (${GITHUB_SHA::7}). Respire.apk : à installer directement. Respire.aab : à envoyer dans la Play Console."

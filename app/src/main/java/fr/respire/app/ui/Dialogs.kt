@@ -4,6 +4,8 @@ import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -187,4 +189,32 @@ internal fun LoosenText(what: String, left: Int) {
             )
         }
     }
+}
+
+/**
+ * Information bien visible et consentement explicite avant d'envoyer vers
+ * les paramètres d'accessibilité (règle Google Play sur l'API d'accessibilité).
+ */
+@Composable
+fun DisclosureDialog(onAccept: () -> Unit, onDecline: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDecline,
+        containerColor = Calme.Card,
+        title = { Text(stringResource(R.string.disclosure_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, color = Calme.Ink) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                Text(stringResource(R.string.disclosure_body), fontFamily = Nunito, fontSize = 15.sp, lineHeight = 21.sp, color = Calme.Ink)
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onAccept) {
+                Text(stringResource(R.string.disclosure_accept), fontFamily = Nunito, fontWeight = FontWeight.Bold)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDecline) {
+                Text(stringResource(R.string.disclosure_decline), fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
+            }
+        },
+    )
 }

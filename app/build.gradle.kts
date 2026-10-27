@@ -25,11 +25,25 @@ android {
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        // Clé d'envoi Google Play : fournie par la CI (secrets GitHub), jamais versionnée.
+        val keystore = System.getenv("RELEASE_KEYSTORE")
+        if (keystore != null && file(keystore).exists()) {
+            create("release") {
+                storeFile = file(keystore)
+                storePassword = System.getenv("RELEASE_STORE_PASSWORD")
+                keyAlias = System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword = System.getenv("RELEASE_STORE_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // Sans clé d'envoi (compilation locale), on signe avec la clé de test du dépôt.
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
         }
     }
 

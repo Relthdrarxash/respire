@@ -98,6 +98,20 @@
     <string name="app_week_totals">Letzte 7 Tage: %1$d Versuchungen · %2$d Öffnungen · %3$d verzichtet</string>
     <string name="app_giveup_rate">Du hast in %1$d %% der Fälle verzichtet</string>
     <string name="app_note">Die Erfassung pro App begann mit Version 3.7.</string>
+    <string name="disclosure_title">Bevor du Respire aktivierst</string>
+    <string name="disclosure_body">Respire nutzt die Schnittstelle des Android-Bedienungshilfendienstes. Die App braucht sie, um zu funktionieren.
+
+Worauf sie zugreift:
+• Den Namen der App, die in den Vordergrund kommt, um vor den von dir gewählten Apps eine Pause anzuzeigen.
+• Wenn du den Reels- oder Shorts-Filter aktivierst: die technischen IDs der Bildschirmelemente, nur in Instagram und YouTube, um den Kurzvideo-Player zu erkennen. Texte, Nachrichten und Bilder werden nie gelesen.
+
+Was damit passiert: Die Daten werden nur auf deinem Handy verwendet, in dem Moment, in dem sie gelesen werden. Nichts wird erfasst, gesendet oder geteilt. Respire hat keine Internetberechtigung.</string>
+    <string name="disclosure_accept">Ich stimme zu</string>
+    <string name="disclosure_decline">Nicht jetzt</string>
+    <string name="link_privacy">Datenschutz</string>
+    <string name="link_feedback">Feedback geben</string>
+    <string name="link_source">Quellcode</string>
+    <string name="url_privacy">https://relthdrarxash.github.io/respire/privacy.html</string>
     <string name="back">Zurück</string>
     <plurals name="risk_desc_quota">
         <item quantity="one">Doppelte Wartezeit, bis zu %d Öffnung pro App.</item>
