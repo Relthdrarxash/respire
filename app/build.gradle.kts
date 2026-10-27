@@ -12,8 +12,19 @@ android {
         applicationId = "fr.respire.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.0"
+        versionCode = 3
+        versionName = "2.1"
+    }
+
+    // Clé fixe : chaque compilation est signée pareil, donc les mises à jour
+    // s'installent par-dessus la version précédente sans la désinstaller.
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("respire-debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
     }
 
     buildTypes {
