@@ -66,14 +66,14 @@ Pour lancer les tests unitaires : `./gradlew testReleaseUnitTest`.
 
 ## Comment Respire est fait
 
-Respire est un projet personnel de Relthdrarxash. L'essentiel du code a été écrit avec un assistant IA (Claude, d'Anthropic), et je préfère le dire clairement.
+Respire est un projet personnel de Relthdrarxash, publié sous le nom Escale. Contact : escale.apps@proton.me. L'essentiel du code a été écrit avec un assistant IA (Claude, d'Anthropic), et je préfère le dire clairement.
 
 Concrètement :
 
 - **Les décisions sont humaines.** Le problème à régler, les fonctions retenues à partir des études citées plus bas, ce qui a été écarté (séries, badges, notifications), le design, et chaque correction après des tests sur un vrai téléphone.
 - **Pas besoin de me croire sur parole.** Tout le code est ici, sous licence GPL-3.0. Le manifeste ne déclare pas la permission `INTERNET` : même un bug ne peut rien envoyer nulle part. Le code lié à l'accessibilité se trouve dans [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) et [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
 - **Les règles sont testées.** Tout ce qui décide d'une attente ou d'un blocage se trouve dans [`Rules.kt`](app/src/main/java/fr/respire/app/Rules.kt), sans dépendance à Android, et est couvert par des tests lancés à chaque compilation (y compris les changements d'heure et les plages qui passent minuit).
-- **Quelqu'un en répond.** Si tu trouves un bug, un souci de vie privée ou quelque chose de flou, [ouvre une issue](https://github.com/Relthdrarxash/respire/issues). Les relectures du code d'accessibilité sont particulièrement bienvenues.
+- **Quelqu'un en répond.** Si tu trouves un bug, un souci de vie privée ou quelque chose de flou, [ouvre une issue](https://github.com/Relthdrarxash/respire/issues) ou écris à escale.apps@proton.me. Les relectures du code d'accessibilité sont particulièrement bienvenues.
 
 ## Licence
 
