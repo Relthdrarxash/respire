@@ -64,6 +64,13 @@
     <string name="picker_title">Apps to slow down</string>
     <string name="picker_search">Search for an app</string>
     <string name="picker_loading">Loading apps…</string>
+    <string name="diag_link">Not working? Diagnostic</string>
+    <string name="diag_title">Reels and Shorts diagnostic</string>
+    <string name="diag_hint">Open a Short in YouTube (or a Reel in Instagram), come back here and copy this text. If it says no readable window, turn Respire off and on again in Accessibility settings.</string>
+    <string name="diag_empty">Nothing analysed yet. Turn on a filter, then open YouTube or Instagram.</string>
+    <string name="diag_copy">Copy</string>
+    <string name="diag_copied">Copied</string>
+    <string name="dialog_close">Close</string>
     <string name="back">Back</string>
     <plurals name="stats_gave_up">
         <item quantity="one">time you gave up\nout of %d pause</item>

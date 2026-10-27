@@ -115,6 +115,7 @@ class MainActivity : ComponentActivity() {
             blockReels = prefs.blockReels,
             blockShorts = prefs.blockShorts,
             shortsBlockedToday = prefs.shortsBlockedToday(),
+            diagnostic = prefs.shortDiagnostic(),
         )
     }
 

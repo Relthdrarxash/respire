@@ -1,5 +1,13 @@
 package fr.respire.app.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.widget.Toast
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.text.font.FontFamily
 import android.content.res.Resources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -61,6 +69,7 @@ data class HomeUi(
     val blockReels: Boolean,
     val blockShorts: Boolean,
     val shortsBlockedToday: Int,
+    val diagnostic: String,
 )
 
 enum class ShortKind { REELS, SHORTS }
@@ -75,6 +84,7 @@ fun HomeScreen(
 ) {
     var editing by remember { mutableStateOf<Rule?>(null) }
     var disabling by remember { mutableStateOf<ShortKind?>(null) }
+    var showDiag by remember { mutableStateOf(false) }
     val res = LocalContext.current.resources
     val quota = ui.rules[Rule.QUOTA] ?: 0
 
@@ -135,8 +145,16 @@ fun HomeScreen(
                     }
                     Text(
                         stringResource(R.string.short_note),
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 4.dp),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
                         fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
+                    )
+                    Text(
+                        stringResource(R.string.diag_link),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(role = Role.Button) { showDiag = true }
+                            .padding(16.dp),
+                        fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Calme.Sage,
                     )
                 }
             }
@@ -169,6 +187,10 @@ fun HomeScreen(
                 editing = null
             },
         )
+    }
+
+    if (showDiag) {
+        DiagnosticDialog(ui.diagnostic) { showDiag = false }
     }
 
     disabling?.let { kind ->
@@ -401,4 +423,44 @@ fun AppIcon(icon: ImageBitmap?, sizeDp: Int) {
     } else {
         Box(Modifier.size(sizeDp.dp).clip(shape).background(Calme.Ring2))
     }
+}
+
+@Composable
+private fun DiagnosticDialog(text: String, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val copied = stringResource(R.string.diag_copied)
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Calme.Card,
+        title = { Text(stringResource(R.string.diag_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, color = Calme.Ink) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                Text(stringResource(R.string.diag_hint), fontFamily = Nunito, fontSize = 14.sp, color = Calme.Muted)
+                Text(
+                    text.ifBlank { stringResource(R.string.diag_empty) },
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Calme.Ground)
+                        .padding(12.dp),
+                    fontFamily = FontFamily.Monospace, fontSize = 12.sp, color = Calme.Ink,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = text.isNotBlank(), onClick = {
+                val cm = context.getSystemService(ClipboardManager::class.java)
+                cm?.setPrimaryClip(ClipData.newPlainText("Respire", text))
+                Toast.makeText(context, copied, Toast.LENGTH_SHORT).show()
+            }) {
+                Text(stringResource(R.string.diag_copy), fontFamily = Nunito, fontWeight = FontWeight.Bold)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.dialog_close), fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
+            }
+        },
+    )
 }

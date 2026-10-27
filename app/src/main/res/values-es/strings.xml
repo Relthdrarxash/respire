@@ -61,6 +61,13 @@
     <string name="picker_title">Apps que frenar</string>
     <string name="picker_search">Buscar una app</string>
     <string name="picker_loading">Cargando apps…</string>
+    <string name="diag_link">¿No funciona? Diagnóstico</string>
+    <string name="diag_title">Diagnóstico de Reels y Shorts</string>
+    <string name="diag_hint">Abre un Short en YouTube (o un Reel en Instagram), vuelve aquí y copia este texto. Si indica que no hay ventana legible, desactiva y vuelve a activar Respire en los ajustes de accesibilidad.</string>
+    <string name="diag_empty">Aún no se ha analizado nada. Activa un filtro y abre YouTube o Instagram.</string>
+    <string name="diag_copy">Copiar</string>
+    <string name="diag_copied">Copiado</string>
+    <string name="dialog_close">Cerrar</string>
     <string name="back">Atrás</string>
     <plurals name="stats_gave_up">
         <item quantity="one">veces que renunciaste\nde %d pausa</item>

@@ -65,20 +65,26 @@ class PauseService : AccessibilityService() {
         }
         if (!enabled) return
         shortPkg = pkg
-        // Au plus une vérification toutes les 300 ms, même si les événements s'enchaînent.
+        // Au plus une vérification toutes les 400 ms, même si les événements s'enchaînent.
         if (!shortScheduled) {
             shortScheduled = true
             handler.postDelayed(shortCheck, SHORT_CHECK_MS)
         }
     }
 
+    private var lastDiag = 0L
+
     private fun runShortCheck() {
         shortScheduled = false
         val pkg = shortPkg ?: return
-        val root = rootInActiveWindow ?: return
-        if (root.packageName?.toString() != pkg) return
-        if (!ShortFormBlocker.isShortFormOnScreen(root, pkg)) return
+        val result = ShortFormBlocker.scan(ShortFormBlocker.roots(this, pkg), pkg)
+
         val now = SystemClock.uptimeMillis()
+        if (result.blocked || now - lastDiag > DIAG_EVERY_MS) {
+            lastDiag = now
+            prefs.saveShortDiagnostic(pkg, result)
+        }
+        if (!result.blocked) return
         if (now - lastShortBack < SHORT_BACK_DEBOUNCE_MS) return
         lastShortBack = now
         ShortFormBlocker.goBack(this)
@@ -164,7 +170,8 @@ class PauseService : AccessibilityService() {
 
     companion object {
         private const val DEBOUNCE_MS = 1500L
-        private const val SHORT_CHECK_MS = 300L
+        private const val SHORT_CHECK_MS = 400L
+        private const val DIAG_EVERY_MS = 2000L
         private const val SHORT_BACK_DEBOUNCE_MS = 1500L
     }
 }

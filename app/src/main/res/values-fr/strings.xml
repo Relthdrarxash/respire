@@ -61,6 +61,13 @@
     <string name="picker_title">Applis à freiner</string>
     <string name="picker_search">Rechercher une appli</string>
     <string name="picker_loading">Chargement des applis…</string>
+    <string name="diag_link">Ça ne marche pas ? Diagnostic</string>
+    <string name="diag_title">Diagnostic Reels et Shorts</string>
+    <string name="diag_hint">Ouvre un Short dans YouTube (ou un Reel dans Instagram), reviens ici et copie ce texte. S’il indique « aucune fenêtre lisible », désactive puis réactive Respire dans les paramètres d’accessibilité.</string>
+    <string name="diag_empty">Rien d’analysé pour l’instant. Active un filtre, puis ouvre YouTube ou Instagram.</string>
+    <string name="diag_copy">Copier</string>
+    <string name="diag_copied">Copié</string>
+    <string name="dialog_close">Fermer</string>
     <string name="back">Retour</string>
     <plurals name="stats_gave_up">
         <item quantity="one">fois où tu as renoncé\nsur %d pause</item>

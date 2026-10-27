@@ -98,6 +98,22 @@ class Prefs(context: Context) {
         sp.edit().putInt(key, sp.getInt(key, 0) + 1).apply()
     }
 
+    /** Dernière analyse Reels/Shorts, affichée dans l'écran de diagnostic. */
+    fun saveShortDiagnostic(pkg: String, r: ShortFormBlocker.Result) {
+        val time = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.ROOT).format(java.util.Date())
+        val text = buildString {
+            append(time).append("  ").append(pkg).append('\n')
+            append("fenêtres ").append(r.windows).append(", nœuds ").append(r.nodes).append('\n')
+            append("résultat : ").append(r.reason).append('\n')
+            append("identifiants : ").append(if (r.seen.isEmpty()) "aucun" else r.seen.joinToString(", "))
+        }
+        sp.edit().putString("diag_$pkg", text).apply()
+    }
+
+    fun shortDiagnostic(): String = listOf(ShortFormBlocker.YOUTUBE, ShortFormBlocker.INSTAGRAM)
+        .mapNotNull { sp.getString("diag_$it", null) }
+        .joinToString("\n\n")
+
     fun recordShortBlocked(now: Long) = bumpDay("d_short", now)
 
     fun shortsBlockedToday(now: Long = System.currentTimeMillis()): Int =
