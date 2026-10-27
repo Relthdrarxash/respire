@@ -3,6 +3,7 @@ package fr.respire.app
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
 import android.os.Handler
+import android.os.HandlerThread
 import android.os.Looper
 import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
@@ -55,8 +56,12 @@ class PauseService : AccessibilityService() {
 
     // ---- Reels / Shorts ---------------------------------------------------------
 
-    private var shortPkg: String? = null
-    private var shortScheduled = false
+    // Les analyses tournent sur un fil à part : une exploration lente ne bloque jamais le service.
+    private val shortThread = HandlerThread("respire-shorts").apply { start() }
+    private val shortHandler = Handler(shortThread.looper)
+
+    @Volatile private var shortPkg: String? = null
+    @Volatile private var shortScheduled = false
     private val shortCheck = Runnable { runShortCheck() }
 
     private fun onShortFormCandidate(pkg: String) {
@@ -70,7 +75,7 @@ class PauseService : AccessibilityService() {
         // Au plus une vérification toutes les 120 ms, même si les événements s'enchaînent.
         if (!shortScheduled) {
             shortScheduled = true
-            handler.postDelayed(shortCheck, SHORT_CHECK_MS)
+            shortHandler.postDelayed(shortCheck, SHORT_CHECK_MS)
         }
     }
 
@@ -88,7 +93,7 @@ class PauseService : AccessibilityService() {
         // puis on vérifie une seule fois si le lecteur est toujours là.
         if (now < cooldownUntil) {
             shortScheduled = true
-            handler.postDelayed(shortCheck, cooldownUntil - now)
+            shortHandler.postDelayed(shortCheck, cooldownUntil - now)
             return
         }
 
@@ -123,11 +128,11 @@ class PauseService : AccessibilityService() {
         prefs.recordShortBlocked(System.currentTimeMillis())
         if (consecutiveBacks == 1) {
             val msg = if (pkg == ShortFormBlocker.INSTAGRAM) R.string.toast_reels_blocked else R.string.toast_shorts_blocked
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            handler.post { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
         }
         // Vérification de contrôle à la fin de la transition.
         shortScheduled = true
-        handler.postDelayed(shortCheck, BACK_COOLDOWN_MS)
+        shortHandler.postDelayed(shortCheck, BACK_COOLDOWN_MS)
     }
 
     // ---- Pauses -----------------------------------------------------------------
@@ -202,6 +207,8 @@ class PauseService : AccessibilityService() {
 
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
+        shortHandler.removeCallbacksAndMessages(null)
+        shortThread.quitSafely()
         super.onDestroy()
     }
 
