@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#2F5D52</color>
+    <color name="primary_dark">#23463E</color>
+    <color name="accent">#4F8A7B</color>
+    <color name="pause_bg">#11171A</color>
+    <color name="pause_text">#E8EEEC</color>
+    <color name="pause_text_2">#9AA8A4</color>
+    <color name="breath">#554F8A7B</color>
+    <color name="icon_bg">#2F5D52</color>
+</resources>

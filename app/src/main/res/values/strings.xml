@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Respire</string>
+    <string name="service_label">Respire : pause avant les applis</string>
+    <string name="service_description">Respire détecte uniquement quelle appli passe au premier plan, pour afficher une pause avant les applis que tu as choisies. Aucun contenu d\'écran n\'est lu, rien n\'est envoyé sur Internet.</string>
+
+    <!-- Écran principal -->
+    <string name="main_intro">Une pause avant les applis qui te happent, une limite de temps par session et un nombre d\'ouvertures par jour.</string>
+    <string name="status_on">Service actif</string>
+    <string name="status_off">Service inactif : active « Respire » dans les paramètres d\'accessibilité.</string>
+    <string name="btn_access">Ouvrir les paramètres d\'accessibilité</string>
+    <string name="stats_today">Aujourd\'hui : %1$d pauses, %2$d renoncements</string>
+    <string name="section_settings">Réglages</string>
+    <string name="set_base">Attente avant d\'ouvrir : %1$d s</string>
+    <string name="set_step">Allongement par tentative dans l\'heure : +%1$d s</string>
+    <string name="set_session">Durée d\'une session : %1$d min</string>
+    <string name="set_quota">Ouvertures max par appli et par jour : %1$d</string>
+    <string name="set_quota_unlimited">Ouvertures max par appli et par jour : illimité</string>
+    <string name="btn_save">Enregistrer</string>
+    <string name="saved">Réglages enregistrés</string>
+    <string name="section_apps">Applis à freiner</string>
+
+    <!-- Verrou d\'assouplissement -->
+    <string name="loosen_title">Assouplir une règle ?</string>
+    <string name="loosen_settings">Tu rends les réglages plus permissifs.</string>
+    <string name="loosen_app">Tu retires %1$s de la liste.</string>
+    <string name="loosen_wait">%1$s\n\nPatiente %2$d s.</string>
+    <string name="loosen_confirm">Confirmer</string>
+    <string name="cancel">Annuler</string>
+
+    <!-- Écran de pause -->
+    <string name="pause_breathe">Inspire quand le cercle grandit, expire quand il rétrécit.</string>
+    <string name="pause_question">Pourquoi tu ouvres cette appli maintenant ?</string>
+    <string name="pause_session_question">Ça fait %1$d min. Tu continues vraiment ?</string>
+    <string name="pause_ready">Si c\'est utile, tu peux y aller.</string>
+    <string name="pause_blocked">Quota du jour atteint.</string>
+    <string name="pause_blocked_hint">Reviens demain. Tu peux modifier le quota dans Respire, avec une attente.</string>
+    <string name="pause_stats">%1$d ouvertures aujourd\'hui</string>
+    <string name="pause_stats_quota">%1$d sur %2$d ouvertures aujourd\'hui</string>
+    <string name="pause_close">Non, je ferme</string>
+    <string name="pause_open">Ouvrir quand même</string>
+    <string name="pause_continue">Continuer</string>
+</resources>
