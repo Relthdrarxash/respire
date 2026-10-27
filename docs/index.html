@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Respire: a pause before the apps you open on autopilot</title>
+<meta name="description" content="Free, open-source Android app against doomscrolling. A breathing pause before the apps you open without thinking, session and daily limits, Reels and Shorts filter. No trackers.">
+<link rel="alternate" hreflang="fr" href="fr/index.html">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+<meta property="og:title" content="Respire: a pause before the apps you open on autopilot">
+<meta property="og:description" content="Free, open-source Android app against doomscrolling. A breathing pause before the apps you open without thinking, session and daily limits, Reels and Shorts filter. No trackers.">
+</head>
+<body>
+<header class="wrap top">
+<a class="brand" href="index.html"><svg viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="30" fill="#4E7363"/><circle cx="54" cy="54" r="22" fill="none" stroke="#EDEEE6" stroke-width="3"/><circle cx="54" cy="54" r="9" fill="#EDEEE6"/></svg>Respire</a>
+<nav aria-label="Menu"><a class="hide-sm" href="#how">How it works</a><a href="#privacy">Privacy</a><a href="#install">Install</a><a href="fr/index.html" lang="fr">Français</a></nav>
+</header>
+<main>
+<div class="wrap hero">
+<div>
+<h1>Why are you opening it now?</h1>
+<p class="lede">Respire is a free Android app that puts a breathing pause in front of the apps you open without thinking. Close them in one tap, or wait a few seconds and open them on purpose.</p>
+<div class="actions">
+<a class="btn btn-primary" href="https://github.com/Relthdrarxash/respire/releases/download/latest/Respire.apk">Download the APK</a>
+<a class="btn btn-quiet" href="https://github.com/Relthdrarxash/respire">View the source code</a>
+</div>
+<p class="fine">Android 8 and later. Free and open source (GPL-3.0). No ads, no account, no Internet permission. A Google Play version is in preparation.</p>
+</div>
+<figure class="breath" style="margin:0">
+<span class="r1"></span><span class="r2"></span><span class="r3"></span>
+<b aria-hidden="true">10</b>
+<figcaption>Breathe in as the circle grows, out as it shrinks.</figcaption>
+</figure>
+</div>
+
+<section id="how"><div class="wrap">
+<h2>Built from what research says works</h2>
+<p class="intro">Each feature is there because studies on smartphone overuse support it. Nothing else was added.</p>
+<ul class="features">
+<li><h3>Pause before opening</h3><p>A breathing screen with a countdown and one question. Closing is available right away; opening only once the countdown ends.</p><p class="why">Friction before opening social apps cut opening attempts and made openings more intentional (Grüning, Riedel and Lorenz-Spreen, PNAS, 2023).</p></li>
+<li><h3>A wait that grows</h3><p>Each new attempt within the hour adds a few seconds. The more the urge comes back, the slower it gets.</p></li>
+<li><h3>Session end</h3><p>Opening an app gives you 10 minutes. If you are still there, the pause comes back in the middle of the feed.</p></li>
+<li><h3>Daily limit</h3><p>After a set number of opens per app, the app stays closed until tomorrow. Extending a session counts as an open.</p><p class="why">Hard-to-override limits reduced social media use by about 16% over 12 weeks, and most people kept them (Allcott, Gentzkow and Song, NBER, 2021).</p></li>
+<li><h3>Risky hours</h3><p>Stricter rules during the hours you choose, for example in the evening. Respire suggests a time range from your own hourly data.</p></li>
+<li><h3>Reels and Shorts filter</h3><p>Leaves Instagram Reels and YouTube Shorts as soon as they open. Messages, search and regular videos stay available.</p></li>
+<li><h3>A lock on loosening</h3><p>Removing an app or relaxing a rule takes a 30-second wait, so you don't undo your settings on a whim.</p><p class="why">People tend to pause these tools and relapse quickly (Haliburton et al., CHI, 2024).</p></li>
+<li><h3>Your week at a glance</h3><p>Pauses and how often you gave up, by day, by hour and by app, to see when temptation is strongest.</p></li>
+</ul>
+</div></section>
+
+<section id="privacy"><div class="wrap">
+<div class="privacy-box">
+<div><h2>Everything stays on your phone</h2></div>
+<div><p>Respire has no Internet permission, so it cannot send anything anywhere, even by mistake.</p><ul><li>Pauses only use the name of the app in the foreground.</li><li>The Reels and Shorts filter, off by default, only checks technical element IDs inside Instagram and YouTube. It never reads text, messages or images.</li><li>Settings and counters stay in the app's private storage and disappear when you uninstall it.</li></ul><p style="margin:16px 0 0"><a href="privacy.html">Read the privacy policy</a></p></div>
+</div>
+</div></section>
+
+<section id="install"><div class="wrap">
+<h2>Install</h2>
+<ol class="steps"><li><strong>Download</strong> <a href="https://github.com/Relthdrarxash/respire/releases/download/latest/Respire.apk">Respire.apk</a> on your phone and open it. Android will ask you to allow installs from your browser.</li><li><strong>Choose the apps</strong> to slow down in Respire.</li><li><strong>Turn on Respire</strong> in Accessibility settings, from the button in the app.</li><li><strong>Android 13 and later:</strong> if the switch is greyed out, go to Settings, Apps, Respire, the ⋮ menu, then Allow restricted settings, and try again.</li></ol>
+</div></section>
+
+<section><div class="wrap">
+<h2>Questions</h2>
+<details><summary>Why does Respire need accessibility access?</summary><p>It is the only way on Android to know which app is opening, so the pause can appear before it. Respire uses it for nothing else.</p></details><details><summary>Can I turn it off?</summary><p>Yes, at any time in Accessibility settings or by uninstalling the app. The 30-second lock only applies to Respire's own rules.</p></details><details><summary>Does it work on iPhone?</summary><p>No. iOS doesn't allow this kind of app outside Apple's Screen Time framework.</p></details><details><summary>How can I report a problem?</summary><p>Open an issue on <a href="https://github.com/Relthdrarxash/respire/issues">GitHub</a>. Respire collects no data, so your feedback is the only way to know what to improve.</p></details>
+</div></section>
+</main>
+<footer>
+<div class="wrap">
+<p style="margin:0">Respire is free software under the GPL-3.0 license.</p>
+<nav aria-label="Source code"><a href="https://github.com/Relthdrarxash/respire">Source code</a><a href="privacy.html">Privacy policy</a></nav>
+</div>
+</footer>
+</body>
+</html>
