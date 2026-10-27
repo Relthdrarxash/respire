@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace = "fr.respire.app"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "fr.respire.app"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 11
-        versionName = "3.7"
+        targetSdk = 36
+        versionCode = 12
+        versionName = "4.0"
     }
 
     // Clé fixe : chaque compilation est signée pareil, donc les mises à jour
