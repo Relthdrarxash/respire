@@ -40,9 +40,8 @@ class PauseService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         ignored = computeIgnored()
-        for (pkg in listOf(ShortFormBlocker.INSTAGRAM, ShortFormBlocker.YOUTUBE)) {
-            ShortFormBlocker.learn(pkg, prefs.learnedShortIds(pkg))
-        }
+        // La version 3.3 mémorisait des identifiants trop larges : on les efface.
+        prefs.clearLearnedShortIds()
     }
 
     /** Fenêtres qui ne doivent pas compter comme « changer d'appli » (clavier, barre système). */
@@ -83,6 +82,7 @@ class PauseService : AccessibilityService() {
     private var lastExplore = 0L
     private var cooldownUntil = 0L
     private var consecutiveBacks = 0
+    private var confirmed = false
 
     private fun runShortCheck() {
         shortScheduled = false
@@ -104,13 +104,6 @@ class PauseService : AccessibilityService() {
         if (explore) lastExplore = now
         val result = ShortFormBlocker.scan(roots, pkg, explore)
 
-        if (result.method == "exploration" && result.blocked) {
-            val id = result.reason.substringAfter("via ", "")
-            if (id.isNotEmpty()) {
-                ShortFormBlocker.learn(pkg, listOf(id))
-                prefs.addLearnedShortId(pkg, id)
-            }
-        }
         if (result.blocked || result.method == "exploration" || now - lastDiag > DIAG_EVERY_MS) {
             lastDiag = now
             prefs.saveShortDiagnostic(pkg, result)
@@ -118,8 +111,18 @@ class PauseService : AccessibilityService() {
 
         if (!result.blocked) {
             consecutiveBacks = 0
+            confirmed = false
             return
         }
+        // Deux détections à 250 ms d'écart avant d'agir : un élément qui passe
+        // furtivement à l'écran ne déclenche rien.
+        if (!confirmed) {
+            confirmed = true
+            shortScheduled = true
+            shortHandler.postDelayed(shortCheck, CONFIRM_MS)
+            return
+        }
+        confirmed = false
         // Garde-fou : jamais plus de quelques « retour » d'affilée, pour ne pas sortir de l'appli.
         if (consecutiveBacks >= MAX_CONSECUTIVE_BACKS) return
         consecutiveBacks++
@@ -219,5 +222,6 @@ class PauseService : AccessibilityService() {
         private const val EXPLORE_EVERY_MS = 6000L
         private const val BACK_COOLDOWN_MS = 900L
         private const val MAX_CONSECUTIVE_BACKS = 3
+        private const val CONFIRM_MS = 250L
     }
 }

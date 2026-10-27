@@ -15,13 +15,10 @@ import android.view.accessibility.AccessibilityWindowInfo
  * uniquement si l'option est active. Rien n'est envoyé : le diagnostic reste
  * dans les préférences locales et ne contient que des identifiants techniques.
  *
- * Deux vitesses :
- *  - recherche rapide : on demande directement à Android les quelques identifiants
- *    connus (un appel par identifiant), quelques millisecondes ;
- *  - exploration complète : on parcourt l'arbre de l'écran pour trouver un identifiant
- *    renommé par une mise à jour (contient « reel » ou « clips_viewer » et couvre
- *    au moins 70 % de la hauteur). Lente, donc rare ; ce qu'elle trouve est mémorisé
- *    et rejoint la recherche rapide.
+ * Le blocage repose uniquement sur une liste fermée d'identifiants connus, recherchés
+ * directement (quelques millisecondes). L'exploration complète de l'écran ne sert qu'au
+ * diagnostic : elle signale des candidats, mais ne déclenche jamais de « retour »,
+ * car une détection trop large confond le fil d'accueil avec le lecteur de Shorts.
  *
  * Identifiants connus repris du jeu de règles ouvert short-video-rules (MIT) et de appblock.
  */
@@ -30,8 +27,8 @@ object ShortFormBlocker {
     const val INSTAGRAM = "com.instagram.android"
     const val YOUTUBE = "com.google.android.youtube"
 
-    private val reelsIds = mutableSetOf("clips_viewer_view_pager", "clips_video_container", "clips_viewer_container")
-    private val shortsIds = mutableSetOf(
+    private val reelsIds = setOf("clips_viewer_view_pager", "clips_video_container", "clips_viewer_container")
+    private val shortsIds = setOf(
         "reel_recycler",
         "reel_player_page_container",
         "reel_watch_fragment_root",
@@ -57,12 +54,10 @@ object ShortFormBlocker {
         val reason: String,
     )
 
-    fun knownIds(pkg: String): Set<String> = if (pkg == INSTAGRAM) reelsIds else shortsIds
+    /** Présents quand on regarde un direct ou une vidéo classique : jamais de blocage. */
+    private val youtubeNegativeIds = listOf("immersive_live_player", "live_chat_content", "live_chat_text_field_bar")
 
-    /** Ajoute des identifiants appris (mémorisés dans les préférences). */
-    fun learn(pkg: String, ids: Collection<String>) {
-        if (pkg == INSTAGRAM) reelsIds.addAll(ids) else shortsIds.addAll(ids)
-    }
+    fun knownIds(pkg: String): Set<String> = if (pkg == INSTAGRAM) reelsIds else shortsIds
 
     /** Fenêtres de l'appli visée ; à défaut, la fenêtre active. */
     fun roots(service: AccessibilityService, pkg: String): List<AccessibilityNodeInfo> {
@@ -95,6 +90,15 @@ object ShortFormBlocker {
         return null
     }
 
+    fun hasNegative(roots: List<AccessibilityNodeInfo>, pkg: String): Boolean {
+        if (pkg != YOUTUBE) return false
+        return youtubeNegativeIds.any { id ->
+            roots.any { root ->
+                root.findAccessibilityNodeInfosByViewId("$pkg:id/$id")?.any { it.isVisibleToUser } == true
+            }
+        }
+    }
+
     fun isDirectMessage(roots: List<AccessibilityNodeInfo>, pkg: String): Boolean {
         if (pkg != INSTAGRAM) return false
         return dmIds.all { id ->
@@ -104,7 +108,7 @@ object ShortFormBlocker {
         }
     }
 
-    /** Exploration complète de l'arbre (lente). Sert au diagnostic et à apprendre les nouveaux identifiants. */
+    /** Exploration complète de l'arbre (lente). Sert uniquement au diagnostic. */
     data class FullScan(val match: String?, val seen: List<String>, val nodes: Int)
 
     fun fullScan(roots: List<AccessibilityNodeInfo>, pkg: String): FullScan {
@@ -143,25 +147,29 @@ object ShortFormBlocker {
         if (roots.isEmpty()) {
             return Result(false, 0, "-", 0, 0, emptyList(), "aucune fenêtre lisible")
         }
-        var match = quickMatch(roots, pkg)
+        val match = quickMatch(roots, pkg)
         var method = "rapide"
         var seen = emptyList<String>()
         var nodes = 0
+        var candidate: String? = null
         if (match == null && explore) {
             val full = fullScan(roots, pkg)
             method = "exploration"
             seen = full.seen
             nodes = full.nodes
-            match = full.match
+            candidate = full.match
         }
         val dm = match != null && isDirectMessage(roots, pkg)
+        val negative = match != null && hasNegative(roots, pkg)
         val reason = when {
+            match == null && candidate != null -> "lecteur non trouvé (candidat non utilisé : $candidate)"
             match == null -> "lecteur non trouvé"
             dm -> "Reel ouvert depuis un message, laissé passer"
-            else -> "bloqué via $match"
+            negative -> "direct ou vidéo classique, laissé passer"
+            else -> "lecteur détecté via $match"
         }
         return Result(
-            blocked = match != null && !dm,
+            blocked = match != null && !dm && !negative,
             windows = roots.size,
             method = method,
             nodes = nodes,

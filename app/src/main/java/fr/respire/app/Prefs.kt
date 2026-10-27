@@ -113,11 +113,9 @@ class Prefs(context: Context) {
         sp.edit().putString("diag_$pkg", text).apply()
     }
 
-    fun learnedShortIds(pkg: String): Set<String> =
-        sp.getStringSet("learned_$pkg", emptySet())?.toSet() ?: emptySet()
-
-    fun addLearnedShortId(pkg: String, id: String) {
-        sp.edit().putStringSet("learned_$pkg", HashSet(learnedShortIds(pkg) + id)).apply()
+    fun clearLearnedShortIds() {
+        val keys = sp.all.keys.filter { it.startsWith("learned_") }
+        if (keys.isNotEmpty()) sp.edit().apply { keys.forEach { remove(it) } }.apply()
     }
 
     fun shortDiagnostic(): String = listOf(ShortFormBlocker.YOUTUBE, ShortFormBlocker.INSTAGRAM)
