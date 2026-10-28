@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="service_label">Respire: pausa antes de las apps</string>
-    <string name="service_description">Respire detecta qué app pasa a primer plano para mostrar una pausa antes de las que elegiste. Si activas el filtro de Reels o Shorts, también consulta los identificadores técnicos de los elementos en pantalla, solo en Instagram y YouTube, para detectar el reproductor de vídeos cortos. No se guarda ni se envía nada: la app no tiene acceso a Internet.</string>
+    <string name="service_description">Respire detecta qué app pasa a primer plano para mostrar una pausa antes de las que elegiste. Si activas el filtro de Reels o Shorts, también consulta los identificadores técnicos de los elementos en pantalla, solo en Instagram, YouTube y Facebook, para detectar el reproductor de vídeos cortos. No se guarda ni se envía nada: la app no tiene acceso a Internet.</string>
     <string name="pause_hint_blocked">Vuelve mañana.</string>
     <string name="pause_hint_breathe">Inspira cuando el círculo crece, espira cuando se encoge.</string>
     <string name="pause_hint_ready">Si de verdad es útil, adelante.</string>
@@ -61,10 +61,14 @@
     <string name="picker_title">Apps que frenar</string>
     <string name="picker_search">Buscar una app</string>
     <string name="picker_loading">Cargando apps…</string>
+    <string name="short_fb_title">Ocultar los Reels de Facebook (en pruebas)</string>
+    <string name="short_fb_note">En pruebas: este filtro todavía no bloquea nada. Abre algunos Reels en Facebook, copia el diagnóstico de abajo y compártelo con «Dar mi opinión» para poder ajustarlo.</string>
+    <string name="picker_suggest_title">Se suelen abrir por inercia</string>
+    <string name="picker_all_title">Todas las apps</string>
     <string name="diag_link">¿No funciona? Diagnóstico</string>
     <string name="diag_title">Diagnóstico de Reels y Shorts</string>
-    <string name="diag_hint">Abre un Short en YouTube (o un Reel en Instagram), vuelve aquí y copia este texto. Si indica que no hay ventana legible, desactiva y vuelve a activar Respire en los ajustes de accesibilidad.</string>
-    <string name="diag_empty">Aún no se ha analizado nada. Activa un filtro y abre YouTube o Instagram.</string>
+    <string name="diag_hint">Abre un Short en YouTube (o un Reel en Instagram o Facebook), vuelve aquí y copia este texto. Si indica que no hay ventana legible, desactiva y vuelve a activar Respire en los ajustes de accesibilidad.</string>
+    <string name="diag_empty">Aún no se ha analizado nada. Activa un filtro y abre YouTube, Instagram o Facebook.</string>
     <string name="diag_copy">Copiar</string>
     <string name="diag_copied">Copiado</string>
     <string name="dialog_close">Cerrar</string>
@@ -103,7 +107,7 @@
 
 A qué accede:
 • El nombre de la app que pasa a primer plano, para mostrar una pausa antes de las apps que elegiste.
-• Si activas el filtro de Reels o Shorts: los identificadores técnicos de los elementos en pantalla, solo en Instagram y YouTube, para detectar el reproductor de vídeos cortos. Nunca se leen textos, mensajes ni imágenes.
+• Si activas el filtro de Reels o Shorts: los identificadores técnicos de los elementos en pantalla, solo en Instagram, YouTube y Facebook, para detectar el reproductor de vídeos cortos. Nunca se leen textos, mensajes ni imágenes.
 
 Qué hace con ello: se usa solo en tu teléfono, en el momento en que se lee. No se recopila, envía ni comparte nada. Respire no tiene permiso de Internet.</string>
     <string name="disclosure_accept">Acepto</string>
@@ -122,5 +126,10 @@ Qué hace con ello: se usa solo en tu teléfono, en el momento en que se lee. No
         <item quantity="one">veces que renunciaste\nde %d pausa</item>
         <item quantity="many">veces que renunciaste\nde %d pausas</item>
         <item quantity="other">veces que renunciaste\nde %d pausas</item>
+    </plurals>
+    <plurals name="picker_add_all">
+        <item quantity="one">Añadir esta app</item>
+        <item quantity="many">Añadir estas %d apps</item>
+        <item quantity="other">Añadir estas %d apps</item>
     </plurals>
 </resources>

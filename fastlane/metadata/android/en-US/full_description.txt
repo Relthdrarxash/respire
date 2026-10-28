@@ -15,7 +15,7 @@ Privacy
 Respire has no Internet permission: it cannot send anything anywhere. No ads, no account, no analytics. Everything stays on your phone.
 
 Accessibility Service
-Respire uses Android's Accessibility Service API, which it needs to work. It only reads the name of the app coming to the foreground, and, if you turn on the Reels or Shorts filter, the technical IDs of on-screen elements in Instagram and YouTube. It never reads text, messages or images. This information is used on your phone only and is never collected or shared.
+Respire uses Android's Accessibility Service API, which it needs to work. It only reads the name of the app coming to the foreground, and, if you turn on the Reels or Shorts filter, the technical IDs of on-screen elements in Instagram, YouTube and Facebook. It never reads text, messages or images. This information is used on your phone only and is never collected or shared.
 
 Free software
 Respire is open source under the GPL-3.0 license. Source code: https://github.com/Relthdrarxash/respire

@@ -1,1 +1,2 @@
-Salir de la pantalla de pausa sin abrir la app (atrás, inicio, cambiar de app) ahora cuenta como renuncia en tus estadísticas.
+• Sugerencias: la pantalla de selección muestra las apps de contenido infinito instaladas en tu teléfono (TikTok, Instagram, Facebook, Snapchat, X...) para añadirlas con un toque.
+• Filtro de Reels de Facebook, en pruebas: todavía no bloquea nada y sirve para ajustar la detección.

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name" translatable="false">Respire</string>
     <string name="service_label">Respire: pause before apps</string>
-    <string name="service_description">Respire detects which app comes to the foreground to show a pause before the apps you chose. If you turn on the Reels or Shorts filter, it also checks the technical IDs of on-screen elements, only in Instagram and YouTube, to spot the short-video player. Nothing is stored or sent: the app has no Internet access.</string>
+    <string name="service_description">Respire detects which app comes to the foreground to show a pause before the apps you chose. If you turn on the Reels or Shorts filter, it also checks the technical IDs of on-screen elements, only in Instagram, YouTube and Facebook, to spot the short-video player. Nothing is stored or sent: the app has no Internet access.</string>
     <string name="pause_hint_blocked">Come back tomorrow.</string>
     <string name="pause_hint_breathe">Breathe in as the circle grows, out as it shrinks.</string>
     <string name="pause_hint_ready">If it’s really useful, go ahead.</string>
@@ -64,10 +64,14 @@
     <string name="picker_title">Apps to slow down</string>
     <string name="picker_search">Search for an app</string>
     <string name="picker_loading">Loading apps…</string>
+    <string name="short_fb_title">Hide Facebook Reels (testing)</string>
+    <string name="short_fb_note">Testing: this filter doesn’t block anything yet. Open a few Reels in Facebook, then copy the diagnostic below and share it through “Give feedback” so it can be tuned.</string>
+    <string name="picker_suggest_title">Often opened on autopilot</string>
+    <string name="picker_all_title">All apps</string>
     <string name="diag_link">Not working? Diagnostic</string>
     <string name="diag_title">Reels and Shorts diagnostic</string>
-    <string name="diag_hint">Open a Short in YouTube (or a Reel in Instagram), come back here and copy this text. If it says no readable window, turn Respire off and on again in Accessibility settings.</string>
-    <string name="diag_empty">Nothing analysed yet. Turn on a filter, then open YouTube or Instagram.</string>
+    <string name="diag_hint">Open a Short in YouTube (or a Reel in Instagram or Facebook), come back here and copy this text. If it says no readable window, turn Respire off and on again in Accessibility settings.</string>
+    <string name="diag_empty">Nothing analysed yet. Turn on a filter, then open YouTube, Instagram or Facebook.</string>
     <string name="diag_copy">Copy</string>
     <string name="diag_copied">Copied</string>
     <string name="dialog_close">Close</string>
@@ -107,7 +111,7 @@
 
 What it accesses:
 • The name of the app that comes to the foreground, to show a pause before the apps you chose.
-• If you turn on the Reels or Shorts filter: the technical IDs of on-screen elements, in Instagram and YouTube only, to detect the short-video player. Text, messages and images are never read.
+• If you turn on the Reels or Shorts filter: the technical IDs of on-screen elements, in Instagram, YouTube and Facebook only, to detect the short-video player. Text, messages and images are never read.
 
 What happens to it: it is used on your phone only, at the moment it is accessed. Nothing is collected, sent or shared. Respire has no Internet permission.</string>
     <string name="disclosure_accept">I agree</string>
@@ -125,5 +129,9 @@ What happens to it: it is used on your phone only, at the moment it is accessed.
     <plurals name="stats_gave_up">
         <item quantity="one">time you gave up\nout of %d pause</item>
         <item quantity="other">times you gave up\nout of %d pauses</item>
+    </plurals>
+    <plurals name="picker_add_all">
+        <item quantity="one">Add this app</item>
+        <item quantity="other">Add these %d apps</item>
     </plurals>
 </resources>

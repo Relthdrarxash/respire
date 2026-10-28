@@ -17,7 +17,7 @@ import android.view.inputmethod.InputMethodManager
  *  1. Ouverture : passage d'une autre appli vers une appli ciblée.
  *  2. Fin de session : l'utilisateur est toujours dans l'appli quand la session autorisée expire.
  *
- * Reels / Shorts (options) : dans Instagram et YouTube uniquement, les identifiants
+ * Reels / Shorts (options) : dans Instagram, YouTube et Facebook uniquement, les identifiants
  * techniques des vues sont consultés pour repérer le lecteur plein écran (voir ShortFormBlocker).
  */
 class PauseService : AccessibilityService() {
@@ -67,6 +67,7 @@ class PauseService : AccessibilityService() {
         val enabled = when (pkg) {
             ShortFormBlocker.INSTAGRAM -> prefs.blockReels
             ShortFormBlocker.YOUTUBE -> prefs.blockShorts
+            ShortFormBlocker.FACEBOOK -> prefs.blockFacebookReels
             else -> false
         }
         if (!enabled) return
@@ -130,7 +131,7 @@ class PauseService : AccessibilityService() {
         ShortFormBlocker.goBack(this)
         prefs.recordShortBlocked(System.currentTimeMillis(), pkg)
         if (consecutiveBacks == 1) {
-            val msg = if (pkg == ShortFormBlocker.INSTAGRAM) R.string.toast_reels_blocked else R.string.toast_shorts_blocked
+            val msg = if (pkg == ShortFormBlocker.YOUTUBE) R.string.toast_shorts_blocked else R.string.toast_reels_blocked
             handler.post { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
         }
         // Vérification de contrôle à la fin de la transition.
@@ -143,8 +144,15 @@ class PauseService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
         val pkg = event.packageName?.toString() ?: return
-        if (pkg == ShortFormBlocker.INSTAGRAM || pkg == ShortFormBlocker.YOUTUBE) {
+        if (pkg in ShortFormBlocker.PACKAGES) {
             onShortFormCandidate(pkg)
+            // Facebook (filtre en test) : on garde le nom technique des écrans pour le diagnostic.
+            if (pkg == ShortFormBlocker.FACEBOOK && prefs.blockFacebookReels &&
+                event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            ) {
+                event.className?.toString()?.takeIf { it.startsWith("com.facebook") }
+                    ?.let { prefs.noteScreen(pkg, it.removePrefix("com.facebook.")) }
+            }
         }
         if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         if (pkg in ignored) return

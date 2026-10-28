@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="service_label">Respire : pause avant les applis</string>
-    <string name="service_description">Respire détecte quelle appli passe au premier plan pour afficher une pause avant celles que tu as choisies. Si tu actives le filtre Reels ou Shorts, il consulte aussi les identifiants techniques des éléments affichés, uniquement dans Instagram et YouTube, pour repérer le lecteur de vidéos courtes. Rien n’est stocké ni envoyé : l’appli n’a pas accès à Internet.</string>
+    <string name="service_description">Respire détecte quelle appli passe au premier plan pour afficher une pause avant celles que tu as choisies. Si tu actives le filtre Reels ou Shorts, il consulte aussi les identifiants techniques des éléments affichés, uniquement dans Instagram, YouTube et Facebook, pour repérer le lecteur de vidéos courtes. Rien n’est stocké ni envoyé : l’appli n’a pas accès à Internet.</string>
     <string name="pause_hint_blocked">Reviens demain.</string>
     <string name="pause_hint_breathe">Inspire quand le cercle grandit, expire quand il rétrécit.</string>
     <string name="pause_hint_ready">Si c’est vraiment utile, tu peux y aller.</string>
@@ -61,10 +61,14 @@
     <string name="picker_title">Applis à freiner</string>
     <string name="picker_search">Rechercher une appli</string>
     <string name="picker_loading">Chargement des applis…</string>
+    <string name="short_fb_title">Masquer les Reels de Facebook (en test)</string>
+    <string name="short_fb_note">En test : ce filtre ne bloque encore rien. Ouvre quelques Reels dans Facebook, puis copie le diagnostic ci-dessous et partage-le via « Donner mon avis » pour qu’on puisse le régler.</string>
+    <string name="picker_suggest_title">Souvent ouvertes par réflexe</string>
+    <string name="picker_all_title">Toutes les applis</string>
     <string name="diag_link">Ça ne marche pas ? Diagnostic</string>
     <string name="diag_title">Diagnostic Reels et Shorts</string>
-    <string name="diag_hint">Ouvre un Short dans YouTube (ou un Reel dans Instagram), reviens ici et copie ce texte. S’il indique « aucune fenêtre lisible », désactive puis réactive Respire dans les paramètres d’accessibilité.</string>
-    <string name="diag_empty">Rien d’analysé pour l’instant. Active un filtre, puis ouvre YouTube ou Instagram.</string>
+    <string name="diag_hint">Ouvre un Short dans YouTube (ou un Reel dans Instagram ou Facebook), reviens ici et copie ce texte. S’il indique « aucune fenêtre lisible », désactive puis réactive Respire dans les paramètres d’accessibilité.</string>
+    <string name="diag_empty">Rien d’analysé pour l’instant. Active un filtre, puis ouvre YouTube, Instagram ou Facebook.</string>
     <string name="diag_copy">Copier</string>
     <string name="diag_copied">Copié</string>
     <string name="dialog_close">Fermer</string>
@@ -103,7 +107,7 @@
 
 Ce à quoi elle accède :
 • Le nom de l’appli qui passe au premier plan, pour afficher une pause avant les applis que tu as choisies.
-• Si tu actives le filtre Reels ou Shorts : les identifiants techniques des éléments affichés, uniquement dans Instagram et YouTube, pour repérer le lecteur de vidéos courtes. Les textes, messages et images ne sont jamais lus.
+• Si tu actives le filtre Reels ou Shorts : les identifiants techniques des éléments affichés, uniquement dans Instagram, YouTube et Facebook, pour repérer le lecteur de vidéos courtes. Les textes, messages et images ne sont jamais lus.
 
 Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniquement, au moment où elles sont lues. Rien n’est collecté, envoyé ni partagé. Respire n’a pas la permission Internet.</string>
     <string name="disclosure_accept">J’accepte</string>
@@ -122,5 +126,10 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
         <item quantity="one">fois où tu as renoncé\nsur %d pause</item>
         <item quantity="many">fois où tu as renoncé\nsur %d pauses</item>
         <item quantity="other">fois où tu as renoncé\nsur %d pauses</item>
+    </plurals>
+    <plurals name="picker_add_all">
+        <item quantity="one">Ajouter cette appli</item>
+        <item quantity="many">Ajouter ces %d applis</item>
+        <item quantity="other">Ajouter ces %d applis</item>
     </plurals>
 </resources>

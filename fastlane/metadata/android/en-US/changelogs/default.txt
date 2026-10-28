@@ -1,1 +1,2 @@
-Leaving the pause screen without opening the app (Back, Home, switching apps) now counts as giving up in your stats.
+• Suggestions: the app picker now lists the endless-feed apps installed on your phone (TikTok, Instagram, Facebook, Snapchat, X...) so you can add them in one tap.
+• Facebook Reels filter, in testing: it doesn't block anything yet and helps tune detection.

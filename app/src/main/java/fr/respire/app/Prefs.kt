@@ -49,6 +49,11 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(K_SHORTS, false)
         set(v) = sp.edit().putBoolean(K_SHORTS, v).apply()
 
+    /** Masquer les Reels de Facebook (en test). */
+    var blockFacebookReels: Boolean
+        get() = sp.getBoolean("block_fb_reels", false)
+        set(v) = sp.edit().putBoolean("block_fb_reels", v).apply()
+
     /** L'utilisateur a accepté l'écran d'information sur l'accessibilité (exigé par Google Play). */
     var accessibilityConsent: Boolean
         get() = sp.getBoolean("a11y_consent", false)
@@ -162,12 +167,24 @@ class Prefs(context: Context) {
             append(time).append("  ").append(pkg).append('\n')
             append("fenêtres ").append(r.windows).append(", méthode ").append(r.method)
             append(", ").append(r.durationMs).append(" ms")
-            if (r.nodes > 0) append(", nœuds ").append(r.nodes)
+            if (r.nodes > 0) append(", nœuds ").append(r.nodes).append(" (dont ").append(r.withId).append(" avec identifiant)")
             append('\n')
             append("résultat : ").append(r.reason).append('\n')
             append("identifiants : ").append(if (r.seen.isEmpty()) "aucun" else r.seen.joinToString(", "))
+            val screens = sp.getString("scr_$pkg", null)
+            if (!screens.isNullOrEmpty()) append('\n').append("écrans récents : ").append(screens)
         }
         sp.edit().putString("diag_$pkg", text).apply()
+    }
+
+    /**
+     * Nom technique (classe) des derniers écrans ouverts dans l'appli, pour le diagnostic.
+     * Ce sont des noms de code de l'appli, jamais du contenu affiché.
+     */
+    fun noteScreen(pkg: String, className: String) {
+        val list = sp.getString("scr_$pkg", null)?.split(", ")?.filter { it.isNotEmpty() }.orEmpty()
+        val next = (listOf(className) + list.filter { it != className }).take(6)
+        sp.edit().putString("scr_$pkg", next.joinToString(", ")).apply()
     }
 
     fun clearLearnedShortIds() {
@@ -175,7 +192,7 @@ class Prefs(context: Context) {
         if (keys.isNotEmpty()) sp.edit().apply { keys.forEach { remove(it) } }.apply()
     }
 
-    fun shortDiagnostic(): String = listOf(ShortFormBlocker.YOUTUBE, ShortFormBlocker.INSTAGRAM)
+    fun shortDiagnostic(): String = listOf(ShortFormBlocker.YOUTUBE, ShortFormBlocker.INSTAGRAM, ShortFormBlocker.FACEBOOK)
         .mapNotNull { sp.getString("diag_$it", null) }
         .joinToString("\n\n")
 

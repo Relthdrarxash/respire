@@ -41,7 +41,7 @@ Sur Android 13 et plus, tu peux choisir la langue de l'appli dans Paramètres > 
 Respire utilise un service d'accessibilité, seul moyen sous Android de savoir quelle appli s'ouvre.
 
 - **Les pauses** n'utilisent que le nom du paquet de l'appli au premier plan.
-- **Le filtre Reels et Shorts** (désactivé par défaut) : uniquement dans Instagram et YouTube, le service consulte les identifiants techniques des éléments affichés pour repérer le lecteur de vidéos courtes. Il ne lit jamais les textes, les messages ou les images.
+- **Le filtre Reels et Shorts** (désactivé par défaut) : uniquement dans Instagram, YouTube et Facebook (le filtre Facebook est encore en test), le service consulte les identifiants techniques des éléments affichés pour repérer le lecteur de vidéos courtes. Il ne lit jamais les textes, les messages ou les images.
 - Les réglages et compteurs restent dans le stockage local de l'appli. Le manifeste ne déclare pas la permission `INTERNET` : rien ne peut être envoyé nulle part.
 
 ## Compiler depuis les sources
@@ -61,7 +61,7 @@ Pour lancer les tests unitaires : `./gradlew testReleaseUnitTest`.
 ## Limites connues
 
 - On peut toujours désactiver le service dans les paramètres d'accessibilité. Le verrou ne protège que les réglages de Respire.
-- Le filtre Reels et Shorts repose sur des identifiants de vues qu'Instagram ou YouTube peuvent modifier lors d'une mise à jour.
+- Le filtre Reels et Shorts repose sur des identifiants de vues qu'Instagram, YouTube ou Facebook peuvent modifier lors d'une mise à jour.
 - Les applis ouvertes via un lien depuis une autre appli déclenchent aussi la pause. C'est voulu.
 
 ## Comment Respire est fait

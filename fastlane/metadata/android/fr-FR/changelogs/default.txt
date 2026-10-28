@@ -1,1 +1,2 @@
-Quitter l’écran de pause sans ouvrir l’appli (retour, accueil, changement d’appli) compte maintenant comme un renoncement dans tes statistiques.
+• Suggestions : l’écran de choix propose les applis à flux sans fin installées sur ton téléphone (TikTok, Instagram, Facebook, Snapchat, X...), à ajouter d’un geste.
+• Filtre des Reels de Facebook, en test : il ne bloque encore rien et sert à régler la détection.

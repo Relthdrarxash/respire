@@ -32,9 +32,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import fr.respire.app.R
+import fr.respire.app.Suggestions
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,6 +54,14 @@ fun PickerScreen(
     val shown = remember(apps, query) {
         val q = query.trim().lowercase()
         if (q.isEmpty()) apps else apps.filter { it.label.lowercase().contains(q) }
+    }
+    // Suggestions : applis à flux sans fin installées et pas encore choisies (masquées pendant une recherche).
+    val suggested = remember(apps, selected, query) {
+        if (query.isNotBlank()) emptyList()
+        else {
+            val byPkg = apps.associateBy { it.pkg }
+            Suggestions.pick(byPkg.keys, selected).mapNotNull { byPkg[it] }
+        }
     }
 
     Column(
@@ -102,39 +112,27 @@ fun PickerScreen(
             contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            if (suggested.isNotEmpty()) {
+                item(key = "suggest_title") { PickerSection(stringResource(R.string.picker_suggest_title)) }
+                items(suggested, key = { "s_" + it.pkg }) { app ->
+                    AppRow(app, checked = false) { onToggle(app.pkg, true) }
+                }
+                if (suggested.size > 1) {
+                    item(key = "suggest_all") {
+                        PillButton(
+                            pluralStringResource(R.plurals.picker_add_all, suggested.size, suggested.size),
+                            onClick = { suggested.forEach { onToggle(it.pkg, true) } },
+                            modifier = Modifier.padding(top = 4.dp),
+                            height = 48.dp,
+                        )
+                    }
+                }
+                item(key = "all_title") { PickerSection(stringResource(R.string.picker_all_title)) }
+            }
             items(shown, key = { it.pkg }) { app ->
                 val checked = app.pkg in selected
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 64.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(if (checked) Calme.Card else Color.Transparent)
-                        .clickable(role = Role.Switch) {
-                            if (checked) pendingRemoval = app else onToggle(app.pkg, true)
-                        }
-                        .padding(horizontal = 14.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(14.dp),
-                ) {
-                    AppIcon(app.icon, 36)
-                    Text(
-                        app.label,
-                        modifier = Modifier.weight(1f),
-                        fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 16.sp,
-                        color = Calme.Ink, maxLines = 1,
-                    )
-                    Switch(
-                        checked = checked,
-                        onCheckedChange = null,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
-                            checkedTrackColor = Calme.Sage,
-                            uncheckedThumbColor = Calme.Muted,
-                            uncheckedTrackColor = Calme.Chip,
-                            uncheckedBorderColor = Calme.Ring2,
-                        ),
-                    )
+                AppRow(app, checked) {
+                    if (checked) pendingRemoval = app else onToggle(app.pkg, true)
                 }
             }
         }
@@ -150,6 +148,49 @@ fun PickerScreen(
                 onToggle(app.pkg, false)
                 pendingRemoval = null
             },
+        )
+    }
+}
+
+@Composable
+private fun PickerSection(text: String) {
+    Text(
+        text,
+        modifier = Modifier.padding(start = 4.dp, top = 12.dp, bottom = 2.dp),
+        fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Calme.Muted,
+    )
+}
+
+@Composable
+private fun AppRow(app: AppItem, checked: Boolean, onClick: () -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 64.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(if (checked) Calme.Card else Color.Transparent)
+            .clickable(role = Role.Switch, onClick = onClick)
+            .padding(horizontal = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        AppIcon(app.icon, 36)
+        Text(
+            app.label,
+            modifier = Modifier.weight(1f),
+            fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 16.sp,
+            color = Calme.Ink, maxLines = 1,
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = null,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = Calme.Sage,
+                uncheckedThumbColor = Calme.Muted,
+                uncheckedTrackColor = Calme.Chip,
+                uncheckedBorderColor = Calme.Ring2,
+            ),
         )
     }
 }

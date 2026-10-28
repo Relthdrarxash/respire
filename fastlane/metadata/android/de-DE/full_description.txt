@@ -15,7 +15,7 @@ Datenschutz
 Respire hat keine Internetberechtigung: Die App kann nichts senden. Keine Werbung, kein Konto, keine Analyse. Alles bleibt auf deinem Handy.
 
 Bedienungshilfendienst
-Respire nutzt die Schnittstelle des Android-Bedienungshilfendienstes, die die App zum Funktionieren braucht. Sie liest nur den Namen der App, die in den Vordergrund kommt, und, wenn du den Reels- oder Shorts-Filter aktivierst, die technischen IDs der Bildschirmelemente in Instagram und YouTube. Texte, Nachrichten und Bilder werden nie gelesen. Diese Informationen werden nur auf deinem Handy verwendet und nie erfasst oder geteilt.
+Respire nutzt die Schnittstelle des Android-Bedienungshilfendienstes, die die App zum Funktionieren braucht. Sie liest nur den Namen der App, die in den Vordergrund kommt, und, wenn du den Reels- oder Shorts-Filter aktivierst, die technischen IDs der Bildschirmelemente in Instagram, YouTube und Facebook. Texte, Nachrichten und Bilder werden nie gelesen. Diese Informationen werden nur auf deinem Handy verwendet und nie erfasst oder geteilt.
 
 Freie Software
 Respire ist Open Source unter der GPL-3.0-Lizenz. Quellcode: https://github.com/Relthdrarxash/respire

@@ -69,6 +69,9 @@ data class HomeUi(
     val rules: Map<Rule, Int>,
     val blockReels: Boolean,
     val blockShorts: Boolean,
+    /** Filtre Reels de Facebook (en test) : proposé seulement si Facebook est installé. */
+    val blockFacebookReels: Boolean = false,
+    val facebookInstalled: Boolean = false,
     val shortsBlockedToday: Int,
     val diagnostic: String,
     val days: List<DayDetail>,
@@ -77,7 +80,7 @@ data class HomeUi(
     val version: String = "",
 )
 
-enum class ShortKind { REELS, SHORTS }
+enum class ShortKind { REELS, SHORTS, FACEBOOK }
 
 @Composable
 fun HomeScreen(
@@ -166,6 +169,19 @@ fun HomeScreen(
                     ShortRow(stringResource(R.string.short_shorts_title), ui.blockShorts) { on ->
                         if (on) onSetShortForm(ShortKind.SHORTS, true) else disabling = ShortKind.SHORTS
                     }
+                    if (ui.facebookInstalled || ui.blockFacebookReels) {
+                        HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
+                        ShortRow(stringResource(R.string.short_fb_title), ui.blockFacebookReels) { on ->
+                            if (on) onSetShortForm(ShortKind.FACEBOOK, true) else disabling = ShortKind.FACEBOOK
+                        }
+                        if (ui.blockFacebookReels) {
+                            Text(
+                                stringResource(R.string.short_fb_note),
+                                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                                fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
+                            )
+                        }
+                    }
                     Text(
                         stringResource(R.string.short_note),
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
@@ -242,7 +258,11 @@ fun HomeScreen(
     }
 
     disabling?.let { kind ->
-        val name = if (kind == ShortKind.REELS) "Reels" else "Shorts"
+        val name = when (kind) {
+            ShortKind.REELS -> "Reels"
+            ShortKind.SHORTS -> "Shorts"
+            ShortKind.FACEBOOK -> "Reels (Facebook)"
+        }
         LoosenDialog(
             title = stringResource(R.string.loosen_short_title),
             what = stringResource(R.string.loosen_short_what, name),
@@ -409,7 +429,7 @@ private fun StatsCard(ui: HomeUi) {
                 fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = Calme.Ink,
             )
         }
-        if (ui.blockReels || ui.blockShorts) {
+        if (ui.blockReels || ui.blockShorts || ui.blockFacebookReels) {
             Text(
                 stringResource(R.string.stats_shorts, ui.shortsBlockedToday),
                 modifier = Modifier.padding(top = 10.dp),

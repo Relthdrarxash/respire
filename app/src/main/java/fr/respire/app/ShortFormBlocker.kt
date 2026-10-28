@@ -7,7 +7,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 
 /**
- * Repère le lecteur plein écran des Reels (Instagram) et des Shorts (YouTube)
+ * Repère le lecteur plein écran des Reels (Instagram, Facebook) et des Shorts (YouTube)
  * à partir des identifiants techniques des vues, puis fait « retour ».
  * Le reste de l'appli reste utilisable.
  *
@@ -26,6 +26,9 @@ object ShortFormBlocker {
 
     const val INSTAGRAM = "com.instagram.android"
     const val YOUTUBE = "com.google.android.youtube"
+    const val FACEBOOK = "com.facebook.katana"
+
+    val PACKAGES = setOf(INSTAGRAM, YOUTUBE, FACEBOOK)
 
     private val reelsIds = setOf("clips_viewer_view_pager", "clips_video_container", "clips_viewer_container")
     private val shortsIds = setOf(
@@ -36,12 +39,19 @@ object ShortFormBlocker {
         "shorts_player",
     )
 
+    /**
+     * Facebook : filtre en test. Aucun identifiant n'est encore validé, donc rien n'est bloqué ;
+     * le diagnostic relève les identifiants des grandes zones de l'écran pour les trouver.
+     */
+    private val facebookReelsIds = emptySet<String>()
+
     /** Reel ouvert depuis une conversation : on le laisse passer. */
     private val dmIds = listOf("sender_username_or_fullname", "reply_bar_edittext")
 
     /** Le lecteur doit couvrir au moins 70 % de la hauteur (évite les vignettes de l'accueil). */
     private const val MIN_COVER = 0.7f
     private const val MAX_NODES = 1500
+    private const val WIDE_COVER = 40
 
     data class Result(
         val blocked: Boolean,
@@ -52,12 +62,18 @@ object ShortFormBlocker {
         /** Identifiants intéressants vus, avec leur couverture en % : « reel_recycler 98% ». */
         val seen: List<String>,
         val reason: String,
+        /** Nœuds qui portent un identifiant (exploration seulement). */
+        val withId: Int = 0,
     )
 
     /** Présents quand on regarde un direct ou une vidéo classique : jamais de blocage. */
     private val youtubeNegativeIds = listOf("immersive_live_player", "live_chat_content", "live_chat_text_field_bar")
 
-    fun knownIds(pkg: String): Set<String> = if (pkg == INSTAGRAM) reelsIds else shortsIds
+    fun knownIds(pkg: String): Set<String> = when (pkg) {
+        INSTAGRAM -> reelsIds
+        FACEBOOK -> facebookReelsIds
+        else -> shortsIds
+    }
 
     /** Fenêtres de l'appli visée ; à défaut, la fenêtre active. */
     fun roots(service: AccessibilityService, pkg: String): List<AccessibilityNodeInfo> {
@@ -109,13 +125,16 @@ object ShortFormBlocker {
     }
 
     /** Exploration complète de l'arbre (lente). Sert uniquement au diagnostic. */
-    data class FullScan(val match: String?, val seen: List<String>, val nodes: Int)
+    data class FullScan(val match: String?, val seen: List<String>, val nodes: Int, val withId: Int)
 
     fun fullScan(roots: List<AccessibilityNodeInfo>, pkg: String): FullScan {
         val fallback = if (pkg == INSTAGRAM) "clips_viewer" else "reel"
+        // Facebook nomme peu ses vues : on relève aussi toute zone qui couvre une bonne part de l'écran.
+        val wide = pkg == FACEBOOK
         val seen = LinkedHashMap<String, Int>()
         var match: String? = null
         var count = 0
+        var withId = 0
         val rect = Rect()
         for (root in roots) {
             val height = rootHeight(root)
@@ -126,11 +145,13 @@ object ShortFormBlocker {
                 count++
                 val fullId = node.viewIdResourceName
                 if (fullId != null && node.isVisibleToUser) {
+                    withId++
                     val id = fullId.substringAfter(":id/")
                     val lower = id.lowercase()
-                    if ("reel" in lower || "short" in lower || "clips" in lower) {
-                        node.getBoundsInScreen(rect)
-                        val cover = rect.height() * 100 / height
+                    node.getBoundsInScreen(rect)
+                    val cover = rect.height() * 100 / height
+                    val named = "reel" in lower || "short" in lower || "clips" in lower || (wide && "video" in lower)
+                    if (named || (wide && cover >= WIDE_COVER)) {
                         if ((seen[id] ?: -1) < cover) seen[id] = cover
                         if (match == null && cover >= MIN_COVER * 100 && fallback in lower) match = id
                     }
@@ -138,7 +159,8 @@ object ShortFormBlocker {
                 for (i in 0 until node.childCount) node.getChild(i)?.let { queue.add(it) }
             }
         }
-        return FullScan(match, seen.entries.take(25).map { "${it.key} ${it.value}%" }, count)
+        val top = seen.entries.sortedByDescending { it.value }.take(25)
+        return FullScan(match, top.map { "${it.key} ${it.value}%" }, count, withId)
     }
 
     /** Analyse complète utilisée par le service : rapide d'abord, exploration si demandé. */
@@ -151,12 +173,14 @@ object ShortFormBlocker {
         var method = "rapide"
         var seen = emptyList<String>()
         var nodes = 0
+        var withId = 0
         var candidate: String? = null
         if (match == null && explore) {
             val full = fullScan(roots, pkg)
             method = "exploration"
             seen = full.seen
             nodes = full.nodes
+            withId = full.withId
             candidate = full.match
         }
         val dm = match != null && isDirectMessage(roots, pkg)
@@ -176,6 +200,7 @@ object ShortFormBlocker {
             durationMs = SystemClock.uptimeMillis() - start,
             seen = seen,
             reason = reason,
+            withId = withId,
         )
     }
 

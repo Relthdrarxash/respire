@@ -150,6 +150,8 @@ class MainActivity : ComponentActivity() {
             ),
             blockReels = prefs.blockReels,
             blockShorts = prefs.blockShorts,
+            blockFacebookReels = prefs.blockFacebookReels,
+            facebookInstalled = packageManager.getLaunchIntentForPackage(ShortFormBlocker.FACEBOOK) != null,
             shortsBlockedToday = prefs.shortsBlockedToday(),
             diagnostic = prefs.shortDiagnostic(),
             days = weekDays(),
@@ -196,6 +198,7 @@ class MainActivity : ComponentActivity() {
         when (kind) {
             ShortKind.REELS -> prefs.blockReels = on
             ShortKind.SHORTS -> prefs.blockShorts = on
+            ShortKind.FACEBOOK -> prefs.blockFacebookReels = on
         }
         refresh()
     }

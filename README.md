@@ -41,7 +41,7 @@ On Android 13 and later, you can pick the app language in Settings > Apps > Resp
 Respire uses an Accessibility Service, which is the only way on Android to detect which app is opening.
 
 - **Pauses** only use the package name of the app in the foreground.
-- **Reels and Shorts filter** (off by default): only inside Instagram and YouTube, the service checks the technical IDs of on-screen elements to spot the short-video player. It never reads text, messages or images.
+- **Reels and Shorts filter** (off by default): only inside Instagram, YouTube and Facebook (the Facebook filter is still being tested), the service checks the technical IDs of on-screen elements to spot the short-video player. It never reads text, messages or images.
 - Settings and counters stay in the app's local storage. The manifest declares no `INTERNET` permission, so nothing can be sent anywhere.
 
 ## Build from source
@@ -61,7 +61,7 @@ Run the unit tests with `./gradlew testReleaseUnitTest`.
 ## Known limits
 
 - Anyone can turn the service off in Accessibility settings. The lock only protects Respire's own settings.
-- The Reels and Shorts filter relies on view IDs that Instagram or YouTube may change in an update.
+- The Reels and Shorts filter relies on view IDs that Instagram, YouTube or Facebook may change in an update.
 - Apps opened from a link inside another app also trigger the pause. This is intended.
 
 ## How Respire is made
