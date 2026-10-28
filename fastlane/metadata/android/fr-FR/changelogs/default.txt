@@ -1,1 +1,1 @@
-Respire affiche maintenant sa version en bas de l’accueil.
+Quitter l’écran de pause sans ouvrir l’appli (retour, accueil, changement d’appli) compte maintenant comme un renoncement dans tes statistiques.

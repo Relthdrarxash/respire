@@ -125,8 +125,13 @@ class PauseActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
-        // Parti sans choisir (Accueil, applis récentes...) : on ne laisse pas traîner l'écran.
-        if (!decided) finish()
+        // Parti sans ouvrir l'appli (Accueil, applis récentes, écran éteint...) :
+        // ça compte comme un renoncement, et on ne laisse pas traîner l'écran.
+        if (!decided && !isChangingConfigurations) {
+            decided = true
+            prefs.recordGiveUp(System.currentTimeMillis(), pkg)
+            finish()
+        }
     }
 
     override fun onDestroy() {

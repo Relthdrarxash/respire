@@ -1,1 +1,1 @@
-Respire zeigt jetzt seine Version unten auf dem Startbildschirm an.
+Wenn du den Pausenbildschirm verlässt, ohne die App zu öffnen (Zurück, Startbildschirm, App-Wechsel), zählt das jetzt in deiner Statistik als Verzicht.

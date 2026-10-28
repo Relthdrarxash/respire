@@ -1,1 +1,1 @@
-Respire now shows its version at the bottom of the home screen.
+Leaving the pause screen without opening the app (Back, Home, switching apps) now counts as giving up in your stats.

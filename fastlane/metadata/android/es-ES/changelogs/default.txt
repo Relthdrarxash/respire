@@ -1,1 +1,1 @@
-Respire muestra ahora su versión al final de la pantalla de inicio.
+Salir de la pantalla de pausa sin abrir la app (atrás, inicio, cambiar de app) ahora cuenta como renuncia en tus estadísticas.
