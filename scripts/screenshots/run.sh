@@ -11,6 +11,12 @@ UI="python3 ui.py"
 
 adb root >/dev/null; sleep 3; adb wait-for-device
 adb shell setprop persist.sys.timezone Europe/Paris
+# Téléphone entier en français (dates, jours de la semaine, paramètres Android).
+adb shell setprop persist.sys.locale fr-FR
+adb shell setprop ctl.restart zygote
+sleep 10; adb wait-for-device
+until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
+sleep 8
 adb shell settings put global auto_time_zone 0
 adb shell settings put system screen_off_timeout 1800000
 adb shell svc power stayon true
