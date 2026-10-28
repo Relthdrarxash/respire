@@ -87,7 +87,7 @@ adb shell monkey -p com.google.android.youtube -c android.intent.category.LAUNCH
 sleep 12
 adb shell input tap $OPEN_X $OPEN_Y ; sleep 6            # l'appli s'ouvre après l'attente
 adb shell input keyevent KEYCODE_HOME; sleep 2
-kill -INT $REC 2>/dev/null; sleep 4
+adb shell pkill -INT screenrecord; wait $REC 2>/dev/null; sleep 3
 adb pull /sdcard/demo.mp4 "$OUT/demo-accessibilite.mp4" >/dev/null && echo "vidéo ok"
 
 # ---- Captures d'écran pour la fiche ------------------------------------------------
@@ -97,12 +97,12 @@ adb shell am force-stop com.google.android.youtube
 push_prefs /tmp/full.xml
 service_on
 adb shell am start -n $PKG/.MainActivity >/dev/null
-shot 1-accueil 5
-adb shell input swipe 540 1500 540 500 600; shot 2-accueil-suite 2
-adb shell input swipe 540 1500 540 400 600; shot 3-accueil-regles 2
+shot 1-accueil 9
+adb shell input tap 663 705; shot 2-detail-jour 3      # barre de lundi : détail heure par heure
+adb shell input keyevent KEYCODE_BACK; sleep 2
+adb shell input swipe 540 1600 540 700 800; shot 3-accueil-applis 3
 $UI tap "Choisir les applis"; shot 5-choix-applis 3
 adb shell input keyevent KEYCODE_BACK; sleep 2
-adb shell am start -n $PKG/.MainActivity >/dev/null; sleep 2
 # Écran de pause, ouvert directement pour la première appli cible.
 adb shell am start -n $PKG/.PauseActivity --es pkg "$FIRST" --es mode open >/dev/null
 shot 4-pause 3
