@@ -53,6 +53,10 @@ service_on() {
   adb shell settings put secure accessibility_enabled 1
 }
 
+# L'écran de pause s'anime en continu (uiautomator ne peut pas le lire) : boutons par coordonnées,
+# mesurées sur l'écran 1080 x 1920 du profil pixel_2.
+CLOSE_X=540; CLOSE_Y=1583; OPEN_X=540; OPEN_Y=1740
+
 # ---- Vidéo de démonstration (déclaration d'accessibilité) -------------------------
 python3 seed.py "$NOW" "$TARGETS" /tmp/demo.xml demo
 adb shell pm clear $PKG >/dev/null
@@ -71,22 +75,25 @@ sleep 4
 $UI tap "accepte"; sleep 3                # paramètres d'accessibilité d'Android
 $UI tap "Respire" ; sleep 2
 $UI tap "Use Respire" || $UI tap "Utiliser" ; sleep 2
-$UI tap "Allow" || $UI tap "Autoriser" ; sleep 2
+$UI tap "=Allow" || $UI tap "=Autoriser" ; sleep 2
+adb shell am force-stop com.android.settings
 service_on                                 # au cas où l'interface n'aurait pas suivi
 adb shell input keyevent KEYCODE_HOME; sleep 2
 adb shell monkey -p com.android.chrome -c android.intent.category.LAUNCHER 1 >/dev/null; sleep 6
 shot demo_pause 0
 sleep 10                                   # fin du compte à rebours
-$UI tap "je ferme"; sleep 3
+adb shell input tap $CLOSE_X $CLOSE_Y; sleep 3
 adb shell monkey -p com.google.android.youtube -c android.intent.category.LAUNCHER 1 >/dev/null; sleep 5
 sleep 12
-$UI tap "quand même" ; sleep 6            # l'appli s'ouvre après l'attente
+adb shell input tap $OPEN_X $OPEN_Y ; sleep 6            # l'appli s'ouvre après l'attente
 adb shell input keyevent KEYCODE_HOME; sleep 2
 kill -INT $REC 2>/dev/null; sleep 4
 adb pull /sdcard/demo.mp4 "$OUT/demo-accessibilite.mp4" >/dev/null && echo "vidéo ok"
 
 # ---- Captures d'écran pour la fiche ------------------------------------------------
 python3 seed.py "$NOW" "$TARGETS" /tmp/full.xml
+adb shell am force-stop com.android.settings
+adb shell am force-stop com.google.android.youtube
 push_prefs /tmp/full.xml
 service_on
 adb shell am start -n $PKG/.MainActivity >/dev/null

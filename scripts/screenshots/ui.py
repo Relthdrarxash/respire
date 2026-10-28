@@ -15,9 +15,13 @@ def dump():
     return ET.fromstring(xml[xml.index("<"):])
 
 def find(root, text):
-    t = text.lower()
-    return [n for n in root.iter("node")
-            if t in (n.get("text") or "").lower() or t in (n.get("content-desc") or "").lower()]
+    # « =Texte » : correspondance exacte ; sinon, le texte doit contenir la chaîne.
+    exact = text.startswith("=")
+    t = text.lstrip("=").lower()
+    def ok(v):
+        v = (v or "").strip().lower()
+        return v == t if exact else t in v
+    return [n for n in root.iter("node") if ok(n.get("text")) or ok(n.get("content-desc"))]
 
 def main():
     if sys.argv[1] == "dump":
