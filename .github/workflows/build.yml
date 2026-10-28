@@ -52,12 +52,15 @@ jobs:
             Respire.apk
             Respire.aab
 
-      - name: Publier dans la release « latest »
+      - name: Publier la version de développement
         if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Version de test reconstruite à chaque push, marquée « préversion » : elle n'apparaît
+          # jamais comme « dernière version ». Le site pointe vers la dernière version vX.Y.Z.
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest Respire.apk Respire.aab \
-            --title "Respire (dernière version)" \
-            --notes "Compilé automatiquement depuis main (${GITHUB_SHA::7}). Respire.apk : à installer directement. Respire.aab : à envoyer dans la Play Console."
+          gh release delete dev --yes --cleanup-tag || true
+          gh release create dev Respire.apk Respire.aab --prerelease --target "$GITHUB_SHA" \
+            --title "Respire (développement)" \
+            --notes "Préversion compilée automatiquement depuis main (${GITHUB_SHA::7}). Pour l'appli stable, prends la dernière version vX.Y.Z. Ne jamais envoyer cet AAB à Google Play."

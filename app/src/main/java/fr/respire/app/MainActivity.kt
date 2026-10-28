@@ -102,6 +102,12 @@ class MainActivity : ComponentActivity() {
         refresh()
     }
 
+    private fun installedVersion(): String = try {
+        packageManager.getPackageInfo(packageName, 0).versionName.orEmpty()
+    } catch (e: android.content.pm.PackageManager.NameNotFoundException) {
+        ""
+    }
+
     private fun openAccessibilitySettings() {
         startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
     }
@@ -154,6 +160,7 @@ class MainActivity : ComponentActivity() {
                 quota = prefs.riskQuota,
                 active = prefs.inRiskWindow(),
             ),
+            version = installedVersion(),
         )
     }
 

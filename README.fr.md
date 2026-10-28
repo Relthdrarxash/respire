@@ -28,7 +28,7 @@ Touche un jour du graphique de la semaine pour le voir heure par heure et repér
 
 ## Installer
 
-1. Depuis ton téléphone, télécharge `Respire.apk` dans la [dernière release](../../releases/tag/latest) et installe-le. Android te demandera d'autoriser l'installation depuis ton navigateur ou ton gestionnaire de fichiers.
+1. Depuis ton téléphone, télécharge `Respire.apk` dans la [dernière version](../../releases/latest) et installe-le. Android te demandera d'autoriser l'installation depuis ton navigateur ou ton gestionnaire de fichiers.
 2. Ouvre Respire, appuie sur **Choisir les applis** et active celles à freiner.
 3. Appuie sur **Ouvrir les paramètres** (ou sur la pastille **Inactif**) et active **Respire** dans les paramètres d'accessibilité.
 4. **Android 13 et plus** : si l'interrupteur est grisé (« paramètre restreint »), va dans Paramètres > Applications > Respire > menu ⋮ > **Autoriser les paramètres restreints**, puis recommence l'étape 3.

@@ -13,8 +13,8 @@ android {
         minSdk = 26
         targetSdk = 36
         // En publication, la CI calcule le numéro à partir de l'étiquette (v4.2.0 -> 40200).
-        versionCode = System.getenv("RESPIRE_VERSION_CODE")?.toIntOrNull() ?: 13
-        versionName = System.getenv("RESPIRE_VERSION_NAME") ?: "4.1"
+        versionCode = System.getenv("RESPIRE_VERSION_CODE")?.toIntOrNull() ?: 40101
+        versionName = System.getenv("RESPIRE_VERSION_NAME") ?: "4.1.1-dev"
     }
 
     // Clé fixe : chaque compilation est signée pareil, donc les mises à jour

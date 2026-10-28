@@ -28,7 +28,7 @@ Tap a day in the weekly chart to see it hour by hour and find your most tempting
 
 ## Install
 
-1. Download `Respire.apk` from the [latest release](../../releases/tag/latest) on your phone and install it. Android will ask you to allow installs from your browser or file manager.
+1. Download `Respire.apk` from the [latest release](../../releases/latest) on your phone and install it. Android will ask you to allow installs from your browser or file manager.
 2. Open Respire, tap **Choose apps** and turn on the apps to slow down.
 3. Tap **Open settings** (or the **Inactive** badge) and turn on **Respire** in Accessibility settings.
 4. **Android 13 and later**: if the switch is greyed out ("restricted setting"), go to Settings > Apps > Respire > ⋮ menu > **Allow restricted settings**, then repeat step 3.

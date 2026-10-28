@@ -116,6 +116,7 @@ What happens to it: it is used on your phone only, at the moment it is accessed.
     <string name="link_feedback">Give feedback</string>
     <string name="link_source">Source code</string>
     <string name="url_privacy">https://relthdrarxash.github.io/respire/privacy.html</string>
+    <string name="app_version" translatable="false">Respire %1$s</string>
     <string name="back">Back</string>
     <plurals name="risk_desc_quota">
         <item quantity="one">Wait doubled, up to %d open per app.</item>

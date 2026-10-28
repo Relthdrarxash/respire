@@ -81,6 +81,8 @@ jobs:
           cp app/build/outputs/apk/release/app-release.apk "Respire-$VERSION_NAME.apk"
           cp app/build/outputs/bundle/release/app-release.aab "Respire-$VERSION_NAME.aab"
           sha256sum "Respire-$VERSION_NAME.apk" > "Respire-$VERSION_NAME.apk.sha256"
+          # Nom fixe pour le lien du site : .../releases/latest/download/Respire.apk
+          cp "Respire-$VERSION_NAME.apk" Respire.apk
 
       - name: Créer la version GitHub
         env:
@@ -88,7 +90,7 @@ jobs:
         run: |
           # --target crée l'étiquette sur ce commit si elle n'existe pas encore (lancement manuel).
           gh release create "$RELEASE_TAG" --target "$GITHUB_SHA" \
-            "Respire-$VERSION_NAME.apk" "Respire-$VERSION_NAME.apk.sha256" "Respire-$VERSION_NAME.aab" \
+            "Respire-$VERSION_NAME.apk" "Respire-$VERSION_NAME.apk.sha256" "Respire-$VERSION_NAME.aab" Respire.apk \
             --title "Respire $VERSION_NAME" --generate-notes
 
       - name: Vérifier la configuration Google Play

@@ -1,1 +1,1 @@
-Unterstützung für Android 16, Informationsbildschirm zur Bedienungshilfe, Links zur Datenschutzerklärung und für Feedback.
+Respire zeigt jetzt seine Version unten auf dem Startbildschirm an.

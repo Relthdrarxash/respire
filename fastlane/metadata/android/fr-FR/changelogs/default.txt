@@ -1,1 +1,1 @@
-Prise en charge d’Android 16, écran d’information sur l’accessibilité, liens vers la politique de confidentialité et pour donner ton avis.
+Respire affiche maintenant sa version en bas de l’accueil.

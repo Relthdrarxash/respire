@@ -1,1 +1,1 @@
-Android 16 support, accessibility information screen, links to the privacy policy and to give feedback.
+Respire now shows its version at the bottom of the home screen.

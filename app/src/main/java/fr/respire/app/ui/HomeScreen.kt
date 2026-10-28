@@ -73,6 +73,8 @@ data class HomeUi(
     val diagnostic: String,
     val days: List<DayDetail>,
     val risk: RiskUi,
+    /** Version installée, affichée en bas de l'accueil pour vérifier une mise à jour. */
+    val version: String = "",
 )
 
 enum class ShortKind { REELS, SHORTS }
@@ -207,6 +209,14 @@ fun HomeScreen(
                 FooterLink(stringResource(R.string.link_privacy)) { onOpenLink(privacyUrl) }
                 FooterLink(stringResource(R.string.link_feedback)) { onOpenLink("https://github.com/Relthdrarxash/respire/issues") }
                 FooterLink(stringResource(R.string.link_source)) { onOpenLink("https://github.com/Relthdrarxash/respire") }
+            }
+            if (ui.version.isNotEmpty()) {
+                Text(
+                    stringResource(R.string.app_version, ui.version),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
+                )
             }
         }
     }
