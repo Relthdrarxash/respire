@@ -12,8 +12,9 @@ android {
         applicationId = "fr.respire.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 13
-        versionName = "4.1"
+        // En publication, la CI calcule le numéro à partir de l'étiquette (v4.2.0 -> 40200).
+        versionCode = System.getenv("RESPIRE_VERSION_CODE")?.toIntOrNull() ?: 13
+        versionName = System.getenv("RESPIRE_VERSION_NAME") ?: "4.1"
     }
 
     // Clé fixe : chaque compilation est signée pareil, donc les mises à jour

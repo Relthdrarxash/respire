@@ -1,0 +1,52 @@
+name: Fiche Play Store
+
+# Envoie à Google Play les textes de la fiche (titre, descriptions courte et longue) dans toutes
+# les langues du dossier fastlane/metadata/android, et, si demandé, l'icône, la bannière et les captures.
+# À lancer à la main : onglet Actions > Fiche Play Store > Run workflow.
+
+on:
+  workflow_dispatch:
+    inputs:
+      images:
+        description: "Envoyer aussi l'icône, la bannière et les captures d'écran"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  listing:
+    name: Mettre à jour la fiche
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Installer fastlane
+        run: gem install fastlane --no-document
+
+      - name: Envoyer la fiche
+        env:
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          WITH_IMAGES: ${{ inputs.images }}
+        run: |
+          if [ -z "$PLAY_JSON" ]; then
+            echo "::error::Secret PLAY_SERVICE_ACCOUNT_JSON manquant."
+            exit 1
+          fi
+          skip_images=true
+          [ "$WITH_IMAGES" = "true" ] && skip_images=false
+          fastlane supply \
+            --package_name fr.respire.app \
+            --json_key_data "$PLAY_JSON" \
+            --metadata_path fastlane/metadata/android \
+            --skip_upload_apk true \
+            --skip_upload_aab true \
+            --skip_upload_changelogs true \
+            --skip_upload_images "$skip_images" \
+            --skip_upload_screenshots "$skip_images"
