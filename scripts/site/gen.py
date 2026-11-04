@@ -42,6 +42,8 @@ T = {
         "Settings and counters stay in the app's private storage and disappear when you uninstall it.",
     ],
     priv_link="Read the privacy policy",
+    why_h="Why Respire is free",
+    why_p="I spend too much time scrolling endless feeds myself, and people close to me have needed the same help. Apps that really help do exist, but their most useful features are often behind a paywall: daily limits, blocking Reels or Shorts, statistics. Respire aims to make these tools available to everyone, with no subscription, no ads and no data collection. Someone who wants to take back control of their time should not have to pay for it.",
     inst_h="Install",
     steps=[
         f'<strong>Download</strong> <a href="{APK}">Respire.apk</a> on your phone and open it. Android will ask you to allow installs from your browser.',
@@ -110,6 +112,8 @@ T = {
         "Les réglages et compteurs restent dans le stockage privé de l’appli et disparaissent à la désinstallation.",
     ],
     priv_link="Lire la politique de confidentialité",
+    why_h="Pourquoi Respire est gratuite",
+    why_p="Je passe moi aussi trop de temps à faire défiler des fils sans fin, et des proches ont eu le même besoin. Les applications qui aident vraiment existent, mais leurs fonctions les plus utiles sont souvent payantes : limites quotidiennes, blocage des Reels ou des Shorts, statistiques. L’idée de Respire est de rendre ces outils accessibles à tout le monde, sans abonnement, sans publicité et sans collecte de données. Ce n’est pas à la personne qui veut reprendre la main sur son temps de payer pour y arriver.",
     inst_h="Installer",
     steps=[
         f'<strong>Télécharge</strong> <a href="{APK}">Respire.apk</a> depuis ton téléphone et ouvre-le. Android te demandera d’autoriser l’installation depuis ton navigateur.',
@@ -230,6 +234,11 @@ def index(t):
 <div><h2>{t["priv_h"]}</h2></div>
 <div><p>{t["priv_p"]}</p><ul>{priv}</ul><p style="margin:16px 0 0"><a href="{t["privacy"]}">{t["priv_link"]}</a></p></div>
 </div>
+</div></section>
+
+<section id="free"><div class="wrap">
+<h2>{t["why_h"]}</h2>
+<p class="intro">{t["why_p"]}</p>
 </div></section>
 
 <section id="install"><div class="wrap">

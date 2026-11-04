@@ -26,6 +26,10 @@ Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute session
 
 Tap a day in the weekly chart to see it hour by hour and find your most tempting time. Tap an app in the list to see its week: temptations, opens, how often you gave up, and its most tempting hour.
 
+## Why Respire is free
+
+I spend too much time scrolling endless feeds myself, and people close to me have needed the same help. Apps that really help do exist, but their most useful features are often behind a paywall: daily limits, blocking Reels or Shorts, statistics. Respire aims to make these tools available to everyone, with no subscription, no ads and no data collection. Someone who wants to take back control of their time should not have to pay for it.
+
 ## Install
 
 1. Download `Respire.apk` from the [latest release](../../releases/latest) on your phone and install it. Android will ask you to allow installs from your browser or file manager.

@@ -26,6 +26,10 @@ Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, session
 
 Touche un jour du graphique de la semaine pour le voir heure par heure et repérer ton moment le plus tentant. Touche une appli de la liste pour voir sa semaine : tentations, ouvertures, part de renoncements et heure la plus tentante.
 
+## Pourquoi Respire est gratuite
+
+Je passe moi aussi trop de temps à faire défiler des fils sans fin, et des proches ont eu le même besoin. Les applications qui aident vraiment existent, mais leurs fonctions les plus utiles sont souvent payantes : limites quotidiennes, blocage des Reels ou des Shorts, statistiques. L'idée de Respire est de rendre ces outils accessibles à tout le monde, sans abonnement, sans publicité et sans collecte de données. Ce n'est pas à la personne qui veut reprendre la main sur son temps de payer pour y arriver.
+
 ## Installer
 
 1. Depuis ton téléphone, télécharge `Respire.apk` dans la [dernière version](../../releases/latest) et installe-le. Android te demandera d'autoriser l'installation depuis ton navigateur ou ton gestionnaire de fichiers.
