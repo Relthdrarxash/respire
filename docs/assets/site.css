@@ -157,3 +157,12 @@ footer nav { display: flex; flex-wrap: wrap; gap: 20px; }
   .wrap { padding: 0 16px; }
   .top nav a.hide-sm { display: none; }
 }
+
+/* ---- Page « Pourquoi » : chaque règle, sa raison, et ce qui la soutient ---- */
+.doc h3 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin: 32px 0 6px; }
+.doc .proof, .doc .choice { margin: 10px 0 0; padding-left: 14px; border-left: 3px solid var(--ring2); font-size: 0.9375rem; color: var(--muted); }
+.doc .choice { border-left-style: dashed; border-left-color: var(--ring3); }
+.doc .proof b, .doc .choice b { color: var(--ink); font-weight: 700; }
+.doc .toc { padding-left: 1.2em; columns: 2; column-gap: 32px; }
+.doc .refs li { font-size: 0.9375rem; margin-bottom: 10px; }
+@media (max-width: 560px) { .doc .toc { columns: 1; } }
