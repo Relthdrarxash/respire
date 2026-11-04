@@ -26,6 +26,10 @@ Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, session
 
 Touche un jour du graphique de la semaine pour le voir heure par heure et repérer ton moment le plus tentant. Touche une appli de la liste pour voir sa semaine : tentations, ouvertures, part de renoncements et heure la plus tentante.
 
+## Pourquoi Respire est gratuite
+
+Je passe moi aussi trop de temps à faire défiler des fils sans fin, et des proches ont eu le même besoin. Les applications qui aident vraiment existent, mais leurs fonctions les plus utiles sont souvent payantes : limites quotidiennes, blocage des Reels ou des Shorts, statistiques. L'idée de Respire est de rendre ces outils accessibles à tout le monde, sans abonnement, sans publicité et sans collecte de données. Ce n'est pas à la personne qui veut reprendre la main sur son temps de payer pour y arriver.
+
 ## Installer
 
 1. Depuis ton téléphone, télécharge `Respire.apk` dans la [dernière version](../../releases/latest) et installe-le. Android te demandera d'autoriser l'installation depuis ton navigateur ou ton gestionnaire de fichiers.
@@ -66,14 +70,14 @@ Pour lancer les tests unitaires : `./gradlew testReleaseUnitTest`.
 
 ## Comment Respire est fait
 
-Respire est un projet personnel de Relthdrarxash, publié sous le nom Escale. Contact : escale.apps@proton.me. L'essentiel du code a été écrit avec un assistant IA (Claude, d'Anthropic), et je préfère le dire clairement.
+Respire est un projet personnel de Relthdrarxash, publié sous le nom Pilmil Studio. Contact : pilmil.studio@proton.me. L'essentiel du code a été écrit avec un assistant IA (Claude, d'Anthropic), et je préfère le dire clairement.
 
 Concrètement :
 
 - **Les décisions sont humaines.** Le problème à régler, les fonctions retenues à partir des études citées plus bas, ce qui a été écarté (séries, badges, notifications), le design, et chaque correction après des tests sur un vrai téléphone.
 - **Pas besoin de me croire sur parole.** Tout le code est ici, sous licence GPL-3.0. Le manifeste ne déclare pas la permission `INTERNET` : même un bug ne peut rien envoyer nulle part. Le code lié à l'accessibilité se trouve dans [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) et [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
 - **Les règles sont testées.** Tout ce qui décide d'une attente ou d'un blocage se trouve dans [`Rules.kt`](app/src/main/java/fr/respire/app/Rules.kt), sans dépendance à Android, et est couvert par des tests lancés à chaque compilation (y compris les changements d'heure et les plages qui passent minuit).
-- **Quelqu'un en répond.** Si tu trouves un bug, un souci de vie privée ou quelque chose de flou, [ouvre une issue](https://github.com/Relthdrarxash/respire/issues) ou écris à escale.apps@proton.me. Les relectures du code d'accessibilité sont particulièrement bienvenues.
+- **Quelqu'un en répond.** Si tu trouves un bug, un souci de vie privée ou quelque chose de flou, [ouvre une issue](https://github.com/Relthdrarxash/respire/issues) ou écris à pilmil.studio@proton.me. Les relectures du code d'accessibilité sont particulièrement bienvenues.
 
 ## Licence
 
@@ -93,3 +97,7 @@ Les polices de `app/src/main/res/font/` restent sous leur propre licence SIL Ope
 - Grüning, D. J., Riedel, F., et Lorenz-Spreen, P. (2023). Directing smartphone use through the self-nudge app one sec. *PNAS*. [doi:10.1073/pnas.2213114120](https://doi.org/10.1073/pnas.2213114120)
 - Haliburton, L., Grüning, D. J., Riedel, F., Schmidt, A., et Terzimehić, N. (2024). A longitudinal in-the-wild investigation of design frictions to prevent smartphone overuse. *CHI 2024*.
 - Allcott, H., Gentzkow, M., et Song, L. (2021). Digital Addiction. *NBER Working Paper* 28936. [nber.org/papers/w28936](https://www.nber.org/papers/w28936)
+
+## Note sur le développement
+
+L'essentiel du code de Respire a été écrit avec Claude, l'assistant IA d'Anthropic (voir [Comment Respire est fait](#comment-respire-est-fait)). Je l'ai relu, testé et je le maintiens : les règles qui comptent sont couvertes par des tests automatiques, et je réponds moi-même aux tickets et aux messages.

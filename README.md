@@ -26,6 +26,10 @@ Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute session
 
 Tap a day in the weekly chart to see it hour by hour and find your most tempting time. Tap an app in the list to see its week: temptations, opens, how often you gave up, and its most tempting hour.
 
+## Why Respire is free
+
+I spend too much time scrolling endless feeds myself, and people close to me have needed the same help. Apps that really help do exist, but their most useful features are often behind a paywall: daily limits, blocking Reels or Shorts, statistics. Respire aims to make these tools available to everyone, with no subscription, no ads and no data collection. Someone who wants to take back control of their time should not have to pay for it.
+
 ## Install
 
 1. Download `Respire.apk` from the [latest release](../../releases/latest) on your phone and install it. Android will ask you to allow installs from your browser or file manager.
@@ -66,14 +70,14 @@ Run the unit tests with `./gradlew testReleaseUnitTest`.
 
 ## How Respire is made
 
-Respire is a personal project by Relthdrarxash, published under the name Escale. Contact: escale.apps@proton.me. Most of the code was written with an AI assistant (Claude, by Anthropic), and I want to say so plainly.
+Respire is a personal project by Relthdrarxash, published under the name Pilmil Studio. Contact: pilmil.studio@proton.me. Most of the code was written with an AI assistant (Claude, by Anthropic), and I want to say so plainly.
 
 What that means in practice:
 
 - **The decisions are human.** Which problem to solve, which features to keep based on the studies cited below, what to leave out (streaks, badges, notifications), the design, and every fix after testing on a real phone.
 - **You don't have to take my word for it.** The full source is here under the GPL-3.0. The manifest declares no `INTERNET` permission, so even a bug cannot send data anywhere. The accessibility code is in [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) and [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
 - **The rules are tested.** Everything that decides a wait or a block lives in [`Rules.kt`](app/src/main/java/fr/respire/app/Rules.kt), with no Android dependency, and is covered by unit tests run on every build (including daylight saving time changes and time ranges that cross midnight).
-- **Someone answers for it.** If you find a bug, a privacy concern or something unclear, [open an issue](https://github.com/Relthdrarxash/respire/issues) or write to escale.apps@proton.me. Reviews of the accessibility code are especially welcome.
+- **Someone answers for it.** If you find a bug, a privacy concern or something unclear, [open an issue](https://github.com/Relthdrarxash/respire/issues) or write to pilmil.studio@proton.me. Reviews of the accessibility code are especially welcome.
 
 ## License
 
@@ -93,3 +97,7 @@ The fonts in `app/src/main/res/font/` keep their own SIL Open Font License (see 
 - Grüning, D. J., Riedel, F., & Lorenz-Spreen, P. (2023). Directing smartphone use through the self-nudge app one sec. *PNAS*. [doi:10.1073/pnas.2213114120](https://doi.org/10.1073/pnas.2213114120)
 - Haliburton, L., Grüning, D. J., Riedel, F., Schmidt, A., & Terzimehić, N. (2024). A longitudinal in-the-wild investigation of design frictions to prevent smartphone overuse. *CHI 2024*.
 - Allcott, H., Gentzkow, M., & Song, L. (2021). Digital Addiction. *NBER Working Paper* 28936. [nber.org/papers/w28936](https://www.nber.org/papers/w28936)
+
+## A note on how this was built
+
+Most of Respire's code was written with Claude, the AI assistant made by Anthropic (see [How Respire is made](#how-respire-is-made)). I reviewed it, tested it and I maintain it: the rules that matter are covered by automated tests, and I answer issues and messages myself.

@@ -4,7 +4,7 @@ OUT = sys.argv[1]
 REPO = "https://github.com/Relthdrarxash/respire"
 APK = REPO + "/releases/latest/download/Respire.apk"
 ISSUES = REPO + "/issues"
-MAIL = "escale.apps@proton.me"
+MAIL = "pilmil.studio@proton.me"
 
 LOGO = ('<svg viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="30" fill="#4E7363"/>'
         '<circle cx="54" cy="54" r="22" fill="none" stroke="#EDEEE6" stroke-width="3"/>'
@@ -23,7 +23,8 @@ T = {
     fine="Android 8 and later. Free and open source (GPL-3.0). No ads, no account, no Internet permission. A Google Play version is in preparation.",
     caption="Breathe in as the circle grows, out as it shrinks.",
     how_h="Built from what research says works",
-    how_intro="Each feature is there because studies on smartphone overuse support it. Nothing else was added.",
+    how_intro='Each feature rests on a study of smartphone overuse or on a stated design choice. The details, rule by rule, are on the page <a href="why.html">Why Respire works the way it does</a>.',
+    why="why.html", nav_why="Why", foot_why="Why these choices",
     features=[
         ("Pause before opening", "A breathing screen with a countdown and one question. Closing is available right away; opening only once the countdown ends.", "Friction before opening social apps cut opening attempts and made openings more intentional (Grüning, Riedel and Lorenz-Spreen, PNAS, 2023)."),
         ("A wait that grows", "Each new attempt within the hour adds a few seconds. The more the urge comes back, the slower it gets.", None),
@@ -42,6 +43,8 @@ T = {
         "Settings and counters stay in the app's private storage and disappear when you uninstall it.",
     ],
     priv_link="Read the privacy policy",
+    why_h="Why Respire is free",
+    why_p="I spend too much time scrolling endless feeds myself, and people close to me have needed the same help. Apps that really help do exist, but their most useful features are often behind a paywall: daily limits, blocking Reels or Shorts, statistics. Respire aims to make these tools available to everyone, with no subscription, no ads and no data collection. Someone who wants to take back control of their time should not have to pay for it.",
     inst_h="Install",
     steps=[
         f'<strong>Download</strong> <a href="{APK}">Respire.apk</a> on your phone and open it. Android will ask you to allow installs from your browser.',
@@ -56,7 +59,7 @@ T = {
         ("Does it work on iPhone?", "No. iOS doesn't allow this kind of app outside Apple's Screen Time framework."),
         ("How can I report a problem?", f'Open an issue on <a href="{ISSUES}">GitHub</a> or write to <a href="mailto:{MAIL}">{MAIL}</a>. Respire collects no data, so your feedback is the only way to know what to improve.'),
     ],
-    foot_license="Respire, by Escale. Free software under the GPL-3.0 license.",
+    foot_license="Respire, by Pilmil Studio. Free software under the GPL-3.0 license.",
     foot_src="Source code", foot_privacy="Privacy policy",
     p_title="Privacy policy",
     p_date="Last updated: 28 October 2026",
@@ -75,7 +78,7 @@ T = {
         ("What Respire shares", ["Nothing. Without the Internet permission, the app cannot send data. The diagnostic text only leaves the app if you tap Copy and paste it yourself."]),
         ("Deleting your data", ["Uninstall Respire, or clear its storage in Settings, Apps, Respire, Storage."]),
         ("Changes", ["Any change to this policy will be published on this page with a new date."]),
-        ("Contact", [f'Respire is published by Escale, an independent developer. Questions about this policy: <a href="mailto:{MAIL}">{MAIL}</a>, or open an issue on <a href="{ISSUES}">GitHub</a>.']),
+        ("Contact", [f'Respire is published by Pilmil Studio, an independent developer. Questions about this policy: <a href="mailto:{MAIL}">{MAIL}</a>, or open an issue on <a href="{ISSUES}">GitHub</a>.']),
     ],
     back="Back to Respire",
 ),
@@ -91,7 +94,8 @@ T = {
     fine="Android 8 et plus. Libre et gratuite (GPL-3.0). Sans pub, sans compte, sans permission Internet. Une version Google Play est en préparation.",
     caption="Inspire quand le cercle grandit, expire quand il rétrécit.",
     how_h="Conçue à partir de ce que dit la recherche",
-    how_intro="Chaque fonction est là parce que les études sur l’usage excessif du smartphone la soutiennent. Rien d’autre n’a été ajouté.",
+    how_intro='Chaque fonction s’appuie sur une étude sur l’usage excessif du smartphone ou sur un choix de conception assumé. Le détail, règle par règle, est sur la page <a href="pourquoi.html">Pourquoi Respire est faite comme ça</a>.',
+    why="pourquoi.html", nav_why="Pourquoi", foot_why="Pourquoi ces choix",
     features=[
         ("Une pause avant d’ouvrir", "Un écran de respiration avec un compte à rebours et une seule question. Fermer est possible tout de suite, ouvrir seulement à la fin du décompte.", "Ajouter une friction avant d’ouvrir les réseaux sociaux a réduit les tentatives d’ouverture et rendu les ouvertures plus intentionnelles (Grüning, Riedel et Lorenz-Spreen, PNAS, 2023)."),
         ("Une attente qui s’allonge", "Chaque nouvelle tentative dans l’heure ajoute quelques secondes. Plus l’envie revient, plus c’est lent.", None),
@@ -110,6 +114,8 @@ T = {
         "Les réglages et compteurs restent dans le stockage privé de l’appli et disparaissent à la désinstallation.",
     ],
     priv_link="Lire la politique de confidentialité",
+    why_h="Pourquoi Respire est gratuite",
+    why_p="Je passe moi aussi trop de temps à faire défiler des fils sans fin, et des proches ont eu le même besoin. Les applications qui aident vraiment existent, mais leurs fonctions les plus utiles sont souvent payantes : limites quotidiennes, blocage des Reels ou des Shorts, statistiques. L’idée de Respire est de rendre ces outils accessibles à tout le monde, sans abonnement, sans publicité et sans collecte de données. Ce n’est pas à la personne qui veut reprendre la main sur son temps de payer pour y arriver.",
     inst_h="Installer",
     steps=[
         f'<strong>Télécharge</strong> <a href="{APK}">Respire.apk</a> depuis ton téléphone et ouvre-le. Android te demandera d’autoriser l’installation depuis ton navigateur.',
@@ -124,7 +130,7 @@ T = {
         ("Elle marche sur iPhone ?", "Non. iOS n’autorise pas ce type d’appli en dehors du cadre Temps d’écran d’Apple."),
         ("Comment signaler un problème ?", f'Ouvre une issue sur <a href="{ISSUES}">GitHub</a> ou écris à <a href="mailto:{MAIL}">{MAIL}</a>. Respire ne collecte aucune donnée : tes retours sont le seul moyen de savoir quoi améliorer.'),
     ],
-    foot_license="Respire, par Escale. Logiciel libre sous licence GPL-3.0.",
+    foot_license="Respire, par Pilmil Studio. Logiciel libre sous licence GPL-3.0.",
     foot_src="Code source", foot_privacy="Politique de confidentialité",
     p_title="Politique de confidentialité",
     p_date="Dernière mise à jour : 28 octobre 2026",
@@ -143,7 +149,7 @@ T = {
         ("Ce que Respire partage", ["Rien. Sans permission Internet, l’appli ne peut pas envoyer de données. Le texte de diagnostic ne sort de l’appli que si tu appuies sur Copier et que tu le colles toi-même."]),
         ("Supprimer tes données", ["Désinstalle Respire, ou vide son stockage dans Paramètres, Applications, Respire, Stockage."]),
         ("Modifications", ["Toute modification de cette politique sera publiée sur cette page avec une nouvelle date."]),
-        ("Contact", [f'Respire est publiée par Escale, développeur indépendant. Pour toute question sur cette politique : <a href="mailto:{MAIL}">{MAIL}</a>, ou ouvre une issue sur <a href="{ISSUES}">GitHub</a>.']),
+        ("Contact", [f'Respire est publiée par Pilmil Studio, développeur indépendant. Pour toute question sur cette politique : <a href="mailto:{MAIL}">{MAIL}</a>, ou ouvre une issue sur <a href="{ISSUES}">GitHub</a>.']),
     ],
     back="Retour à Respire",
 ),
@@ -171,6 +177,7 @@ def topbar(t, home_href, show_sections=True):
     links = ""
     if show_sections:
         links = (f'<a class="hide-sm" href="#how">{t["nav_how"]}</a>'
+                 f'<a href="{t["why"]}">{t["nav_why"]}</a>'
                  f'<a href="#privacy">{t["nav_privacy"]}</a>'
                  f'<a href="#install">{t["nav_install"]}</a>')
     return f'''<header class="wrap top">
@@ -183,7 +190,7 @@ def footer(t):
     return f'''<footer>
 <div class="wrap">
 <p style="margin:0">{t["foot_license"]}</p>
-<nav aria-label="{t["foot_src"]}"><a href="mailto:{MAIL}">{MAIL}</a><a href="{REPO}">{t["foot_src"]}</a><a href="{t["privacy"]}">{t["foot_privacy"]}</a></nav>
+<nav aria-label="{t["foot_src"]}"><a href="mailto:{MAIL}">{MAIL}</a><a href="{REPO}">{t["foot_src"]}</a><a href="{t["why"]}">{t["foot_why"]}</a><a href="{t["privacy"]}">{t["foot_privacy"]}</a></nav>
 </div>
 </footer>
 </body>
@@ -230,6 +237,11 @@ def index(t):
 <div><h2>{t["priv_h"]}</h2></div>
 <div><p>{t["priv_p"]}</p><ul>{priv}</ul><p style="margin:16px 0 0"><a href="{t["privacy"]}">{t["priv_link"]}</a></p></div>
 </div>
+</div></section>
+
+<section id="free"><div class="wrap">
+<h2>{t["why_h"]}</h2>
+<p class="intro">{t["why_p"]}</p>
 </div></section>
 
 <section id="install"><div class="wrap">
