@@ -10,17 +10,17 @@ Disponible en français, anglais, espagnol et allemand.
 
 ## Pourquoi ces fonctions
 
-Respire réunit les techniques qui ont le plus de soutien dans la recherche sur la réduction de l'usage excessif du smartphone :
+L'appli reste au strict nécessaire : les explications sont ici et sur la page [Pourquoi Respire est faite comme ça](https://relthdrarxash.github.io/respire/fr/pourquoi.html), avec les sources complètes. Chaque fonction s'appuie sur une étude ou sur un choix de conception, signalé comme tel.
 
-| Fonction | Ce qu'elle fait | Ce que dit la recherche |
+| Fonction | Ce qu'elle fait | Pourquoi |
 |---|---|---|
 | **Pause avant ouverture** | Un écran de respiration avec un compte à rebours et la question « Pourquoi tu l'ouvres maintenant ? ». Fermer est possible tout de suite, ouvrir seulement à la fin du décompte. | Ajouter une friction avant d'ouvrir les réseaux sociaux réduit les tentatives d'ouverture et rend les ouvertures plus intentionnelles (Grüning, Riedel et Lorenz-Spreen, *PNAS* 2023 ; Haliburton et al., *CHI* 2024). |
-| **Délai croissant** | Chaque nouvelle tentative dans l'heure ajoute quelques secondes. | Même principe de friction, renforcé quand l'envie revient. |
-| **Fin de session** | Une ouverture ne vaut que pour une durée fixée (10 min par défaut). Si tu es toujours dans l'appli, la pause revient en plein défilement. | Vise le défilement lui-même, pas seulement l'ouverture. |
-| **Quota quotidien** | Au-delà d'un nombre d'ouvertures par appli et par jour, l'appli est bloquée jusqu'au lendemain. Prolonger une session compte comme une ouverture. | Des limites difficiles à contourner ont réduit l'usage des réseaux sociaux d'environ 16 % sur 12 semaines, et la plupart des participants les ont gardées (Allcott, Gentzkow et Song, NBER 2021). |
-| **Heures à risque** | Sur une plage que tu choisis (22 h à 7 h par défaut, avec une suggestion tirée de ton propre suivi par heure), l'attente est doublée et les ouvertures plafonnées, à zéro par défaut. | Changer le contexte aux moments où tu craques le plus marche mieux que compter sur la volonté. |
+| **Délai croissant** | Chaque nouvelle tentative dans l'heure ajoute quelques secondes. | Choix de conception : même principe de friction, renforcé quand l'envie revient. Aucune étude ne compare une attente fixe et une attente croissante. |
+| **Fin de session** | Une ouverture ne vaut que pour une durée fixée (10 min par défaut). Si tu es toujours dans l'appli, la pause revient en plein défilement. | Choix de conception : un fil sans fin n'offre aucun moment pour s'arrêter, la fin de session en recrée un. |
+| **Quota quotidien** | Au-delà d'un nombre d'ouvertures par appli et par jour, l'appli est bloquée jusqu'au lendemain. Prolonger une session compte comme une ouverture. | Des limites difficiles à contourner ont réduit l'usage des réseaux sociaux d'environ 16 % sur 12 semaines, et la plupart des participants les ont gardées (Allcott, Gentzkow et Song, *American Economic Review* 2022). |
+| **Heures à risque** | Sur une plage que tu choisis (22 h à 7 h par défaut, avec une suggestion tirée de ton propre suivi par heure), l'attente est doublée et les ouvertures plafonnées, à zéro par défaut. | Choix de conception : régler l'outil à partir de ses propres données, plutôt que suivre une règle générale. Effet non mesuré. |
 | **Verrou d'assouplissement** | Retirer une appli ou relâcher une règle impose 30 secondes d'attente. | Les utilisateurs ont tendance à mettre ces outils en pause et à rechuter vite (Haliburton et al., 2024). |
-| **Filtre Reels et Shorts** | Quitte le lecteur plein écran de vidéos courtes dès qu'il apparaît dans Instagram ou YouTube. Un Reel reçu en message s'ouvre quand même. | Supprime le flux sans fin tout en gardant les messages, la recherche et les vidéos classiques. |
+| **Filtre Reels et Shorts** | Quitte le lecteur plein écran de vidéos courtes dès qu'il apparaît dans Instagram ou YouTube. Un Reel reçu en message s'ouvre quand même. | Choix de conception : supprime le flux sans fin tout en gardant les messages, la recherche et les vidéos classiques. Effet non mesuré. |
 
 Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, sessions de 10 min, 6 ouvertures par appli et par jour. Les heures à risque restent désactivées tant que tu ne les actives pas.
 

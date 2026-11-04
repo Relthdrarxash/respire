@@ -115,6 +115,8 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
     <string name="link_privacy">Confidentialité</string>
     <string name="link_feedback">Donner mon avis</string>
     <string name="link_source">Code source</string>
+    <string name="link_why">Pourquoi ces règles ?</string>
+    <string name="url_why">https://relthdrarxash.github.io/respire/fr/pourquoi.html</string>
     <string name="url_privacy">https://relthdrarxash.github.io/respire/fr/confidentialite.html</string>
     <string name="back">Retour</string>
     <plurals name="risk_desc_quota">

@@ -115,6 +115,8 @@ Was damit passiert: Die Daten werden nur auf deinem Handy verwendet, in dem Mome
     <string name="link_privacy">Datenschutz</string>
     <string name="link_feedback">Feedback geben</string>
     <string name="link_source">Quellcode</string>
+    <string name="link_why">Warum diese Regeln?</string>
+    <string name="url_why">https://relthdrarxash.github.io/respire/why.html</string>
     <string name="url_privacy">https://relthdrarxash.github.io/respire/privacy.html</string>
     <string name="back">Zurück</string>
     <plurals name="risk_desc_quota">

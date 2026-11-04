@@ -23,7 +23,8 @@ T = {
     fine="Android 8 and later. Free and open source (GPL-3.0). No ads, no account, no Internet permission. A Google Play version is in preparation.",
     caption="Breathe in as the circle grows, out as it shrinks.",
     how_h="Built from what research says works",
-    how_intro="Each feature is there because studies on smartphone overuse support it. Nothing else was added.",
+    how_intro='Each feature rests on a study of smartphone overuse or on a stated design choice. The details, rule by rule, are on the page <a href="why.html">Why Respire works the way it does</a>.',
+    why="why.html", nav_why="Why", foot_why="Why these choices",
     features=[
         ("Pause before opening", "A breathing screen with a countdown and one question. Closing is available right away; opening only once the countdown ends.", "Friction before opening social apps cut opening attempts and made openings more intentional (Grüning, Riedel and Lorenz-Spreen, PNAS, 2023)."),
         ("A wait that grows", "Each new attempt within the hour adds a few seconds. The more the urge comes back, the slower it gets.", None),
@@ -93,7 +94,8 @@ T = {
     fine="Android 8 et plus. Libre et gratuite (GPL-3.0). Sans pub, sans compte, sans permission Internet. Une version Google Play est en préparation.",
     caption="Inspire quand le cercle grandit, expire quand il rétrécit.",
     how_h="Conçue à partir de ce que dit la recherche",
-    how_intro="Chaque fonction est là parce que les études sur l’usage excessif du smartphone la soutiennent. Rien d’autre n’a été ajouté.",
+    how_intro='Chaque fonction s’appuie sur une étude sur l’usage excessif du smartphone ou sur un choix de conception assumé. Le détail, règle par règle, est sur la page <a href="pourquoi.html">Pourquoi Respire est faite comme ça</a>.',
+    why="pourquoi.html", nav_why="Pourquoi", foot_why="Pourquoi ces choix",
     features=[
         ("Une pause avant d’ouvrir", "Un écran de respiration avec un compte à rebours et une seule question. Fermer est possible tout de suite, ouvrir seulement à la fin du décompte.", "Ajouter une friction avant d’ouvrir les réseaux sociaux a réduit les tentatives d’ouverture et rendu les ouvertures plus intentionnelles (Grüning, Riedel et Lorenz-Spreen, PNAS, 2023)."),
         ("Une attente qui s’allonge", "Chaque nouvelle tentative dans l’heure ajoute quelques secondes. Plus l’envie revient, plus c’est lent.", None),
@@ -175,6 +177,7 @@ def topbar(t, home_href, show_sections=True):
     links = ""
     if show_sections:
         links = (f'<a class="hide-sm" href="#how">{t["nav_how"]}</a>'
+                 f'<a href="{t["why"]}">{t["nav_why"]}</a>'
                  f'<a href="#privacy">{t["nav_privacy"]}</a>'
                  f'<a href="#install">{t["nav_install"]}</a>')
     return f'''<header class="wrap top">
@@ -187,7 +190,7 @@ def footer(t):
     return f'''<footer>
 <div class="wrap">
 <p style="margin:0">{t["foot_license"]}</p>
-<nav aria-label="{t["foot_src"]}"><a href="mailto:{MAIL}">{MAIL}</a><a href="{REPO}">{t["foot_src"]}</a><a href="{t["privacy"]}">{t["foot_privacy"]}</a></nav>
+<nav aria-label="{t["foot_src"]}"><a href="mailto:{MAIL}">{MAIL}</a><a href="{REPO}">{t["foot_src"]}</a><a href="{t["why"]}">{t["foot_why"]}</a><a href="{t["privacy"]}">{t["foot_privacy"]}</a></nav>
 </div>
 </footer>
 </body>
