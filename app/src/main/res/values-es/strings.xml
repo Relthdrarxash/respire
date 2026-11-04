@@ -115,6 +115,8 @@ Qué hace con ello: se usa solo en tu teléfono, en el momento en que se lee. No
     <string name="link_privacy">Privacidad</string>
     <string name="link_feedback">Dar mi opinión</string>
     <string name="link_source">Código fuente</string>
+    <string name="link_why">¿Por qué estas reglas?</string>
+    <string name="url_why">https://relthdrarxash.github.io/respire/why.html</string>
     <string name="url_privacy">https://relthdrarxash.github.io/respire/privacy.html</string>
     <string name="back">Atrás</string>
     <plurals name="risk_desc_quota">

@@ -212,6 +212,8 @@ fun HomeScreen(
                         RuleTile(Rule.QUOTA, ui.rules, res, Modifier.weight(1f)) { editing = it }
                     }
                 }
+                val whyUrl = stringResource(R.string.url_why)
+                FooterLink(stringResource(R.string.link_why)) { onOpenLink(whyUrl) }
             }
         }
         item {
