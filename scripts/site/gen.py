@@ -4,7 +4,7 @@ OUT = sys.argv[1]
 REPO = "https://github.com/Relthdrarxash/respire"
 APK = REPO + "/releases/latest/download/Respire.apk"
 ISSUES = REPO + "/issues"
-MAIL = "escale.apps@proton.me"
+MAIL = "pilmil.studio@proton.me"
 
 LOGO = ('<svg viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="30" fill="#4E7363"/>'
         '<circle cx="54" cy="54" r="22" fill="none" stroke="#EDEEE6" stroke-width="3"/>'
@@ -56,7 +56,7 @@ T = {
         ("Does it work on iPhone?", "No. iOS doesn't allow this kind of app outside Apple's Screen Time framework."),
         ("How can I report a problem?", f'Open an issue on <a href="{ISSUES}">GitHub</a> or write to <a href="mailto:{MAIL}">{MAIL}</a>. Respire collects no data, so your feedback is the only way to know what to improve.'),
     ],
-    foot_license="Respire, by Escale. Free software under the GPL-3.0 license.",
+    foot_license="Respire, by Pilmil Studio. Free software under the GPL-3.0 license.",
     foot_src="Source code", foot_privacy="Privacy policy",
     p_title="Privacy policy",
     p_date="Last updated: 28 October 2026",
@@ -75,7 +75,7 @@ T = {
         ("What Respire shares", ["Nothing. Without the Internet permission, the app cannot send data. The diagnostic text only leaves the app if you tap Copy and paste it yourself."]),
         ("Deleting your data", ["Uninstall Respire, or clear its storage in Settings, Apps, Respire, Storage."]),
         ("Changes", ["Any change to this policy will be published on this page with a new date."]),
-        ("Contact", [f'Respire is published by Escale, an independent developer. Questions about this policy: <a href="mailto:{MAIL}">{MAIL}</a>, or open an issue on <a href="{ISSUES}">GitHub</a>.']),
+        ("Contact", [f'Respire is published by Pilmil Studio, an independent developer. Questions about this policy: <a href="mailto:{MAIL}">{MAIL}</a>, or open an issue on <a href="{ISSUES}">GitHub</a>.']),
     ],
     back="Back to Respire",
 ),
@@ -124,7 +124,7 @@ T = {
         ("Elle marche sur iPhone ?", "Non. iOS n’autorise pas ce type d’appli en dehors du cadre Temps d’écran d’Apple."),
         ("Comment signaler un problème ?", f'Ouvre une issue sur <a href="{ISSUES}">GitHub</a> ou écris à <a href="mailto:{MAIL}">{MAIL}</a>. Respire ne collecte aucune donnée : tes retours sont le seul moyen de savoir quoi améliorer.'),
     ],
-    foot_license="Respire, par Escale. Logiciel libre sous licence GPL-3.0.",
+    foot_license="Respire, par Pilmil Studio. Logiciel libre sous licence GPL-3.0.",
     foot_src="Code source", foot_privacy="Politique de confidentialité",
     p_title="Politique de confidentialité",
     p_date="Dernière mise à jour : 28 octobre 2026",
@@ -143,7 +143,7 @@ T = {
         ("Ce que Respire partage", ["Rien. Sans permission Internet, l’appli ne peut pas envoyer de données. Le texte de diagnostic ne sort de l’appli que si tu appuies sur Copier et que tu le colles toi-même."]),
         ("Supprimer tes données", ["Désinstalle Respire, ou vide son stockage dans Paramètres, Applications, Respire, Stockage."]),
         ("Modifications", ["Toute modification de cette politique sera publiée sur cette page avec une nouvelle date."]),
-        ("Contact", [f'Respire est publiée par Escale, développeur indépendant. Pour toute question sur cette politique : <a href="mailto:{MAIL}">{MAIL}</a>, ou ouvre une issue sur <a href="{ISSUES}">GitHub</a>.']),
+        ("Contact", [f'Respire est publiée par Pilmil Studio, développeur indépendant. Pour toute question sur cette politique : <a href="mailto:{MAIL}">{MAIL}</a>, ou ouvre une issue sur <a href="{ISSUES}">GitHub</a>.']),
     ],
     back="Retour à Respire",
 ),
