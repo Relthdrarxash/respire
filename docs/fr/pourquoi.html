@@ -81,6 +81,26 @@
 <p>Ces chiffres servent à voir quand la tentation est la plus forte et à régler Respire en conséquence. Ils ne donnent ni note ni objectif.</p>
 <p class="choice"><b>Choix de conception</b> : même principe que pour les heures à risque.</p>
 
+<h2>Auditabilité : formules exactes et fichiers du code source</h2>
+<p>Respire n’embarque aucune intelligence artificielle et aucun modèle boîte noire : tout ce qui décide d’une attente ou d’un blocage est regroupé dans des fonctions pures sans dépendance à Android, vérifiées par des tests unitaires automatiques à chaque compilation.</p>
+<ul>
+<li><strong>Calcul du délai de respiration (<code>Rules.delay</code>) :</strong>
+<code>délai = min(90, (base + pas × max(0, tentatives_heure − 1)) × (2 si heure_à_risque sinon 1))</code>, avec par défaut <code>base = 10 s</code>, <code>pas = 5 s</code> et un plafond strict <code>MAX_DELAY_S = 90 s</code>.
+&rarr; <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/main/java/fr/respire/app/Rules.kt"><code>Rules.kt</code></a> · <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/test/java/fr/respire/app/RulesTest.kt"><code>RulesTest.kt</code></a></li>
+<li><strong>Décision de blocage quotidien ou en plage à risque (<code>Rules.blockReason</code> &amp; <code>Rules.riskWindowStart</code>) :</strong>
+blocage quotidien dès que <code>quota_jour &gt; 0</code> et <code>ouvertures_jour &ge; quota_jour</code> ; blocage en plage à risque dès que l’heure courante appartient à <code>[début, fin[</code> (avec gestion du passage de minuit et des nuits de 23 h ou 25 h lors des changements d’heure d’été/hiver) et que <code>ouvertures_plage &ge; quota_risque</code>.
+&rarr; <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/main/java/fr/respire/app/Rules.kt"><code>Rules.kt</code></a> · <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/test/java/fr/respire/app/RulesTest.kt"><code>RulesTest.kt</code></a></li>
+<li><strong>Détection d’un assouplissement des règles (<code>Rules.isRiskLooser</code>) :</strong>
+impose l’attente de réflexion de <code>30 s</code> uniquement si la plage à risque active perd au moins une heure couverte ou si son plafond d’ouvertures augmente.
+&rarr; <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/main/java/fr/respire/app/Rules.kt"><code>Rules.kt</code></a></li>
+<li><strong>Service d’accessibilité et filtre Reels / Shorts :</strong>
+n’observe que le nom de paquet au premier plan et les identifiants de vues des lecteurs de vidéos courtes (sans jamais lire le texte des messages ni disposer de la permission <code>INTERNET</code>).
+&rarr; <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/main/java/fr/respire/app/PauseService.kt"><code>PauseService.kt</code></a> · <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/main/java/fr/respire/app/ShortFormBlocker.kt"><code>ShortFormBlocker.kt</code></a></li>
+<li><strong>Statistiques locales sur 7 jours et suggestion de plage à risque :</strong>
+agrégation par jour calendaire et par tranche horaire locale sur les 7 derniers jours.
+&rarr; <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/main/java/fr/respire/app/ui/AppStats.kt"><code>AppStats.kt</code></a> · <a href="https://github.com/Relthdrarxash/respire/blob/main/app/src/test/java/fr/respire/app/ui/StatsLogicTest.kt"><code>StatsLogicTest.kt</code></a></li>
+</ul>
+
 <h2>Ce que Respire ne fait pas</h2>
 <ul>
 <li>Elle ne mesure pas ton temps d’écran et ne lit pas le contenu de tes applis.</li>
