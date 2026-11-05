@@ -1,0 +1,309 @@
+package fr.respire.app.ui
+
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.res.Resources
+import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import fr.respire.app.R
+
+/** Section « Tes applis » : liste des applications suivies, jauge du quota quotidien et bouton d'ajout. */
+@Composable
+internal fun AppsSection(
+    targets: List<TargetStat>,
+    quota: Int,
+    onOpenApp: (AppItem) -> Unit,
+    onPickApps: () -> Unit,
+) {
+    Column {
+        SectionTitle(stringResource(R.string.section_apps))
+        CalmeCard(radius = 24.dp, padding = 0.dp) {
+            if (targets.isEmpty()) {
+                Text(
+                    stringResource(R.string.apps_empty),
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 18.dp, bottom = 6.dp),
+                    fontFamily = Nunito, fontSize = 15.sp, color = Calme.Muted,
+                )
+            }
+            targets.forEachIndexed { index, stat ->
+                if (index > 0) HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
+                TargetRow(stat, quota) { onOpenApp(stat.app) }
+            }
+            if (targets.isNotEmpty()) {
+                Text(
+                    stringResource(R.string.apps_tap_hint),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                    fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
+                )
+            }
+            HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
+            Text(
+                stringResource(R.string.apps_choose),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(role = Role.Button, onClick = onPickApps)
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Calme.Sage,
+            )
+        }
+    }
+}
+
+/** Section « Vidéos courtes » : interrupteurs Reels / Shorts / Facebook et lien vers le diagnostic. */
+@Composable
+internal fun ShortFormSection(
+    ui: HomeUi,
+    onEnable: (ShortKind) -> Unit,
+    onRequestDisable: (ShortKind) -> Unit,
+    onShowDiag: () -> Unit,
+) {
+    Column {
+        SectionTitle(stringResource(R.string.section_short))
+        CalmeCard(radius = 24.dp, padding = 0.dp) {
+            ShortRow(stringResource(R.string.short_reels_title), ui.blockReels) { on ->
+                if (on) onEnable(ShortKind.REELS) else onRequestDisable(ShortKind.REELS)
+            }
+            HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
+            ShortRow(stringResource(R.string.short_shorts_title), ui.blockShorts) { on ->
+                if (on) onEnable(ShortKind.SHORTS) else onRequestDisable(ShortKind.SHORTS)
+            }
+            if (ui.facebookInstalled || ui.blockFacebookReels) {
+                HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
+                ShortRow(stringResource(R.string.short_fb_title), ui.blockFacebookReels) { on ->
+                    if (on) onEnable(ShortKind.FACEBOOK) else onRequestDisable(ShortKind.FACEBOOK)
+                }
+                if (ui.blockFacebookReels) {
+                    Text(
+                        stringResource(R.string.short_fb_note),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                        fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
+                    )
+                }
+            }
+            Text(
+                stringResource(R.string.short_note),
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
+                fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
+            )
+            Text(
+                stringResource(R.string.diag_link),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(role = Role.Button, onClick = onShowDiag)
+                    .padding(16.dp),
+                fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Calme.Sage,
+            )
+        }
+    }
+}
+
+/** Grille des 4 tuiles de règles (durée de pause, allongement, session, quota quotidien). */
+@Composable
+internal fun RulesSection(
+    rules: Map<Rule, Int>,
+    res: Resources,
+    onEditRule: (Rule) -> Unit,
+    onOpenWhy: () -> Unit,
+) {
+    Column {
+        SectionTitle(stringResource(R.string.section_rules))
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                RuleTile(Rule.DELAY, rules, res, Modifier.weight(1f), onEditRule)
+                RuleTile(Rule.STEP, rules, res, Modifier.weight(1f), onEditRule)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                RuleTile(Rule.SESSION, rules, res, Modifier.weight(1f), onEditRule)
+                RuleTile(Rule.QUOTA, rules, res, Modifier.weight(1f), onEditRule)
+            }
+        }
+        FooterLink(stringResource(R.string.link_why), onOpenWhy)
+    }
+}
+
+@Composable
+private fun ShortRow(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 60.dp)
+            .clickable(role = Role.Switch) { onChange(!checked) }
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            title,
+            modifier = Modifier.weight(1f),
+            fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = Calme.Ink,
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = null,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = Calme.Sage,
+                uncheckedThumbColor = Calme.Muted,
+                uncheckedTrackColor = Calme.Chip,
+                uncheckedBorderColor = Calme.Ring2,
+            ),
+        )
+    }
+}
+
+@Composable
+private fun TargetRow(stat: TargetStat, quota: Int, onClick: () -> Unit) {
+    val blocked = stat.blocked
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clickable(role = Role.Button, onClick = onClick)
+            .heightIn(min = 64.dp)
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        AppIcon(stat.app.icon, 36)
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(stat.app.label, fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = Calme.Ink, maxLines = 1)
+            if (quota > 0) {
+                val frac = (stat.opens.toFloat() / quota).coerceIn(0f, 1f)
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(5.dp)
+                        .clip(RoundedCornerShape(3.dp))
+                        .background(Calme.Chip)
+                ) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth(frac)
+                            .fillMaxHeight()
+                            .background(if (blocked) Calme.Clay else Calme.Sage)
+                    )
+                }
+            }
+        }
+        Text(
+            when {
+                blocked -> stringResource(R.string.target_blocked)
+                quota > 0 -> "${stat.opens} / $quota"
+                else -> "${stat.opens}"
+            },
+            fontFamily = Nunito,
+            fontWeight = if (blocked) FontWeight.Bold else FontWeight.Normal,
+            fontSize = 14.sp,
+            color = if (blocked) Calme.ClayText else Calme.Muted,
+        )
+    }
+}
+
+@Composable
+private fun RuleTile(rule: Rule, rules: Map<Rule, Int>, res: Resources, modifier: Modifier, onClick: (Rule) -> Unit) {
+    Column(
+        modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(Calme.Card)
+            .clickable(role = Role.Button) { onClick(rule) }
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        Text(stringResource(rule.title), fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted)
+        Text(rule.format(res, rules[rule] ?: rule.min), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Calme.Ink)
+    }
+}
+
+@Composable
+fun AppIcon(icon: ImageBitmap?, sizeDp: Int) {
+    val shape = RoundedCornerShape((sizeDp * 0.3f).dp)
+    if (icon != null) {
+        Image(icon, contentDescription = null, modifier = Modifier.size(sizeDp.dp).clip(shape))
+    } else {
+        Box(Modifier.size(sizeDp.dp).clip(shape).background(Calme.Ring2))
+    }
+}
+
+@Composable
+internal fun DiagnosticDialog(text: String, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val copied = stringResource(R.string.diag_copied)
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Calme.Card,
+        title = { Text(stringResource(R.string.diag_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, color = Calme.Ink) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                Text(stringResource(R.string.diag_hint), fontFamily = Nunito, fontSize = 14.sp, color = Calme.Muted)
+                Text(
+                    text.ifBlank { stringResource(R.string.diag_empty) },
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Calme.Ground)
+                        .padding(12.dp),
+                    fontFamily = FontFamily.Monospace, fontSize = 12.sp, color = Calme.Ink,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = text.isNotBlank(), onClick = {
+                val cm = context.getSystemService(ClipboardManager::class.java)
+                cm?.setPrimaryClip(ClipData.newPlainText("Respire", text))
+                Toast.makeText(context, copied, Toast.LENGTH_SHORT).show()
+            }) {
+                Text(stringResource(R.string.diag_copy), fontFamily = Nunito, fontWeight = FontWeight.Bold)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.dialog_close), fontFamily = Nunito, fontWeight = FontWeight.Bold, color = Calme.Muted)
+            }
+        },
+    )
+}
+
+@Composable
+internal fun FooterLink(label: String, onClick: () -> Unit) {
+    Text(
+        label,
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 12.dp),
+        fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Calme.Muted,
+    )
+}
