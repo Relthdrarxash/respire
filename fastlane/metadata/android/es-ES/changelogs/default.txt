@@ -1,2 +1,3 @@
-• Sugerencias: la pantalla de selección muestra las apps de contenido infinito instaladas en tu teléfono (TikTok, Instagram, Facebook, Snapchat, X...) para añadirlas con un toque.
-• Filtro de Reels de Facebook, en pruebas: todavía no bloquea nada y sirve para ajustar la detección.
+• Botones rápidos de intención en la pantalla de pausa y opción de sesión corta «Solo 2 min».
+• Estimación del tiempo ahorrado, resumen compartible de 7 días y widget discreto en la pantalla de inicio.
+• Copia de seguridad automática cifrada de Android al cambiar de teléfono.

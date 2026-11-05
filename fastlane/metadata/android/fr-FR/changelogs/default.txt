@@ -1,2 +1,3 @@
-• Suggestions : l’écran de choix propose les applis à flux sans fin installées sur ton téléphone (TikTok, Instagram, Facebook, Snapchat, X...), à ajouter d’un geste.
-• Filtre des Reels de Facebook, en test : il ne bloque encore rien et sert à régler la détection.
+• Puces d’intention sur l’écran de pause (Message précis, Chercher une info, Simple réflexe) et bouton de session courte « 2 min seulement ».
+• Estimation du temps épargné, partage du bilan des 7 jours et widget discret sur l’écran d’accueil.
+• Sauvegarde automatique chiffrée d’Android lors d’un changement de téléphone.

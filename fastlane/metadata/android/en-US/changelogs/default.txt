@@ -1,2 +1,3 @@
-• Suggestions: the app picker now lists the endless-feed apps installed on your phone (TikTok, Instagram, Facebook, Snapchat, X...) so you can add them in one tap.
-• Facebook Reels filter, in testing: it doesn't block anything yet and helps tune detection.
+• Quick intention chips on the pause screen (Specific message, Look something up, Just a habit) and a "Just 2 min" short session button.
+• Estimated time saved, 7-day summary sharing and a discreet home screen widget.
+• Android encrypted device-to-device backup when switching phones.

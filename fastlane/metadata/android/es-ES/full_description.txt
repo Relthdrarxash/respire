@@ -2,14 +2,15 @@ Respire coloca una breve pausa para respirar delante de las apps que abres sin p
 
 Cada función se basa en la investigación sobre el uso excesivo del móvil:
 
-• Una pausa antes de abrir: una pantalla de respiración, una cuenta atrás y una sola pregunta, «¿Por qué la abres ahora?». Cerrar es posible al instante, abrir solo al final de la cuenta atrás.
+• Una pausa antes de abrir: una pantalla de respiración, una cuenta atrás, una pregunta («¿Por qué la abres ahora?») y 3 botones rápidos de intención (Mensaje concreto, Buscar algo, Puro reflejo). Cerrar es posible al instante, abrir solo al final de la cuenta atrás.
+• Sesión corta consciente: al terminar la cuenta atrás, elige entre tu sesión habitual o «Solo 2 min» para mirar algo rápido sin perder el tiempo.
 • Una espera que crece: cada nuevo intento en la misma hora añade unos segundos.
 • Fin de sesión: tras 10 minutos en una app frenada, la pausa vuelve en mitad del feed.
 • Límite diario: superado un número de aperturas, la app queda cerrada hasta mañana.
 • Horas de riesgo: reglas más estrictas en las horas que elijas, por ejemplo por la noche, con una sugerencia basada en tus propios datos.
-• Filtro de Reels y Shorts: sale de los Reels de Instagram y de los Shorts de YouTube en cuanto se abren, dejando disponibles los mensajes, la búsqueda y los vídeos normales.
+• Filtro de Reels y Shorts: sale de los Reels de Instagram, Facebook y de los Shorts de YouTube en cuanto se abren, dejando disponibles los mensajes, la búsqueda y los vídeos normales.
 • Un bloqueo contra la relajación: quitar una app o relajar una regla requiere 30 segundos de espera, para no deshacer tus ajustes por impulso.
-• Tu semana de un vistazo: pausas y renuncias por día, por hora y por app.
+• Tu semana de un vistazo y widget: pausas, renuncias, tiempo estimado ahorrado, resumen compartible de 7 días y widget discreto en la pantalla de inicio.
 
 Privacidad
 Respire no tiene permiso de Internet: no puede enviar nada a ningún sitio. Sin anuncios, sin cuenta, sin analítica. Todo se queda en tu teléfono.

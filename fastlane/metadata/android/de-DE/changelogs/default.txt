@@ -1,2 +1,3 @@
-• Vorschläge: Die App-Auswahl zeigt die auf deinem Handy installierten Apps mit endlosem Feed (TikTok, Instagram, Facebook, Snapchat, X...), die du mit einem Tippen hinzufügen kannst.
-• Facebook-Reels-Filter im Test: Er blockiert noch nichts und hilft, die Erkennung einzustellen.
+• Schnelle Absichts-Chips auf dem Pausenbildschirm und Kurzsitzung „Nur 2 Min.“.
+• Geschätzte eingesparte Zeit, teilbare 7-Tage-Bilanz und dezentes Startbildschirm-Widget.
+• Automatische verschlüsselte Android-Sicherung beim Handywechsel.
