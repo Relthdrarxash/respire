@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -99,7 +101,15 @@ fun AppDialog(app: AppItem, week: Prefs.AppWeek, dayLabels: List<String>, onDism
 @Composable
 private fun DayBars(totals: List<Int>, overlay: List<Int>, labels: List<String>, modifier: Modifier = Modifier) {
     val max = (totals.maxOrNull() ?: 0).coerceAtLeast(1)
-    Column(modifier.fillMaxWidth()) {
+    val attemptsLabel = stringResource(R.string.hours_attempts)
+    val giveUpsLabel = stringResource(R.string.hours_giveups)
+    val summary = totals.indices
+        .filter { totals[it] > 0 }
+        .joinToString(", ") { i ->
+            val part = overlay.getOrElse(i) { 0 }.coerceAtMost(totals[i])
+            "${labels.getOrElse(i) { "" }} : ${totals[i]} $attemptsLabel ($part $giveUpsLabel)"
+        }
+    Column(modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = summary }) {
         Row(
             Modifier
                 .fillMaxWidth()

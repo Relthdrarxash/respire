@@ -50,6 +50,10 @@ import androidx.compose.ui.res.stringResource
 import fr.respire.app.Prefs
 import fr.respire.app.R
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -316,13 +320,21 @@ private fun Header(serviceOn: Boolean, onOpenAccessibility: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Text("Respire", fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 32.sp, color = Calme.Ink)
+        Text(
+            "Respire",
+            modifier = Modifier.semantics { heading() },
+            fontFamily = Fraunces,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 32.sp,
+            color = Calme.Ink,
+        )
         Row(
             Modifier
+                .heightIn(min = 48.dp)
                 .clip(RoundedCornerShape(50))
                 .background(if (serviceOn) Calme.SageTint else Calme.Chip)
                 .clickable(role = Role.Button, onClick = onOpenAccessibility)
-                .padding(horizontal = 12.dp, vertical = 6.dp),
+                .padding(horizontal = 14.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
@@ -393,11 +405,13 @@ private fun StatsCard(ui: HomeUi) {
         ) {
             ui.week.forEachIndexed { i, v ->
                 val today = i == ui.week.lastIndex
+                val dayLabel = ui.days.getOrNull(i)?.title ?: ui.weekLabels.getOrElse(i) { "" }
                 // Toute la colonne est cliquable, pas seulement la barre (plus facile au doigt).
                 Box(
                     Modifier
                         .weight(1f)
                         .fillMaxHeight()
+                        .semantics { contentDescription = "$dayLabel : $v" }
                         .clickable(role = Role.Button) { openDay = i },
                     contentAlignment = Alignment.BottomCenter,
                 ) {
@@ -410,7 +424,13 @@ private fun StatsCard(ui: HomeUi) {
                 }
             }
         }
-        Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 6.dp)
+                .clearAndSetSemantics { },
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
             ui.weekLabels.forEach { d ->
                 Text(
                     d, modifier = Modifier.weight(1f),

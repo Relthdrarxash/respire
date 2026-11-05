@@ -18,6 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -108,7 +110,14 @@ fun DayDialog(day: DayDetail, onDismiss: () -> Unit) {
 @Composable
 private fun HoursBars(temptation: List<Int>, giveUps: List<Int>, modifier: Modifier = Modifier) {
     val max = (temptation.maxOrNull() ?: 0).coerceAtLeast(1)
-    Column(modifier.fillMaxWidth()) {
+    val attemptsLabel = stringResource(R.string.hours_attempts)
+    val giveUpsLabel = stringResource(R.string.hours_giveups)
+    val summary = (0 until 24)
+        .filter { temptation[it] > 0 }
+        .joinToString(", ") { h ->
+            "${hourLabel(h)} : ${temptation[h]} $attemptsLabel (${giveUps[h].coerceAtMost(temptation[h])} $giveUpsLabel)"
+        }
+    Column(modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = summary }) {
         Row(
             Modifier
                 .fillMaxWidth()
