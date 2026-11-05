@@ -43,4 +43,4 @@ CurrentVersionCode: 40300
 ## 2. Référencement IzzyOnDroid / AlternativeTo / Framalibre
 
 - **IzzyOnDroid** : soumettre `https://github.com/Relthdrarxash/respire` sur `https://gitlab.com/IzzyOnDroid/repo/-/issues` (structure Fastlane en 4 langues `fr-FR`, `en-US`, `es-ES`, `de-DE` déjà présente, 0 pisteur, 0 permission `INTERNET`).
-- **AlternativeTo** : référencer en alternative libre (`Open Source`, `Free`, `Privacy-focused`) à *One Sec*, *Opal*, *ScreenZen* et *Digital Wellbeing*.
+- **AlternativeTo** : référencer dans les catégories *Screen Time*, *Digital Wellbeing* et *App Blocker* avec les critères libres (`Open Source`, `Free`, `Privacy-focused`).
