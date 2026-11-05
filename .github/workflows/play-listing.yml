@@ -41,6 +41,9 @@ jobs:
           fi
           skip_images=true
           [ "$WITH_IMAGES" = "true" ] && skip_images=false
+          # Les notes de version partent avec chaque publication (release.yml). Ici, fastlane tenterait
+          # de les rattacher à une version sans numéro et échouerait : on les retire de la copie de travail.
+          rm -rf fastlane/metadata/android/*/changelogs
           fastlane supply \
             --package_name fr.respire.app \
             --json_key_data "$PLAY_JSON" \
