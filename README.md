@@ -25,17 +25,17 @@ The app keeps only what you need: the explanations live here and on the page [Wh
 | **Risky hours** | During a time range you choose (10 pm to 7 am by default, suggested from your own hourly data), the wait is doubled and opens are capped, at zero by default. | Design choice: tune the tool from your own data rather than a general rule. Effect not measured. |
 | **Loosening lock** | Removing an app or relaxing a rule requires a 30-second wait. | People tend to pause such tools and relapse quickly (Haliburton et al., 2024). |
 | **Reels and Shorts filter** | Leaves Instagram or YouTube when the full-screen short-video player appears. Reels sent in a direct message still open. | Design choice: removes the endless feed while keeping messages, search and regular videos. Effect not measured. |
-| **Home screen widget & saved time** | A discreet home screen widget and 7-day summary show avoided openings and estimated minutes saved, without guilt-inducing streaks. | Design choice: calm feedback without gamification. |
+| **Home screen widget & saved time** | A discreet home screen widget and 7-day summary show avoided openings and estimated minutes saved, with no streak counter. | Design choice: calm feedback without scores or badges. |
 
 Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute sessions, 6 opens per app per day. Risky hours are off until you turn them on.
 
 Tap a day in the weekly chart to see it hour by hour and find your most tempting time. Tap an app in the list to see its week: temptations, opens, how often you gave up, and its most tempting hour.
 
-## What Respire refuses to do
+## Design commitments
 
-- **No Internet permission despite using Accessibility**: commercial blockers ask for both Android's Accessibility Service and Internet access. Respire declares zero network permissions in its manifest, making data exfiltration technically impossible.
-- **No 1-app paywall**: slowing down as many apps as you want, filtering Reels/Shorts and viewing your weekly stats are all free.
-- **No guilt-inducing streaks or productivity scores**: giving in and opening an app does not reset a counter or show a failure badge.
+- **No Internet permission**: Respire declares no network access in its Android manifest, so nothing you do can ever leave your phone.
+- **No limit on the number of apps**: slowing down as many apps as you want, filtering Reels/Shorts and viewing your weekly summary are all included for free.
+- **No score or daily streak counter**: opening an app after the pause is information, not a failure, and never resets a counter to zero.
 
 ## Why Respire is free
 

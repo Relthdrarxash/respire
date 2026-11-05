@@ -25,17 +25,17 @@ L'appli reste au strict nécessaire : les explications sont ici et sur la page [
 | **Heures à risque** | Sur une plage que tu choisis (22 h à 7 h par défaut, avec une suggestion tirée de ton propre suivi par heure), l'attente est doublée et les ouvertures plafonnées, à zéro par défaut. | Choix de conception : régler l'outil à partir de ses propres données, plutôt que suivre une règle générale. Effet non mesuré. |
 | **Verrou d'assouplissement** | Retirer une appli ou relâcher une règle impose 30 secondes d'attente. | Les utilisateurs ont tendance à mettre ces outils en pause et à rechuter vite (Haliburton et al., 2024). |
 | **Filtre Reels et Shorts** | Quitte le lecteur plein écran de vidéos courtes dès qu'il apparaît dans Instagram ou YouTube. Un Reel reçu en message s'ouvre quand même. | Choix de conception : supprime le flux sans fin tout en gardant les messages, la recherche et les vidéos classiques. Effet non mesuré. |
-| **Widget d'accueil et temps épargné** | Un widget discret sur l'écran d'accueil et un bilan partageable sur 7 jours affichent les renoncements et le temps estimé épargné, sans série culpabilisante. | Choix de conception : retour d'information posé, sans gamification. |
+| **Widget d'accueil et temps épargné** | Un widget discret sur l'écran d'accueil et un bilan partageable sur 7 jours affichent les renoncements et le temps estimé épargné, sans compteur de jours consécutifs. | Choix de conception : retour d'information posé, sans score ni badge. |
 
 Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, sessions de 10 min, 6 ouvertures par appli et par jour. Les heures à risque restent désactivées tant que tu ne les actives pas.
 
 Touche un jour du graphique de la semaine pour le voir heure par heure et repérer ton moment le plus tentant. Touche une appli de la liste pour voir sa semaine : tentations, ouvertures, part de renoncements et heure la plus tentante.
 
-## Ce que Respire refuse de faire
+## Parti pris
 
-- **Pas de permission Internet malgré l'accessibilité** : les bloqueurs commerciaux demandent à la fois le service d'accessibilité Android et l'accès à Internet. Respire ne déclare aucune permission réseau dans son manifeste : rien ne peut techniquement quitter ton téléphone.
-- **Pas de limite à 1 seule appli gratuite** : freiner autant d'applis que tu veux, filtrer les Reels/Shorts et consulter ton bilan sont gratuits.
-- **Pas de série de jours ni de score culpabilisant** : ouvrir une appli après la pause ne remet aucun compteur à zéro.
+- **Pas de permission Internet** : Respire ne déclare aucun accès réseau dans son manifeste Android, rien ne peut donc quitter ton téléphone.
+- **Pas de limite sur le nombre d'applis** : freiner autant d'applis que tu veux, filtrer les Reels et Shorts et consulter ton bilan sont inclus gratuitement.
+- **Pas de score ni de série de jours à maintenir** : un jour où tu as beaucoup ouvert est une information, pas un échec, et ne remet aucun compteur à zéro.
 
 ## Pourquoi Respire est gratuite
 
