@@ -41,13 +41,14 @@ jobs:
           fi
           skip_images=true
           [ "$WITH_IMAGES" = "true" ] && skip_images=false
-          # Les notes de version partent avec chaque publication (release.yml). Ici, fastlane tenterait
-          # de les rattacher à une version sans numéro et échouerait : on les retire de la copie de travail.
-          rm -rf fastlane/metadata/android/*/changelogs
+          # La fiche est commune à toutes les pistes, mais fastlane a besoin d'une piste qui contient déjà
+          # une version (sinon : « Could not find release for version code »). La production est vide
+          # tant que l'appli n'y est pas publiée : on vise donc le test interne.
           fastlane supply \
             --package_name fr.respire.app \
             --json_key_data "$PLAY_JSON" \
             --metadata_path fastlane/metadata/android \
+            --track internal \
             --skip_upload_apk true \
             --skip_upload_aab true \
             --skip_upload_changelogs true \
