@@ -52,7 +52,7 @@ On n'ajoute une langue à ce fichier **que** lorsque tous les textes de l'appli 
 |---|---|---|---|---|---|---|
 | Respire | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Lunaison, interface | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Lunaison, fiches et conseils | ✓ | ✓ | anglais | anglais | anglais | anglais |
-| Sommelle | ✓ | ✓ | à faire | à faire | à faire | à faire |
+| Lunaison, fiches et conseils | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Sommelle, interface et bilans | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 Les traductions pl, uk, es et de ont été rédigées avec l'aide d'un assistant IA et **doivent être relues** par des personnes qui parlent ces langues avant publication.
