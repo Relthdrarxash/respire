@@ -81,7 +81,7 @@ Pour lancer les tests unitaires : `./gradlew testReleaseUnitTest`.
 
 ## Comment Respire est fait
 
-Respire est un projet personnel de Relthdrarxash, publié sous le nom Pilmil Studio. Contact : pilmil.studio@proton.me. L'essentiel du code a été écrit avec un assistant IA (Claude, d'Anthropic), et je préfère le dire clairement.
+Respire est un projet personnel de Relthdrarxash, publié sous le nom Pilmil Studio. Contact : pilmil.studio@proton.me. Le code a été développé avec l'aide d'un assistant IA (Claude, d'Anthropic) : l'application elle-même n'embarque aucune intelligence artificielle, toutes ses règles sont purement déterministes, et je préfère l'indiquer clairement.
 
 Concrètement :
 

@@ -81,7 +81,7 @@ Run the unit tests with `./gradlew testReleaseUnitTest`.
 
 ## How Respire is made
 
-Respire is a personal project by Relthdrarxash, published under the name Pilmil Studio. Contact: pilmil.studio@proton.me. Most of the code was written with an AI assistant (Claude, by Anthropic), and I want to say so plainly.
+Respire is a personal project by Relthdrarxash, published under the name Pilmil Studio. Contact: pilmil.studio@proton.me. The code was developed with the help of an AI assistant (Claude, by Anthropic): the app itself embeds no artificial intelligence, all its rules are purely deterministic, and I want to state this plainly.
 
 What that means in practice:
 
