@@ -2,9 +2,13 @@
 
 **English** · [Français](README.fr.md)
 
+[![Build](https://github.com/Relthdrarxash/respire/actions/workflows/build.yml/badge.svg)](https://github.com/Relthdrarxash/respire/actions/workflows/build.yml)
+
 A small Android app against doomscrolling. Respire puts a breathing pause in front of the apps you open on autopilot, limits how long a session lasts, caps how many times a day you can open them, and can hide Instagram Reels and YouTube Shorts while leaving the rest of those apps usable.
 
 No Internet permission, no trackers, no account. Everything stays on your phone.
+
+**[Respire website](https://relthdrarxash.github.io/respire/)** · **[Download APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Why these choices](https://relthdrarxash.github.io/respire/why.html) · [Privacy policy](https://relthdrarxash.github.io/respire/privacy.html)
 
 Available in English, French, Spanish and German.
 
@@ -26,6 +30,12 @@ The app keeps only what you need: the explanations live here and on the page [Wh
 Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute sessions, 6 opens per app per day. Risky hours are off until you turn them on.
 
 Tap a day in the weekly chart to see it hour by hour and find your most tempting time. Tap an app in the list to see its week: temptations, opens, how often you gave up, and its most tempting hour.
+
+## What Respire refuses to do
+
+- **No Internet permission despite using Accessibility**: commercial blockers ask for both Android's Accessibility Service and Internet access. Respire declares zero network permissions in its manifest, making data exfiltration technically impossible.
+- **No 1-app paywall**: slowing down as many apps as you want, filtering Reels/Shorts and viewing your weekly stats are all free.
+- **No guilt-inducing streaks or productivity scores**: giving in and opening an app does not reset a counter or show a failure badge.
 
 ## Why Respire is free
 
@@ -99,6 +109,7 @@ The fonts in `app/src/main/res/font/` keep their own SIL Open Font License (see 
 - Haliburton, L., Grüning, D. J., Riedel, F., Schmidt, A., & Terzimehić, N. (2024). A longitudinal in-the-wild investigation of design frictions to prevent smartphone overuse. *CHI 2024*.
 - Allcott, H., Gentzkow, M., & Song, L. (2021). Digital Addiction. *NBER Working Paper* 28936. [nber.org/papers/w28936](https://www.nber.org/papers/w28936)
 
-## A note on how this was built
+## From the same studio (Pilmil Studio)
 
-Most of Respire's code was written with Claude, the AI assistant made by Anthropic (see [How Respire is made](#how-respire-is-made)). I reviewed it, tested it and I maintain it: the rules that matter are covered by automated tests, and I answer issues and messages myself.
+- **[Sommelle](https://github.com/Relthdrarxash/sommelle)**: 6-to-8-week CBT-I insomnia support app, free, open source and offline.
+- **[Lunaison](https://github.com/Relthdrarxash/lunaison)**: private menstrual cycle tracker with referenced medical guides and serverless partner sharing.

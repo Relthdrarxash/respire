@@ -2,9 +2,13 @@
 
 [English](README.md) · **Français**
 
+[![Build](https://github.com/Relthdrarxash/respire/actions/workflows/build.yml/badge.svg)](https://github.com/Relthdrarxash/respire/actions/workflows/build.yml)
+
 Une petite appli Android contre le doom scroll. Respire place une pause de respiration devant les applis que tu ouvres par réflexe, limite la durée d'une session, plafonne le nombre d'ouvertures par jour et peut masquer les Reels d'Instagram et les Shorts de YouTube tout en laissant le reste de ces applis utilisable.
 
 Pas de permission Internet, pas de traqueur, pas de compte. Tout reste sur ton téléphone.
+
+**[Site de Respire](https://relthdrarxash.github.io/respire/fr/)** · **[Télécharger l'APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Pourquoi ces choix](https://relthdrarxash.github.io/respire/fr/pourquoi.html) · [Confidentialité](https://relthdrarxash.github.io/respire/fr/confidentialite.html)
 
 Disponible en français, anglais, espagnol et allemand.
 
@@ -26,6 +30,12 @@ L'appli reste au strict nécessaire : les explications sont ici et sur la page [
 Réglages par défaut : 10 s d'attente, +5 s par tentative dans l'heure, sessions de 10 min, 6 ouvertures par appli et par jour. Les heures à risque restent désactivées tant que tu ne les actives pas.
 
 Touche un jour du graphique de la semaine pour le voir heure par heure et repérer ton moment le plus tentant. Touche une appli de la liste pour voir sa semaine : tentations, ouvertures, part de renoncements et heure la plus tentante.
+
+## Ce que Respire refuse de faire
+
+- **Pas de permission Internet malgré l'accessibilité** : les bloqueurs commerciaux demandent à la fois le service d'accessibilité Android et l'accès à Internet. Respire ne déclare aucune permission réseau dans son manifeste : rien ne peut techniquement quitter ton téléphone.
+- **Pas de limite à 1 seule appli gratuite** : freiner autant d'applis que tu veux, filtrer les Reels/Shorts et consulter ton bilan sont gratuits.
+- **Pas de série de jours ni de score culpabilisant** : ouvrir une appli après la pause ne remet aucun compteur à zéro.
 
 ## Pourquoi Respire est gratuite
 
@@ -99,6 +109,7 @@ Les polices de `app/src/main/res/font/` restent sous leur propre licence SIL Ope
 - Haliburton, L., Grüning, D. J., Riedel, F., Schmidt, A., et Terzimehić, N. (2024). A longitudinal in-the-wild investigation of design frictions to prevent smartphone overuse. *CHI 2024*.
 - Allcott, H., Gentzkow, M., et Song, L. (2021). Digital Addiction. *NBER Working Paper* 28936. [nber.org/papers/w28936](https://www.nber.org/papers/w28936)
 
-## Note sur le développement
+## Du même atelier (Pilmil Studio)
 
-L'essentiel du code de Respire a été écrit avec Claude, l'assistant IA d'Anthropic (voir [Comment Respire est fait](#comment-respire-est-fait)). Je l'ai relu, testé et je le maintiens : les règles qui comptent sont couvertes par des tests automatiques, et je réponds moi-même aux tickets et aux messages.
+- **[Sommelle](https://github.com/Relthdrarxash/sommelle)** : accompagnement de l'insomnie chronique par la TCC-I en 6 à 8 semaines, gratuit, libre et sans accès à Internet.
+- **[Lunaison](https://github.com/Relthdrarxash/lunaison)** : suivi du cycle menstruel libre, gratuit et sans accès à Internet, avec fiches médicales sourcées et partage partenaire hors-ligne.
