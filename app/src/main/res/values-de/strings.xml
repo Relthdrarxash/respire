@@ -13,6 +13,10 @@
     <string name="pause_close">Nein, schließen</string>
     <string name="pause_open">Trotzdem öffnen</string>
     <string name="pause_continue">Weiter</string>
+    <string name="pause_open_short">Nur 2 Min.</string>
+    <string name="pause_reason_msg">Gezielte Nachricht</string>
+    <string name="pause_reason_lookup">Kurz nachschauen</string>
+    <string name="pause_reason_habit">Nur aus Gewohnheit</string>
     <string name="pause_wait">%1$s in %2$d s</string>
     <string name="home_active">Aktiv</string>
     <string name="home_inactive">Inaktiv</string>
@@ -24,6 +28,11 @@
     <string name="stats_none">noch keine\nPausen</string>
     <string name="stats_week">Verzichtet, letzte 7 Tage</string>
     <string name="stats_shorts">Heute übersprungene Reels und Shorts: %1$d</string>
+    <string name="stats_time_saved">≈ %1$d Min. heute gespart · %2$d Min. in 7 Tagen</string>
+    <string name="stats_share">Meine 7-Tage-Bilanz teilen</string>
+    <string name="widget_description">Verzichtete Öffnungen und gesparte Zeit</string>
+    <string name="widget_title">Respire · Heute</string>
+    <string name="widget_sub">%1$d heute verzichtet · %2$d in 7 Tagen (≈ %3$d Min.)</string>
     <string name="section_apps">Gebremste Apps</string>
     <string name="apps_empty">Noch keine Apps. Fang mit denen an, die du ohne nachzudenken öffnest.</string>
     <string name="apps_choose">Apps auswählen</string>

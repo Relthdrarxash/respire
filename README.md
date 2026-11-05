@@ -14,13 +14,14 @@ The app keeps only what you need: the explanations live here and on the page [Wh
 
 | Feature | What it does | Why |
 |---|---|---|
-| **Pause before opening** | A breathing screen with a countdown and the question "Why are you opening it now?". Closing is available immediately, opening only once the countdown ends. | Friction before opening social apps reduced opening attempts and made openings more intentional (Grüning, Riedel & Lorenz-Spreen, *PNAS* 2023; Haliburton et al., *CHI* 2024). |
+| **Pause before opening & intention** | A breathing screen with a countdown, intention chips (*Specific message*, *Quick lookup*, *Just a habit*), and the question "Why are you opening it now?". Closing is available immediately, opening only once the countdown ends. | Friction before opening social apps reduced opening attempts and made openings more intentional (Grüning, Riedel & Lorenz-Spreen, *PNAS* 2023; Haliburton et al., *CHI* 2024). |
 | **Growing delay** | Each new attempt within the hour adds a few seconds. | Design choice: same friction principle, stronger when the urge repeats. No study compares a fixed and a growing wait. |
-| **Session end** | An opening only lasts a set time (10 min by default). If you are still in the app, the pause comes back mid-scroll. | Design choice: an endless feed offers no moment to stop; session end creates one. |
+| **Session end & "Just 2 min" choice** | An opening only lasts a set time (10 min by default), or **Just 2 min** when you only need a quick reply or lookup. If you are still in the app, the pause comes back mid-scroll. | Design choice: an endless feed offers no moment to stop; session end creates one. |
 | **Daily limit** | After a set number of opens per app per day, the app is blocked until tomorrow. Extending a session counts as an open. | Hard-to-override limits cut social media use by about 16% over 12 weeks, and most people kept them (Allcott, Gentzkow & Song, *American Economic Review* 2022). |
 | **Risky hours** | During a time range you choose (10 pm to 7 am by default, suggested from your own hourly data), the wait is doubled and opens are capped, at zero by default. | Design choice: tune the tool from your own data rather than a general rule. Effect not measured. |
 | **Loosening lock** | Removing an app or relaxing a rule requires a 30-second wait. | People tend to pause such tools and relapse quickly (Haliburton et al., 2024). |
 | **Reels and Shorts filter** | Leaves Instagram or YouTube when the full-screen short-video player appears. Reels sent in a direct message still open. | Design choice: removes the endless feed while keeping messages, search and regular videos. Effect not measured. |
+| **Home screen widget & saved time** | A discreet home screen widget and 7-day summary show avoided openings and estimated minutes saved, without guilt-inducing streaks. | Design choice: calm feedback without gamification. |
 
 Default settings: 10 s wait, +5 s per attempt within the hour, 10-minute sessions, 6 opens per app per day. Risky hours are off until you turn them on.
 

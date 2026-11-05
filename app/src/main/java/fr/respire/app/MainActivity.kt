@@ -100,6 +100,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         refresh()
+        RespireWidget.refreshAll(this)
     }
 
     private fun installedVersion(): String = try {

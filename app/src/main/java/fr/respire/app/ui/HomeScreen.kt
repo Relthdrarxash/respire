@@ -2,6 +2,7 @@ package fr.respire.app.ui
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -371,6 +372,10 @@ private fun ActivationCard(onOpenAccessibility: () -> Unit) {
 @Composable
 private fun StatsCard(ui: HomeUi) {
     var openDay by remember { mutableStateOf<Int?>(null) }
+    val context = LocalContext.current
+    val sessionMin = (ui.rules[Rule.SESSION] ?: 10).coerceAtLeast(1)
+    val savedTodayMin = ui.giveUps * sessionMin
+    val savedWeekMin = ui.week.sum() * sessionMin
     CalmeCard {
         Text(
             stringResource(R.string.stats_today),
@@ -391,6 +396,13 @@ private fun StatsCard(ui: HomeUi) {
                 },
                 modifier = Modifier.padding(bottom = 6.dp),
                 fontFamily = Nunito, fontSize = 16.sp, lineHeight = 21.sp, color = Calme.Ink,
+            )
+        }
+        if (savedWeekMin > 0) {
+            Text(
+                stringResource(R.string.stats_time_saved, savedTodayMin, savedWeekMin),
+                modifier = Modifier.padding(top = 6.dp),
+                fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Calme.SageDark,
             )
         }
 
@@ -458,6 +470,26 @@ private fun StatsCard(ui: HomeUi) {
                 fontFamily = Nunito, fontSize = 14.sp, color = Calme.Ink,
             )
         }
+        val shareLabel = stringResource(R.string.stats_share)
+        val shareText = stringResource(R.string.stats_time_saved, savedTodayMin, savedWeekMin) +
+            "\n" + ui.days.joinToString("\n") { d ->
+                "${d.title} : ${d.giveUps.sum()} / ${d.attempts.sum()}"
+            }
+        Text(
+            shareLabel,
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .clickable(role = Role.Button) {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, shareText)
+                    }
+                    context.startActivity(Intent.createChooser(intent, shareLabel))
+                }
+                .padding(vertical = 6.dp),
+            fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Calme.Sage,
+        )
     }
 
     openDay?.let { i ->

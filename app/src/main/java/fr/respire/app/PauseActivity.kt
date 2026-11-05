@@ -103,7 +103,8 @@ class PauseActivity : ComponentActivity() {
                     ui = ui,
                     remaining = remaining.intValue,
                     onClose = ::giveUp,
-                    onOpen = ::openAnyway,
+                    onOpen = { openAnyway(prefs.sessionMinutes) },
+                    onOpenShort = { openAnyway(2) },
                 )
             }
         }
@@ -143,6 +144,7 @@ class PauseActivity : ComponentActivity() {
         if (decided) return
         decided = true
         prefs.recordGiveUp(System.currentTimeMillis(), pkg)
+        RespireWidget.refreshAll(this)
         startActivity(
             Intent(Intent.ACTION_MAIN)
                 .addCategory(Intent.CATEGORY_HOME)
@@ -151,12 +153,13 @@ class PauseActivity : ComponentActivity() {
         finish()
     }
 
-    private fun openAnyway() {
+    private fun openAnyway(minutes: Int = prefs.sessionMinutes) {
         if (decided || blocked || remaining.intValue > 0) return
         decided = true
         val now = System.currentTimeMillis()
         prefs.recordOpen(pkg, now)
-        prefs.allow(pkg, now + prefs.sessionMinutes * 60_000L)
+        prefs.allow(pkg, now + minutes * 60_000L)
+        RespireWidget.refreshAll(this)
         packageManager.getLaunchIntentForPackage(pkg)?.let { launch ->
             launch.addFlags(
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED

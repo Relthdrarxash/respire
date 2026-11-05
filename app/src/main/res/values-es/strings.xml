@@ -13,6 +13,10 @@
     <string name="pause_close">No, la cierro</string>
     <string name="pause_open">Abrir de todos modos</string>
     <string name="pause_continue">Continuar</string>
+    <string name="pause_open_short">Solo 2 min</string>
+    <string name="pause_reason_msg">Mensaje concreto</string>
+    <string name="pause_reason_lookup">Buscar un dato</string>
+    <string name="pause_reason_habit">Pura inercia</string>
     <string name="pause_wait">%1$s en %2$d s</string>
     <string name="home_active">Activo</string>
     <string name="home_inactive">Inactivo</string>
@@ -24,6 +28,11 @@
     <string name="stats_none">ninguna pausa\npor ahora</string>
     <string name="stats_week">Renuncias en 7 días</string>
     <string name="stats_shorts">Reels y Shorts evitados hoy: %1$d</string>
+    <string name="stats_time_saved">≈ %1$d min ahorrados hoy · %2$d min en 7 días</string>
+    <string name="stats_share">Compartir mi balance de 7 días</string>
+    <string name="widget_description">Renuncias de hoy y tiempo estimado ahorrado</string>
+    <string name="widget_title">Respire · Hoy</string>
+    <string name="widget_sub">%1$d hoy · %2$d en 7 días (≈ %3$d min)</string>
     <string name="section_apps">Apps frenadas</string>
     <string name="apps_empty">Aún no hay apps. Empieza por las que abres sin pensar.</string>
     <string name="apps_choose">Elegir apps</string>

@@ -14,6 +14,10 @@
     <string name="pause_close">No, close it</string>
     <string name="pause_open">Open anyway</string>
     <string name="pause_continue">Continue</string>
+    <string name="pause_open_short">Just 2 min</string>
+    <string name="pause_reason_msg">Specific message</string>
+    <string name="pause_reason_lookup">Quick lookup</string>
+    <string name="pause_reason_habit">Just a habit</string>
     <string name="pause_wait">%1$s in %2$d s</string>
     <string name="home_active">Active</string>
     <string name="home_inactive">Inactive</string>
@@ -25,6 +29,11 @@
     <string name="stats_none">no pauses\nyet</string>
     <string name="stats_week">Gave up, last 7 days</string>
     <string name="stats_shorts">Reels and Shorts skipped today: %1$d</string>
+    <string name="stats_time_saved">≈ %1$d min saved today · %2$d min over 7 days</string>
+    <string name="stats_share">Share my 7-day summary</string>
+    <string name="widget_description">Avoided openings and estimated time saved</string>
+    <string name="widget_title">Respire · Today</string>
+    <string name="widget_sub">%1$d avoided today · %2$d over 7 days (≈ %3$d min)</string>
     <string name="section_apps">Slowed-down apps</string>
     <string name="apps_empty">No apps yet. Start with the ones you open without thinking.</string>
     <string name="apps_choose">Choose apps</string>

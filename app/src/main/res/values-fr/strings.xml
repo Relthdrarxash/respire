@@ -13,6 +13,10 @@
     <string name="pause_close">Non, je ferme</string>
     <string name="pause_open">Ouvrir quand même</string>
     <string name="pause_continue">Continuer</string>
+    <string name="pause_open_short">2 min seulement</string>
+    <string name="pause_reason_msg">Message précis</string>
+    <string name="pause_reason_lookup">Chercher une info</string>
+    <string name="pause_reason_habit">Simple réflexe</string>
     <string name="pause_wait">%1$s dans %2$d s</string>
     <string name="home_active">Actif</string>
     <string name="home_inactive">Inactif</string>
@@ -24,6 +28,11 @@
     <string name="stats_none">aucune pause\npour l’instant</string>
     <string name="stats_week">Renoncements sur 7 jours</string>
     <string name="stats_shorts">Reels et Shorts écartés aujourd’hui : %1$d</string>
+    <string name="stats_time_saved">≈ %1$d min épargnées aujourd’hui · %2$d min sur 7 jours</string>
+    <string name="stats_share">Partager mon bilan sur 7 jours</string>
+    <string name="widget_description">Renoncements du jour et temps estimé épargné</string>
+    <string name="widget_title">Respire · Aujourd’hui</string>
+    <string name="widget_sub">%1$d renoncement(s) · %2$d sur 7 jours (≈ %3$d min)</string>
     <string name="section_apps">Applis freinées</string>
     <string name="apps_empty">Aucune appli pour l’instant. Commence par celles que tu ouvres sans y penser.</string>
     <string name="apps_choose">Choisir les applis</string>

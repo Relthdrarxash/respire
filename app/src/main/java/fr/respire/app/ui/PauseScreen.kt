@@ -2,6 +2,7 @@ package fr.respire.app.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,11 +20,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import fr.respire.app.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -52,7 +58,9 @@ fun PauseScreen(
     remaining: Int,
     onClose: () -> Unit,
     onOpen: () -> Unit,
+    onOpenShort: () -> Unit = onOpen,
 ) {
+    var selectedReason by remember { mutableStateOf<Int?>(null) }
     Column(
         Modifier
             .fillMaxSize()
@@ -126,27 +134,97 @@ fun PauseScreen(
             color = Calme.Muted,
         )
 
+        if (!ui.blocked && !ui.sessionEnd) {
+            val reasons = listOf(
+                R.string.pause_reason_msg,
+                R.string.pause_reason_lookup,
+                R.string.pause_reason_habit,
+            )
+            Row(
+                Modifier.padding(top = 14.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                reasons.forEachIndexed { idx, resId ->
+                    val chosen = selectedReason == idx
+                    Box(
+                        Modifier
+                            .clip(RoundedCornerShape(50))
+                            .background(if (chosen) Calme.SageTint else Calme.Chip)
+                            .clickable(role = Role.RadioButton) { selectedReason = if (chosen) null else idx }
+                            .padding(horizontal = 12.dp, vertical = 6.dp),
+                    ) {
+                        Text(
+                            stringResource(resId),
+                            fontFamily = Nunito,
+                            fontWeight = if (chosen) FontWeight.Bold else FontWeight.SemiBold,
+                            fontSize = 13.sp,
+                            color = if (chosen) Calme.SageDark else Calme.InkSoft,
+                        )
+                    }
+                }
+            }
+        }
+
         Spacer(Modifier.weight(1f))
 
         PillButton(stringResource(R.string.pause_close), onClick = onClose)
 
         if (!ui.blocked) {
             val verb = stringResource(if (ui.sessionEnd) R.string.pause_continue else R.string.pause_open)
-            TextButton(
-                onClick = onOpen,
-                enabled = remaining == 0,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-                    .height(48.dp),
-            ) {
-                Text(
-                    if (remaining > 0) stringResource(R.string.pause_wait, verb, remaining) else verb,
-                    fontFamily = Nunito,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 15.sp,
-                    color = Calme.Muted,
-                )
+            if (remaining == 0 && ui.sessionMinutes > 2 && !ui.sessionEnd) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    TextButton(
+                        onClick = onOpenShort,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                    ) {
+                        Text(
+                            stringResource(R.string.pause_open_short),
+                            fontFamily = Nunito,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Calme.SageDark,
+                        )
+                    }
+                    TextButton(
+                        onClick = onOpen,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                    ) {
+                        Text(
+                            verb,
+                            fontFamily = Nunito,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = Calme.Muted,
+                        )
+                    }
+                }
+            } else {
+                TextButton(
+                    onClick = onOpen,
+                    enabled = remaining == 0,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .height(48.dp),
+                ) {
+                    Text(
+                        if (remaining > 0) stringResource(R.string.pause_wait, verb, remaining) else verb,
+                        fontFamily = Nunito,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 15.sp,
+                        color = Calme.Muted,
+                    )
+                }
             }
         }
     }
