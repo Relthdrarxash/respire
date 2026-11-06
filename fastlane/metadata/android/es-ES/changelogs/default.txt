@@ -1,3 +1,3 @@
-• Botones rápidos de intención en la pantalla de pausa y opción de sesión corta «Solo 2 min».
-• Estimación del tiempo ahorrado, resumen compartible de 7 días y widget discreto en la pantalla de inicio.
-• Copia de seguridad automática cifrada de Android al cambiar de teléfono.
+• Navegación inferior fluida de 3 pestañas: Aplicaciones, Estadísticas y Ajustes.
+• Eliminación del atajo «Solo 2 min» en la pausa para reforzar la toma de consciencia.
+• Pantalla de Ajustes reorganizada, descubrimiento de apps compañeras (Sommelle, Lunaison) y compromiso de privacidad.

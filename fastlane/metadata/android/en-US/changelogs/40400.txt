@@ -1,0 +1,3 @@
+• Fluid 3-tab bottom navigation: Apps, Statistics, and Settings.
+• Removed the "Just 2 min" shortcut on pause screen to maintain effective mindful breathing.
+• Reorganized Settings screen, companion suite discovery (Sommelle, Lunaison), and unified privacy pledge.

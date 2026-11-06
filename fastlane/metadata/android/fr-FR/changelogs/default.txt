@@ -1,3 +1,3 @@
-• Puces d’intention sur l’écran de pause (Message précis, Chercher une info, Simple réflexe) et bouton de session courte « 2 min seulement ».
-• Estimation du temps épargné, partage du bilan des 7 jours et widget discret sur l’écran d’accueil.
-• Sauvegarde automatique chiffrée d’Android lors d’un changement de téléphone.
+• Navigation basse fluide à 3 onglets : Applications, Statistiques et Réglages.
+• Suppression du raccourci « 2 min seulement » sur l'écran de pause pour renforcer l'efficacité de la prise de recul.
+• Écran Réglages réorganisé, découverte des applications compagnes (Sommelle, Lunaison) et engagement éthique unifié.
