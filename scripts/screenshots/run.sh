@@ -103,13 +103,14 @@ adb shell am force-stop com.google.android.youtube
 push_prefs /tmp/full.xml
 service_on
 adb shell am start -n $PKG/.MainActivity >/dev/null
-shot 1-accueil 9
-adb shell input tap 663 705; shot 2-detail-jour 3      # barre de lundi : détail heure par heure
+shot 1-applis 9
+$UI tap "Choisir les applis"; shot 2-choix-applis 3
 adb shell input keyevent KEYCODE_BACK; sleep 2
-adb shell input swipe 540 1600 540 700 800; shot 3-accueil-applis 3
-$UI tap "Choisir les applis"; shot 5-choix-applis 3
+$UI tap "Statistiques"; shot 3-statistiques 3
+adb shell input tap 663 705; shot 4-detail-jour 3      # barre de lundi : détail heure par heure
 adb shell input keyevent KEYCODE_BACK; sleep 2
+$UI tap "Configuration"; shot 5-configuration 3
 # Écran de pause, ouvert directement pour la première appli cible.
 adb shell am start -n $PKG/.PauseActivity --es pkg "$FIRST" --es mode open >/dev/null
-shot 4-pause 3
+shot 6-pause 3
 ls -l "$OUT"
