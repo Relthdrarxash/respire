@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -74,7 +75,7 @@ data class HomeUi(
 
 enum class ShortKind { REELS, SHORTS, FACEBOOK }
 
-enum class RespireTab { APPS, STATS, CONFIG }
+enum class RespireTab { APPS, STATS, SETTINGS }
 
 /**
  * Écran d'accueil de Respire avec navigation fluide par onglets (Applis, Statistiques, Configuration).
@@ -165,8 +166,8 @@ fun HomeScreen(
                         }
                     }
                 }
-                RespireTab.CONFIG -> {
-                    item { Header(stringResource(R.string.nav_config), ui.serviceOn, onOpenAccessibility) }
+                RespireTab.SETTINGS -> {
+                    item { Header(stringResource(R.string.nav_settings), ui.serviceOn, onOpenAccessibility) }
 
                     item {
                         Column {
@@ -185,25 +186,18 @@ fun HomeScreen(
                     }
 
                     item {
+                        SuiteSection(onOpenLink = onOpenLink)
+                    }
+
+                    item {
                         val privacyUrl = stringResource(R.string.url_privacy)
-                        Row(
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.Center,
-                        ) {
-                            FooterLink(stringResource(R.string.link_privacy)) { onOpenLink(privacyUrl) }
-                            FooterLink(stringResource(R.string.link_feedback)) { onOpenLink("https://github.com/Relthdrarxash/respire/issues") }
-                            FooterLink(stringResource(R.string.link_source)) { onOpenLink("https://github.com/Relthdrarxash/respire") }
-                        }
-                        if (ui.version.isNotEmpty()) {
-                            Text(
-                                stringResource(R.string.app_version, ui.version),
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
-                            )
-                        }
+                        AboutSection(
+                            version = ui.version,
+                            onOpenPrivacy = { onOpenLink(privacyUrl) },
+                            onOpenFeedback = { onOpenLink("https://github.com/Relthdrarxash/respire/issues") },
+                            onOpenSource = { onOpenLink("https://github.com/Relthdrarxash/respire") },
+                            onShowDiag = { showDiag = true },
+                        )
                     }
                 }
             }
@@ -251,9 +245,11 @@ fun HomeScreen(
 
 @Composable
 private fun RespireBottomBar(selected: RespireTab, onSelect: (RespireTab) -> Unit) {
+    val navLabel = stringResource(R.string.nav_label)
     NavigationBar(
         containerColor = Calme.Card,
         contentColor = Calme.Ink,
+        modifier = Modifier.semantics { contentDescription = navLabel },
     ) {
         val colors = NavigationBarItemDefaults.colors(
             selectedIconColor = Calme.Ink,
@@ -267,6 +263,7 @@ private fun RespireBottomBar(selected: RespireTab, onSelect: (RespireTab) -> Uni
             onClick = { onSelect(RespireTab.APPS) },
             icon = { Icon(RespireIcons.Apps, contentDescription = null) },
             label = { Text(stringResource(R.string.nav_apps), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 12.sp) },
+            alwaysShowLabel = true,
             colors = colors,
         )
         NavigationBarItem(
@@ -274,13 +271,15 @@ private fun RespireBottomBar(selected: RespireTab, onSelect: (RespireTab) -> Uni
             onClick = { onSelect(RespireTab.STATS) },
             icon = { Icon(RespireIcons.Chart, contentDescription = null) },
             label = { Text(stringResource(R.string.nav_stats), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 12.sp) },
+            alwaysShowLabel = true,
             colors = colors,
         )
         NavigationBarItem(
-            selected = selected == RespireTab.CONFIG,
-            onClick = { onSelect(RespireTab.CONFIG) },
+            selected = selected == RespireTab.SETTINGS,
+            onClick = { onSelect(RespireTab.SETTINGS) },
             icon = { Icon(RespireIcons.Settings, contentDescription = null) },
-            label = { Text(stringResource(R.string.nav_config), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 12.sp) },
+            label = { Text(stringResource(R.string.nav_settings), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 12.sp) },
+            alwaysShowLabel = true,
             colors = colors,
         )
     }

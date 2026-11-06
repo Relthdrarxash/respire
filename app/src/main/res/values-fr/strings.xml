@@ -145,5 +145,14 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
     </plurals>
     <string name="nav_apps">Applis</string>
     <string name="nav_stats">Statistiques</string>
-    <string name="nav_config">Configuration</string>
+    <string name="nav_settings">Réglages</string>
+    <string name="nav_label">Navigation principale</string>
+    <string name="section_about">À propos &amp; démarche</string>
+    <string name="suite_title">Dans la même démarche</string>
+    <string name="suite_subtitle">Applications libres, 100 % hors-ligne et respectueuses de votre attention.</string>
+    <string name="suite_commitment">100 % hors-ligne • Zéro pisteur, zéro compte • Code source libre et auditable</string>
+    <string name="app_lunaison_name">Lunaison</string>
+    <string name="app_lunaison_desc">Suivi du cycle menstruel &amp; santé hormonale, libre et sans compte</string>
+    <string name="app_sommelle_name">Sommelle</string>
+    <string name="app_sommelle_desc">Accompagnement de l\'insomnie chronique par TCC-I, libre et sans compte</string>
 </resources>

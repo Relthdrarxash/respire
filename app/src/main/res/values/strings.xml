@@ -147,5 +147,14 @@ What happens to it: it is used on your phone only, at the moment it is accessed.
     </plurals>
     <string name="nav_apps">Apps</string>
     <string name="nav_stats">Statistics</string>
-    <string name="nav_config">Settings</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_label">Main navigation</string>
+    <string name="section_about">About &amp; Approach</string>
+    <string name="suite_title">In the same spirit</string>
+    <string name="suite_subtitle">Free, 100% offline apps that respect your attention.</string>
+    <string name="suite_commitment">100% offline • Zero trackers, zero account • Open and auditable source code</string>
+    <string name="app_lunaison_name">Lunaison</string>
+    <string name="app_lunaison_desc">Menstrual cycle &amp; hormonal health tracking, free and offline</string>
+    <string name="app_sommelle_name">Sommelle</string>
+    <string name="app_sommelle_desc">CBT-I accompaniment for chronic insomnia, free and offline</string>
 </resources>

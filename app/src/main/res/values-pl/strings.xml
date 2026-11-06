@@ -148,5 +148,14 @@ Co dzieje się z danymi: wszystko zostaje wyłącznie w telefonie. Respire nie m
     </plurals>
     <string name="nav_apps">Aplikacje</string>
     <string name="nav_stats">Statystyki</string>
-    <string name="nav_config">Ustawienia</string>
+    <string name="nav_settings">Ustawienia</string>
+    <string name="nav_label">Główna nawigacja</string>
+    <string name="section_about">O aplikacji i podejściu</string>
+    <string name="suite_title">W tym samym duchu</string>
+    <string name="suite_subtitle">Wolne, w 100% działające offline aplikacje szanujące Twoją uwagę.</string>
+    <string name="suite_commitment">100% offline • Bez trackerów, bez konta • Otwarty i audytowalny kod źródłowy</string>
+    <string name="app_lunaison_name">Lunaison</string>
+    <string name="app_lunaison_desc">Śledzenie cyklu menstruacyjnego i zdrowie hormonalne, bez konta i offline</string>
+    <string name="app_sommelle_name">Sommelle</string>
+    <string name="app_sommelle_desc">Wsparcie w przewlekłej bezsenności metodą CBT-I, bez konta i offline</string>
 </resources>

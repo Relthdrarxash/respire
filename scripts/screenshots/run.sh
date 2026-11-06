@@ -109,7 +109,7 @@ adb shell input keyevent KEYCODE_BACK; sleep 2
 $UI tap "Statistiques"; shot 3-statistiques 3
 adb shell input tap 663 705; shot 4-detail-jour 3      # barre de lundi : détail heure par heure
 adb shell input keyevent KEYCODE_BACK; sleep 2
-$UI tap "Configuration"; shot 5-configuration 3
+$UI tap "Réglages"; shot 5-reglages 3
 # Écran de pause, ouvert directement pour la première appli cible.
 adb shell am start -n $PKG/.PauseActivity --es pkg "$FIRST" --es mode open >/dev/null
 shot 6-pause 3

@@ -145,5 +145,14 @@ Qué hace con ello: se usa solo en tu teléfono, en el momento en que se lee. No
     </plurals>
     <string name="nav_apps">Apps</string>
     <string name="nav_stats">Estadísticas</string>
-    <string name="nav_config">Configuración</string>
+    <string name="nav_settings">Ajustes</string>
+    <string name="nav_label">Navegación principal</string>
+    <string name="section_about">Acerca de &amp; filosofía</string>
+    <string name="suite_title">En la misma línea</string>
+    <string name="suite_subtitle">Aplicaciones libres, 100 % sin conexión que respetan tu atención.</string>
+    <string name="suite_commitment">100 % sin conexión • Cero rastreadores, cero cuentas • Código abierto y auditable</string>
+    <string name="app_lunaison_name">Lunaison</string>
+    <string name="app_lunaison_desc">Seguimiento del ciclo menstrual y salud hormonal, libre y sin conexión</string>
+    <string name="app_sommelle_name">Sommelle</string>
+    <string name="app_sommelle_desc">Acompañamiento del insomnio crónico con TCC-I, libre y sin conexión</string>
 </resources>

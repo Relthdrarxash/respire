@@ -142,5 +142,14 @@ Was damit passiert: Die Daten werden nur auf deinem Handy verwendet, in dem Mome
     </plurals>
     <string name="nav_apps">Apps</string>
     <string name="nav_stats">Statistik</string>
-    <string name="nav_config">Einstellungen</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="nav_label">Hauptnavigation</string>
+    <string name="section_about">Über &amp; Ansatz</string>
+    <string name="suite_title">Im gleichen Sinne</string>
+    <string name="suite_subtitle">Freie, 100 % Offline-Apps, die Ihre Aufmerksamkeit respektieren.</string>
+    <string name="suite_commitment">100 % offline • Keine Tracker, kein Konto • Freier und auditierbarer Quellcode</string>
+    <string name="app_lunaison_name">Lunaison</string>
+    <string name="app_lunaison_desc">Menstruationszyklus- &amp; Hormongesundheits-Tracking, frei und offline</string>
+    <string name="app_sommelle_name">Sommelle</string>
+    <string name="app_sommelle_desc">KVT-I-Begleitung bei chronischer Schlaflosigkeit, frei und offline</string>
 </resources>

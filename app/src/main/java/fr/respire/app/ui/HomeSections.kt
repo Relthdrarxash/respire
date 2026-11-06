@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -303,7 +304,122 @@ internal fun FooterLink(label: String, onClick: () -> Unit) {
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 12.dp),
+            .padding(horizontal = 6.dp, vertical = 8.dp),
         fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Calme.Muted,
     )
+}
+
+/** Section « Dans la même démarche » : mise en valeur des applications soeurs libres et hors-ligne. */
+@Composable
+internal fun SuiteSection(onOpenLink: (String) -> Unit) {
+    Column {
+        SectionTitle(stringResource(R.string.suite_title))
+        CalmeCard(radius = 24.dp, padding = 16.dp) {
+            Text(
+                stringResource(R.string.suite_subtitle),
+                fontFamily = Nunito,
+                fontSize = 14.sp,
+                color = Calme.Muted,
+            )
+            Spacer(Modifier.height(10.dp))
+            CompanionAppRow(
+                badge = "🌙",
+                name = stringResource(R.string.app_lunaison_name),
+                description = stringResource(R.string.app_lunaison_desc),
+                onClick = { onOpenLink("https://relthdrarxash.github.io/lunaison/") },
+            )
+            HorizontalDivider(Modifier.padding(vertical = 8.dp), color = Calme.Divider)
+            CompanionAppRow(
+                badge = "🛏️",
+                name = stringResource(R.string.app_sommelle_name),
+                description = stringResource(R.string.app_sommelle_desc),
+                onClick = { onOpenLink("https://relthdrarxash.github.io/sommelle/") },
+            )
+        }
+    }
+}
+
+@Composable
+private fun CompanionAppRow(
+    badge: String,
+    name: String,
+    description: String,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(vertical = 6.dp, horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(38.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Calme.Chip),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(badge, fontSize = 18.sp)
+        }
+        Column(Modifier.weight(1f)) {
+            Text(name, fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Calme.Ink)
+            Text(description, fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted)
+        }
+    }
+}
+
+/** Section « À propos & Démarche » avec version, engagement éthique et liens utiles. */
+@Composable
+internal fun AboutSection(
+    version: String,
+    onOpenPrivacy: () -> Unit,
+    onOpenFeedback: () -> Unit,
+    onOpenSource: () -> Unit,
+    onShowDiag: () -> Unit,
+) {
+    Column {
+        SectionTitle(stringResource(R.string.section_about))
+        CalmeCard(radius = 24.dp, padding = 16.dp) {
+            if (version.isNotEmpty()) {
+                Text(
+                    stringResource(R.string.app_version, version),
+                    fontFamily = Fraunces,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    color = Calme.Ink,
+                )
+            }
+            Text(
+                stringResource(R.string.suite_commitment),
+                modifier = Modifier.padding(top = 4.dp),
+                fontFamily = Nunito,
+                fontSize = 13.sp,
+                color = Calme.Muted,
+            )
+            HorizontalDivider(Modifier.padding(vertical = 12.dp), color = Calme.Divider)
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                FooterLink(stringResource(R.string.link_privacy), onClick = onOpenPrivacy)
+                FooterLink(stringResource(R.string.link_source), onClick = onOpenSource)
+                FooterLink(stringResource(R.string.link_feedback), onClick = onOpenFeedback)
+            }
+            Text(
+                stringResource(R.string.diag_title),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(role = Role.Button, onClick = onShowDiag)
+                    .padding(top = 8.dp),
+                fontFamily = Nunito,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 13.sp,
+                color = Calme.Sage,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            )
+        }
+    }
 }

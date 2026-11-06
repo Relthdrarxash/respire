@@ -148,5 +148,14 @@
     </plurals>
     <string name="nav_apps">Програми</string>
     <string name="nav_stats">Статистика</string>
-    <string name="nav_config">Налаштування</string>
+    <string name="nav_settings">Налаштування</string>
+    <string name="nav_label">Основна навігація</string>
+    <string name="section_about">Про застосунок та підхід</string>
+    <string name="suite_title">У тому ж дусі</string>
+    <string name="suite_subtitle">Вільні, на 100% офлайн-програми, що поважають вашу увагу.</string>
+    <string name="suite_commitment">100% офлайн • Без трекерів, без облікового запису • Відкритий вихідний код</string>
+    <string name="app_lunaison_name">Lunaison</string>
+    <string name="app_lunaison_desc">Відстеження менструального циклу та гормональне здоров\'я, вільна та офлайн</string>
+    <string name="app_sommelle_name">Sommelle</string>
+    <string name="app_sommelle_desc">Супровід при хронічному безсонні за методом КПТ-Б, вільна та офлайн</string>
 </resources>
