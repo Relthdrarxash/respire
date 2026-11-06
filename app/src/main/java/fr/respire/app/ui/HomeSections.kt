@@ -185,7 +185,7 @@ private fun ShortRow(title: String, checked: Boolean, onChange: (Boolean) -> Uni
 }
 
 @Composable
-private fun TargetRow(stat: TargetStat, quota: Int, onClick: () -> Unit) {
+internal fun TargetRow(stat: TargetStat, quota: Int, onClick: () -> Unit) {
     val blocked = stat.blocked
     Row(
         Modifier

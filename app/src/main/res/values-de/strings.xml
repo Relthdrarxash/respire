@@ -140,4 +140,7 @@ Was damit passiert: Die Daten werden nur auf deinem Handy verwendet, in dem Mome
         <item quantity="one">Diese App hinzufügen</item>
         <item quantity="other">Diese %d Apps hinzufügen</item>
     </plurals>
+    <string name="nav_apps">Apps</string>
+    <string name="nav_stats">Statistik</string>
+    <string name="nav_config">Einstellungen</string>
 </resources>

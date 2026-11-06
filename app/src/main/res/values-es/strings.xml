@@ -143,4 +143,7 @@ Qué hace con ello: se usa solo en tu teléfono, en el momento en que se lee. No
         <item quantity="many">Añadir estas %d apps</item>
         <item quantity="other">Añadir estas %d apps</item>
     </plurals>
+    <string name="nav_apps">Apps</string>
+    <string name="nav_stats">Estadísticas</string>
+    <string name="nav_config">Configuración</string>
 </resources>

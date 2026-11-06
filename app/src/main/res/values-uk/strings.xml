@@ -146,4 +146,7 @@
         <item quantity="many">Додати ці %d застосунків</item>
         <item quantity="other">Додати ці %d застосунків</item>
     </plurals>
+    <string name="nav_apps">Програми</string>
+    <string name="nav_stats">Статистика</string>
+    <string name="nav_config">Налаштування</string>
 </resources>

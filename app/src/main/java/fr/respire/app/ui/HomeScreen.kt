@@ -18,11 +18,18 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,8 +74,10 @@ data class HomeUi(
 
 enum class ShortKind { REELS, SHORTS, FACEBOOK }
 
+enum class RespireTab { APPS, STATS, CONFIG }
+
 /**
- * Écran d'accueil de Respire.
+ * Écran d'accueil de Respire avec navigation fluide par onglets (Applis, Statistiques, Configuration).
  * Les sous-sections sont découpées dans [StatsCard] et [HomeSections] pour garder chaque fichier court et lisible.
  */
 @Composable
@@ -82,6 +91,7 @@ fun HomeScreen(
     onSaveRisk: (Boolean, Int, Int, Int) -> Unit,
     appWeek: (String) -> Prefs.AppWeek,
 ) {
+    var currentTab by rememberSaveable { mutableStateOf(RespireTab.APPS) }
     var openApp by remember { mutableStateOf<AppItem?>(null) }
     var editing by remember { mutableStateOf<Rule?>(null) }
     var disabling by remember { mutableStateOf<ShortKind?>(null) }
@@ -90,75 +100,112 @@ fun HomeScreen(
     val quota = ui.rules[Rule.QUOTA] ?: 0
     val whyUrl = stringResource(R.string.url_why)
 
-    LazyColumn(
-        Modifier
-            .fillMaxSize()
-            .background(Calme.Ground)
-            .systemBarsPadding(),
-        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 24.dp, bottom = 32.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        item { Header(ui.serviceOn, onOpenAccessibility) }
-
-        if (!ui.serviceOn) {
-            item { ActivationCard(onOpenAccessibility) }
-        }
-
-        item { StatsCard(ui) }
-
-        item {
-            AppsSection(
-                targets = ui.targets,
-                quota = quota,
-                onOpenApp = { openApp = it },
-                onPickApps = onPickApps,
+    Scaffold(
+        containerColor = Calme.Ground,
+        bottomBar = {
+            RespireBottomBar(
+                selected = currentTab,
+                onSelect = { currentTab = it },
             )
-        }
+        },
+    ) { padding ->
+        LazyColumn(
+            Modifier
+                .fillMaxSize()
+                .background(Calme.Ground)
+                .padding(padding),
+            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 28.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            when (currentTab) {
+                RespireTab.APPS -> {
+                    item { Header("Respire", ui.serviceOn, onOpenAccessibility) }
 
-        item {
-            Column {
-                SectionTitle(stringResource(R.string.section_risk))
-                RiskCard(ui.risk, ui.days, onSaveRisk)
-            }
-        }
+                    if (!ui.serviceOn) {
+                        item { ActivationCard(onOpenAccessibility) }
+                    }
 
-        item {
-            ShortFormSection(
-                ui = ui,
-                onEnable = { onSetShortForm(it, true) },
-                onRequestDisable = { disabling = it },
-                onShowDiag = { showDiag = true },
-            )
-        }
+                    item {
+                        AppsSection(
+                            targets = ui.targets,
+                            quota = quota,
+                            onOpenApp = { openApp = it },
+                            onPickApps = onPickApps,
+                        )
+                    }
 
-        item {
-            RulesSection(
-                rules = ui.rules,
-                res = res,
-                onEditRule = { editing = it },
-                onOpenWhy = { onOpenLink(whyUrl) },
-            )
-        }
+                    item {
+                        ShortFormSection(
+                            ui = ui,
+                            onEnable = { onSetShortForm(it, true) },
+                            onRequestDisable = { disabling = it },
+                            onShowDiag = { showDiag = true },
+                        )
+                    }
+                }
+                RespireTab.STATS -> {
+                    item { Header(stringResource(R.string.nav_stats), ui.serviceOn, onOpenAccessibility) }
 
-        item {
-            val privacyUrl = stringResource(R.string.url_privacy)
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                FooterLink(stringResource(R.string.link_privacy)) { onOpenLink(privacyUrl) }
-                FooterLink(stringResource(R.string.link_feedback)) { onOpenLink("https://github.com/Relthdrarxash/respire/issues") }
-                FooterLink(stringResource(R.string.link_source)) { onOpenLink("https://github.com/Relthdrarxash/respire") }
-            }
-            if (ui.version.isNotEmpty()) {
-                Text(
-                    stringResource(R.string.app_version, ui.version),
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
-                )
+                    item { StatsCard(ui) }
+
+                    if (ui.targets.isNotEmpty()) {
+                        item {
+                            SectionTitle(stringResource(R.string.section_apps))
+                            CalmeCard(radius = 24.dp, padding = 0.dp) {
+                                ui.targets.forEachIndexed { index, stat ->
+                                    if (index > 0) HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = Calme.Divider)
+                                    TargetRow(stat, quota) { openApp = stat.app }
+                                }
+                                Text(
+                                    stringResource(R.string.apps_tap_hint),
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                                    fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
+                                )
+                            }
+                        }
+                    }
+                }
+                RespireTab.CONFIG -> {
+                    item { Header(stringResource(R.string.nav_config), ui.serviceOn, onOpenAccessibility) }
+
+                    item {
+                        Column {
+                            SectionTitle(stringResource(R.string.section_risk))
+                            RiskCard(ui.risk, ui.days, onSaveRisk)
+                        }
+                    }
+
+                    item {
+                        RulesSection(
+                            rules = ui.rules,
+                            res = res,
+                            onEditRule = { editing = it },
+                            onOpenWhy = { onOpenLink(whyUrl) },
+                        )
+                    }
+
+                    item {
+                        val privacyUrl = stringResource(R.string.url_privacy)
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            FooterLink(stringResource(R.string.link_privacy)) { onOpenLink(privacyUrl) }
+                            FooterLink(stringResource(R.string.link_feedback)) { onOpenLink("https://github.com/Relthdrarxash/respire/issues") }
+                            FooterLink(stringResource(R.string.link_source)) { onOpenLink("https://github.com/Relthdrarxash/respire") }
+                        }
+                        if (ui.version.isNotEmpty()) {
+                            Text(
+                                stringResource(R.string.app_version, ui.version),
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                                fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -203,7 +250,44 @@ fun HomeScreen(
 }
 
 @Composable
-private fun Header(serviceOn: Boolean, onOpenAccessibility: () -> Unit) {
+private fun RespireBottomBar(selected: RespireTab, onSelect: (RespireTab) -> Unit) {
+    NavigationBar(
+        containerColor = Calme.Card,
+        contentColor = Calme.Ink,
+    ) {
+        val colors = NavigationBarItemDefaults.colors(
+            selectedIconColor = Calme.Ink,
+            selectedTextColor = Calme.Ink,
+            indicatorColor = Calme.SageTint,
+            unselectedIconColor = Calme.Muted,
+            unselectedTextColor = Calme.Muted,
+        )
+        NavigationBarItem(
+            selected = selected == RespireTab.APPS,
+            onClick = { onSelect(RespireTab.APPS) },
+            icon = { Icon(RespireIcons.Apps, contentDescription = null) },
+            label = { Text(stringResource(R.string.nav_apps), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 12.sp) },
+            colors = colors,
+        )
+        NavigationBarItem(
+            selected = selected == RespireTab.STATS,
+            onClick = { onSelect(RespireTab.STATS) },
+            icon = { Icon(RespireIcons.Chart, contentDescription = null) },
+            label = { Text(stringResource(R.string.nav_stats), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 12.sp) },
+            colors = colors,
+        )
+        NavigationBarItem(
+            selected = selected == RespireTab.CONFIG,
+            onClick = { onSelect(RespireTab.CONFIG) },
+            icon = { Icon(RespireIcons.Settings, contentDescription = null) },
+            label = { Text(stringResource(R.string.nav_config), fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 12.sp) },
+            colors = colors,
+        )
+    }
+}
+
+@Composable
+private fun Header(title: String, serviceOn: Boolean, onOpenAccessibility: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -212,7 +296,7 @@ private fun Header(serviceOn: Boolean, onOpenAccessibility: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
-            "Respire",
+            title,
             modifier = Modifier.semantics { heading() },
             fontFamily = Fraunces,
             fontWeight = FontWeight.SemiBold,

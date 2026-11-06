@@ -58,7 +58,6 @@ fun PauseScreen(
     remaining: Int,
     onClose: () -> Unit,
     onOpen: () -> Unit,
-    onOpenShort: () -> Unit = onOpen,
 ) {
     var selectedReason by remember { mutableStateOf<Int?>(null) }
     Column(
@@ -172,59 +171,21 @@ fun PauseScreen(
 
         if (!ui.blocked) {
             val verb = stringResource(if (ui.sessionEnd) R.string.pause_continue else R.string.pause_open)
-            if (remaining == 0 && ui.sessionMinutes > 2 && !ui.sessionEnd) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    TextButton(
-                        onClick = onOpenShort,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp),
-                    ) {
-                        Text(
-                            stringResource(R.string.pause_open_short),
-                            fontFamily = Nunito,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
-                            color = Calme.SageDark,
-                        )
-                    }
-                    TextButton(
-                        onClick = onOpen,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp),
-                    ) {
-                        Text(
-                            verb,
-                            fontFamily = Nunito,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
-                            color = Calme.Muted,
-                        )
-                    }
-                }
-            } else {
-                TextButton(
-                    onClick = onOpen,
-                    enabled = remaining == 0,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .height(48.dp),
-                ) {
-                    Text(
-                        if (remaining > 0) stringResource(R.string.pause_wait, verb, remaining) else verb,
-                        fontFamily = Nunito,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = Calme.Muted,
-                    )
-                }
+            TextButton(
+                onClick = onOpen,
+                enabled = remaining == 0,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .height(48.dp),
+            ) {
+                Text(
+                    if (remaining > 0) stringResource(R.string.pause_wait, verb, remaining) else verb,
+                    fontFamily = Nunito,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    color = if (remaining == 0) Calme.SageDark else Calme.Muted,
+                )
             }
         }
     }

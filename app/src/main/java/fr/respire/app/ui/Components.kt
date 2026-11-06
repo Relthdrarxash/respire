@@ -28,7 +28,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -134,4 +139,43 @@ fun SectionTitle(text: String, modifier: Modifier = Modifier) {
         fontSize = 17.sp,
         color = Calme.Ink,
     )
+}
+
+object RespireIcons {
+    val Apps: ImageVector by lazy {
+        stroke(
+            "Apps",
+            "M4 4h6v6H4z", "M14 4h6v6h-6z", "M4 14h6v6H4z", "M14 14h6v6h-6z",
+        )
+    }
+    val Chart: ImageVector by lazy {
+        stroke("Chart", "M5 20V10", "M12 20V4", "M19 20v-7")
+    }
+    val Settings: ImageVector by lazy {
+        stroke(
+            "Settings",
+            "M4 21v-7", "M4 10V3", "M12 21v-9", "M12 8V3", "M20 21v-5", "M20 12V3",
+            "M1 14h6", "M9 8h6", "M17 16h6",
+        )
+    }
+
+    private fun stroke(name: String, vararg paths: String): ImageVector =
+        ImageVector.Builder(
+            name = name,
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f,
+        ).apply {
+            paths.forEach { d ->
+                addPath(
+                    pathData = PathParser().parsePathString(d).toNodes(),
+                    fill = null,
+                    stroke = SolidColor(Color.Black),
+                    strokeLineWidth = 2f,
+                    strokeLineCap = StrokeCap.Round,
+                    strokeLineJoin = StrokeJoin.Round,
+                )
+            }
+        }.build()
 }

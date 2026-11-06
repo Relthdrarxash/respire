@@ -103,8 +103,7 @@ class PauseActivity : ComponentActivity() {
                     ui = ui,
                     remaining = remaining.intValue,
                     onClose = ::giveUp,
-                    onOpen = { openAnyway(prefs.sessionMinutes) },
-                    onOpenShort = { openAnyway(2) },
+                    onOpen = ::openAnyway,
                 )
             }
         }
@@ -153,12 +152,12 @@ class PauseActivity : ComponentActivity() {
         finish()
     }
 
-    private fun openAnyway(minutes: Int = prefs.sessionMinutes) {
+    private fun openAnyway() {
         if (decided || blocked || remaining.intValue > 0) return
         decided = true
         val now = System.currentTimeMillis()
         prefs.recordOpen(pkg, now)
-        prefs.allow(pkg, now + minutes * 60_000L)
+        prefs.allow(pkg, now + prefs.sessionMinutes * 60_000L)
         RespireWidget.refreshAll(this)
         packageManager.getLaunchIntentForPackage(pkg)?.let { launch ->
             launch.addFlags(

@@ -145,4 +145,7 @@ What happens to it: it is used on your phone only, at the moment it is accessed.
         <item quantity="one">Add this app</item>
         <item quantity="other">Add these %d apps</item>
     </plurals>
+    <string name="nav_apps">Apps</string>
+    <string name="nav_stats">Statistics</string>
+    <string name="nav_config">Settings</string>
 </resources>

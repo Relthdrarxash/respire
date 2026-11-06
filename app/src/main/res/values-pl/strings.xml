@@ -146,4 +146,7 @@ Co dzieje się z danymi: wszystko zostaje wyłącznie w telefonie. Respire nie m
         <item quantity="many">Dodaj te %d aplikacji</item>
         <item quantity="other">Dodaj te %d aplikacji</item>
     </plurals>
+    <string name="nav_apps">Aplikacje</string>
+    <string name="nav_stats">Statystyki</string>
+    <string name="nav_config">Ustawienia</string>
 </resources>

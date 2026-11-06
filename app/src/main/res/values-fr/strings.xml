@@ -143,4 +143,7 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
         <item quantity="many">Ajouter ces %d applis</item>
         <item quantity="other">Ajouter ces %d applis</item>
     </plurals>
+    <string name="nav_apps">Applis</string>
+    <string name="nav_stats">Statistiques</string>
+    <string name="nav_config">Configuration</string>
 </resources>
