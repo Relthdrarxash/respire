@@ -8,7 +8,7 @@ A small Android app against doomscrolling. Respire puts a breathing pause in fro
 
 No Internet permission, no trackers, no account. Everything stays on your phone.
 
-**[Respire website](https://relthdrarxash.github.io/respire/)** · **[Download APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Why these choices](https://relthdrarxash.github.io/respire/why.html) · [Privacy policy](https://relthdrarxash.github.io/respire/privacy.html)
+**[Respire website](https://relthdrarxash.github.io/respire/)** · **[Google Play](https://play.google.com/store/apps/details?id=fr.respire.app)** · **[Download APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Why these choices](https://relthdrarxash.github.io/respire/why.html) · [Privacy policy](https://relthdrarxash.github.io/respire/privacy.html)
 
 Available in English, French, Spanish and German.
 
@@ -43,7 +43,7 @@ I spend too much time scrolling endless feeds myself, and people close to me hav
 
 ## Install
 
-1. Download `Respire.apk` from the [latest release](../../releases/latest) on your phone and install it. Android will ask you to allow installs from your browser or file manager.
+1. Install from [Google Play](https://play.google.com/store/apps/details?id=fr.respire.app) or download `Respire.apk` from the [latest release](../../releases/latest) on your phone and install it (Android will ask you to allow installs from your browser or file manager).
 2. Open Respire, tap **Choose apps** and turn on the apps to slow down.
 3. Tap **Open settings** (or the **Inactive** badge) and turn on **Respire** in Accessibility settings.
 4. **Android 13 and later**: if the switch is greyed out ("restricted setting"), go to Settings > Apps > Respire > ⋮ menu > **Allow restricted settings**, then repeat step 3.

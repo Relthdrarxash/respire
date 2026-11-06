@@ -278,9 +278,9 @@ class Prefs(context: Context) {
     fun shortsBlockedToday(now: Long = System.currentTimeMillis()): Int =
         sp.getInt(dayKey("d_short", now), 0)
 
-    /** Renoncements des 7 derniers jours, du plus ancien à aujourd'hui. */
-    fun giveUpsLastWeek(now: Long = System.currentTimeMillis()): List<Int> =
-        Rules.pastDays(now).map { day -> sp.getInt(dayKey("d_give", day), 0) }
+    /** Renoncements des derniers jours, du plus ancien à aujourd'hui (par défaut 56 jours = 8 semaines). */
+    fun giveUpsLastWeek(now: Long = System.currentTimeMillis(), count: Int = 56): List<Int> =
+        Rules.pastDays(now, count).map { day -> sp.getInt(dayKey("d_give", day), 0) }
 
     fun attemptsSince(pkg: String, since: Long) = readLog("att_$pkg").count { it >= since }
 

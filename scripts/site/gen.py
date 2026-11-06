@@ -3,6 +3,7 @@ import os, sys
 OUT = sys.argv[1]
 REPO = "https://github.com/Relthdrarxash/respire"
 APK = REPO + "/releases/latest/download/Respire.apk"
+PLAY_STORE = "https://play.google.com/store/apps/details?id=fr.respire.app"
 ISSUES = REPO + "/issues"
 MAIL = "pilmil.studio@proton.me"
 
@@ -19,8 +20,8 @@ T = {
     nav_how="How it works", nav_privacy="Privacy", nav_install="Install",
     h1="Why are you opening it now?",
     lede="Respire is a free Android app that puts a breathing pause in front of the apps you open without thinking. Close them in one tap, or wait a few seconds and open them on purpose.",
-    dl="Download the APK", src="View the source code",
-    fine="Android 8 and later. Free and open source (GPL-3.0). No ads, no account, no Internet permission. A Google Play version is in preparation.",
+    dl="Download APK", dl_play="Google Play", src="View the source code",
+    fine="Android 8 and later. Free and open source (GPL-3.0). No ads, no account, no Internet permission. Available on Google Play and GitHub.",
     caption="Breathe in as the circle grows, out as it shrinks.",
     how_h="Built from what research says works",
     how_intro='Each feature rests on a study of smartphone overuse or on a stated design choice. The details, rule by rule, are on the page <a href="why.html">Why Respire works the way it does</a>.',
@@ -47,7 +48,7 @@ T = {
     why_p="I spend too much time scrolling endless feeds myself, and people close to me have needed the same help. Apps that really help do exist, but their most useful features are often behind a paywall: daily limits, blocking Reels or Shorts, statistics. Respire aims to make these tools available to everyone, with no subscription, no ads and no data collection. Someone who wants to take back control of their time should not have to pay for it.",
     inst_h="Install",
     steps=[
-        f'<strong>Download</strong> <a href="{APK}">Respire.apk</a> on your phone and open it. Android will ask you to allow installs from your browser.',
+        f'<strong>Install from Google Play</strong> via the <a href="{PLAY_STORE}">Google Play Store</a>, or <strong>download</strong> <a href="{APK}">Respire.apk</a> on your phone (Android will ask you to allow installs from your browser).',
         "<strong>Choose the apps</strong> to slow down in Respire.",
         "<strong>Turn on Respire</strong> in Accessibility settings, from the button in the app.",
         "<strong>Android 13 and later:</strong> if the switch is greyed out, go to Settings, Apps, Respire, the ⋮ menu, then Allow restricted settings, and try again.",
@@ -90,8 +91,8 @@ T = {
     nav_how="Fonctionnement", nav_privacy="Vie privée", nav_install="Installer",
     h1="Pourquoi tu l’ouvres maintenant ?",
     lede="Respire est une appli Android gratuite qui place une pause de respiration devant les applis que tu ouvres sans y penser. Ferme-les d’un geste, ou attends quelques secondes et ouvre-les en connaissance de cause.",
-    dl="Télécharger l’APK", src="Voir le code source",
-    fine="Android 8 et plus. Libre et gratuite (GPL-3.0). Sans pub, sans compte, sans permission Internet. Une version Google Play est en préparation.",
+    dl="Télécharger l’APK", dl_play="Google Play", src="Voir le code source",
+    fine="Android 8 et plus. Libre et gratuite (GPL-3.0). Sans pub, sans compte, sans permission Internet. Disponible sur Google Play et GitHub.",
     caption="Inspire quand le cercle grandit, expire quand il rétrécit.",
     how_h="Conçue à partir de ce que dit la recherche",
     how_intro='Chaque fonction s’appuie sur une étude sur l’usage excessif du smartphone ou sur un choix de conception assumé. Le détail, règle par règle, est sur la page <a href="pourquoi.html">Pourquoi Respire est faite comme ça</a>.',
@@ -118,7 +119,7 @@ T = {
     why_p="Je passe moi aussi trop de temps à faire défiler des fils sans fin, et des proches ont eu le même besoin. Les applications qui aident vraiment existent, mais leurs fonctions les plus utiles sont souvent payantes : limites quotidiennes, blocage des Reels ou des Shorts, statistiques. L’idée de Respire est de rendre ces outils accessibles à tout le monde, sans abonnement, sans publicité et sans collecte de données. Ce n’est pas à la personne qui veut reprendre la main sur son temps de payer pour y arriver.",
     inst_h="Installer",
     steps=[
-        f'<strong>Télécharge</strong> <a href="{APK}">Respire.apk</a> depuis ton téléphone et ouvre-le. Android te demandera d’autoriser l’installation depuis ton navigateur.',
+        f'<strong>Installe depuis Google Play</strong> sur le <a href="{PLAY_STORE}">Google Play Store</a>, ou <strong>télécharge</strong> <a href="{APK}">Respire.apk</a> depuis ton téléphone (Android te demandera d’autoriser l’installation depuis ton navigateur).',
         "<strong>Choisis les applis</strong> à freiner dans Respire.",
         "<strong>Active Respire</strong> dans les paramètres d’accessibilité, depuis le bouton de l’appli.",
         "<strong>Android 13 et plus :</strong> si l’interrupteur est grisé, va dans Paramètres, Applications, Respire, menu ⋮, puis Autoriser les paramètres restreints, et recommence.",
@@ -213,7 +214,8 @@ def index(t):
 <h1>{t["h1"]}</h1>
 <p class="lede">{t["lede"]}</p>
 <div class="actions">
-<a class="btn btn-primary" href="{APK}">{t["dl"]}</a>
+<a class="btn btn-primary" href="{PLAY_STORE}">{t["dl_play"]}</a>
+<a class="btn btn-quiet" href="{APK}">{t["dl"]}</a>
 <a class="btn btn-quiet" href="{REPO}">{t["src"]}</a>
 </div>
 <p class="fine">{t["fine"]}</p>

@@ -323,14 +323,14 @@ internal fun SuiteSection(onOpenLink: (String) -> Unit) {
             )
             Spacer(Modifier.height(10.dp))
             CompanionAppRow(
-                badge = "🌙",
+                badge = "L",
                 name = stringResource(R.string.app_lunaison_name),
                 description = stringResource(R.string.app_lunaison_desc),
                 onClick = { onOpenLink("https://relthdrarxash.github.io/lunaison/") },
             )
             HorizontalDivider(Modifier.padding(vertical = 8.dp), color = Calme.Divider)
             CompanionAppRow(
-                badge = "🛏️",
+                badge = "S",
                 name = stringResource(R.string.app_sommelle_name),
                 description = stringResource(R.string.app_sommelle_desc),
                 onClick = { onOpenLink("https://relthdrarxash.github.io/sommelle/") },

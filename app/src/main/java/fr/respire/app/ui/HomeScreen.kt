@@ -217,7 +217,7 @@ fun HomeScreen(
     }
 
     openApp?.let { app ->
-        AppDialog(app, appWeek(app.pkg), ui.weekLabels) { openApp = null }
+        AppDialog(app, appWeek(app.pkg), ui.weekLabels.takeLast(7)) { openApp = null }
     }
 
     if (showDiag) {
