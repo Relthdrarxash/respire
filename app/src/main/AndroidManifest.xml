@@ -2,6 +2,9 @@
 <!-- Pas de permission INTERNET : rien ne sort du téléphone. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Pour prévenir si le service est coupé et, sur demande, envoyer le bilan du dimanche. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <!-- Pour lister les applis installées qui ont une icône dans le lanceur. -->
     <queries>
         <intent>

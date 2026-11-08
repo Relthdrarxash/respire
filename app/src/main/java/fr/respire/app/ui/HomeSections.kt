@@ -36,6 +36,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -157,7 +159,7 @@ internal fun RulesSection(
 }
 
 @Composable
-private fun ShortRow(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+internal fun ShortRow(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -423,3 +425,117 @@ internal fun AboutSection(
         }
     }
 }
+
+/**
+ * Checklist de démarrage, tant que tout n'est pas prêt : d'abord les applis (avec des suggestions
+ * ajoutées en un geste), puis le service d'accessibilité, puis, en option, les notifications.
+ * Sans applis choisies, activer le service ne servirait à rien : l'ordre est voulu.
+ */
+@Composable
+internal fun StartChecklist(
+    hasApps: Boolean,
+    serviceOn: Boolean,
+    canNotify: Boolean,
+    suggestions: List<AppItem>,
+    onAddApp: (String) -> Unit,
+    onPickApps: () -> Unit,
+    onOpenAccessibility: () -> Unit,
+    onAllowNotifications: () -> Unit,
+) {
+    CalmeCard {
+        Text(stringResource(R.string.start_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Calme.Ink)
+        Spacer(Modifier.height(12.dp))
+
+        StepLine(stringResource(R.string.start_step_apps), done = hasApps)
+        if (!hasApps) {
+            if (suggestions.isNotEmpty()) {
+                Text(
+                    stringResource(R.string.start_suggest),
+                    modifier = Modifier.padding(top = 6.dp, bottom = 4.dp),
+                    fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
+                )
+                suggestions.take(4).forEach { app ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .clip(RoundedCornerShape(14.dp))
+                            .clickable(role = Role.Button) { onAddApp(app.pkg) }
+                            .padding(horizontal = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        AppIcon(app.icon, 28)
+                        Spacer(Modifier.size(10.dp))
+                        Text(app.label, modifier = Modifier.weight(1f), fontFamily = Nunito, fontSize = 15.sp, color = Calme.Ink)
+                        Text("+", fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = Calme.Sage)
+                    }
+                }
+            }
+            Text(
+                stringResource(R.string.apps_choose),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 48.dp)
+                    .clickable(role = Role.Button, onClick = onPickApps)
+                    .padding(vertical = 12.dp, horizontal = 8.dp),
+                fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Calme.Sage,
+            )
+        }
+
+        Spacer(Modifier.height(10.dp))
+        StepLine(stringResource(R.string.start_step_service), done = serviceOn)
+        if (!serviceOn) {
+            Text(
+                stringResource(R.string.activation_restricted),
+                modifier = Modifier.padding(top = 4.dp),
+                fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
+            )
+            Spacer(Modifier.height(10.dp))
+            PillButton(stringResource(R.string.activation_button), onClick = onOpenAccessibility, enabled = hasApps, height = 52.dp)
+        }
+
+        if (!canNotify) {
+            Spacer(Modifier.height(14.dp))
+            StepLine(stringResource(R.string.start_step_notif), done = false)
+            Text(
+                stringResource(R.string.start_notif_button),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 48.dp)
+                    .clickable(role = Role.Button, onClick = onAllowNotifications)
+                    .padding(vertical = 12.dp, horizontal = 8.dp),
+                fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Calme.Sage,
+            )
+        }
+    }
+}
+
+@Composable
+private fun StepLine(text: String, done: Boolean) {
+    val doneLabel = stringResource(R.string.start_done)
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true) { if (done) stateDescription = doneLabel },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            Modifier
+                .size(24.dp)
+                .clip(RoundedCornerShape(50))
+                .background(if (done) Calme.Sage else Calme.Chip),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (done) Text("✓", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+        }
+        Spacer(Modifier.size(10.dp))
+        Text(
+            text,
+            fontFamily = Nunito,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 15.sp,
+            color = if (done) Calme.Muted else Calme.Ink,
+        )
+    }
+}
+

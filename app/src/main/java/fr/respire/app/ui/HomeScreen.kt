@@ -71,6 +71,9 @@ data class HomeUi(
     val risk: RiskUi,
     /** Version installée, affichée en bas de l'accueil pour vérifier une mise à jour. */
     val version: String = "",
+    /** Applis à flux sans fin installées, proposées dans la checklist de démarrage. */
+    val suggestions: List<AppItem> = emptyList(),
+    val canNotify: Boolean = true,
 )
 
 enum class ShortKind { REELS, SHORTS, FACEBOOK }
@@ -91,6 +94,8 @@ fun HomeScreen(
     onSetShortForm: (ShortKind, Boolean) -> Unit,
     onSaveRisk: (Boolean, Int, Int, Int) -> Unit,
     appWeek: (String) -> Prefs.AppWeek,
+    onAddApp: (String) -> Unit = {},
+    onAllowNotifications: () -> Unit = {},
 ) {
     var currentTab by rememberSaveable { mutableStateOf(RespireTab.APPS) }
     var openApp by remember { mutableStateOf<AppItem?>(null) }
@@ -122,8 +127,19 @@ fun HomeScreen(
                 RespireTab.APPS -> {
                     item { Header("Respire", ui.serviceOn, onOpenAccessibility) }
 
-                    if (!ui.serviceOn) {
-                        item { ActivationCard(onOpenAccessibility) }
+                    if (!ui.serviceOn || ui.targets.isEmpty()) {
+                        item {
+                            StartChecklist(
+                                hasApps = ui.targets.isNotEmpty(),
+                                serviceOn = ui.serviceOn,
+                                canNotify = ui.canNotify,
+                                suggestions = ui.suggestions,
+                                onAddApp = onAddApp,
+                                onPickApps = onPickApps,
+                                onOpenAccessibility = onOpenAccessibility,
+                                onAllowNotifications = onAllowNotifications,
+                            )
+                        }
                     }
 
                     item {
@@ -319,24 +335,5 @@ private fun Header(title: String, serviceOn: Boolean, onOpenAccessibility: () ->
                 color = if (serviceOn) Calme.SageDark else Calme.ClayText,
             )
         }
-    }
-}
-
-@Composable
-private fun ActivationCard(onOpenAccessibility: () -> Unit) {
-    CalmeCard {
-        Text(stringResource(R.string.activation_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Calme.Ink)
-        Text(
-            stringResource(R.string.activation_body),
-            modifier = Modifier.padding(top = 8.dp),
-            fontFamily = Nunito, fontSize = 15.sp, color = Calme.Muted,
-        )
-        Text(
-            stringResource(R.string.activation_restricted),
-            modifier = Modifier.padding(top = 8.dp),
-            fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
-        )
-        Spacer(Modifier.height(16.dp))
-        PillButton(stringResource(R.string.activation_button), onClick = onOpenAccessibility, height = 52.dp)
     }
 }

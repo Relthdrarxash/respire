@@ -158,4 +158,22 @@
     <string name="app_lunaison_desc">Відстеження менструального циклу та гормональне здоров\'я, вільна та офлайн</string>
     <string name="app_sommelle_name">Sommelle</string>
     <string name="app_sommelle_desc">Супровід при хронічному безсонні за методом КПТ-Б, вільна та офлайн</string>
+    <string name="notif_channel">Respire</string>
+    <string name="notif_stopped_title">Respire на паузі</string>
+    <string name="notif_stopped_text">Android вимкнув службу Respire: паузи більше не з’являються. Торкніться, щоб увімкнути її знову.</string>
+    <string name="toast_giveup">Чудово: повернуто близько %1$d хв.</string>
+    <string name="start_title">Для початку</string>
+    <string name="start_step_apps">1. Оберіть застосунки, які відкриваєте машинально</string>
+    <string name="start_suggest">Пропозиції, торкніться, щоб додати:</string>
+    <string name="start_step_service">2. Увімкніть Respire у налаштуваннях спеціальних можливостей</string>
+    <string name="start_step_notif">3. Необов’язково: попередження, якщо Android зупинить Respire</string>
+    <string name="start_notif_button">Дозволити сповіщення</string>
+    <string name="start_done">Готово</string>
+    <string name="stats_week_saved">≈ %1$d хв повернуто за цей тиждень</string>
+    <plurals name="stats_week_giveups">
+        <item quantity="one">%d відмова за цей тиждень</item>
+        <item quantity="few">%d відмови за цей тиждень</item>
+        <item quantity="many">%d відмов за цей тиждень</item>
+        <item quantity="other">%d відмови за цей тиждень</item>
+    </plurals>
 </resources>

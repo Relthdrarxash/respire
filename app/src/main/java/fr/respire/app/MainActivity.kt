@@ -3,7 +3,10 @@ package fr.respire.app
 import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Color
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -44,6 +47,8 @@ class MainActivity : ComponentActivity() {
     private var allApps by mutableStateOf<List<AppItem>>(emptyList())
     private var selected by mutableStateOf<Set<String>>(emptySet())
 
+    private val notificationPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { refresh() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
@@ -54,6 +59,7 @@ class MainActivity : ComponentActivity() {
         prefs.pruneOldDays()
         selected = prefs.targets
         loadApps()
+        CheckInWorker.schedule(this)
 
         setContent {
             RespireTheme {
@@ -90,6 +96,8 @@ class MainActivity : ComponentActivity() {
                         onSetShortForm = ::setShortForm,
                         onSaveRisk = ::saveRisk,
                         appWeek = { pkg -> prefs.appWeek(pkg) },
+                        onAddApp = { pkg -> setTarget(pkg, true) },
+                        onAllowNotifications = ::askNotifications,
                     )
                     else -> Box(Modifier.fillMaxSize().background(Calme.Ground))
                 }
@@ -129,15 +137,24 @@ class MainActivity : ComponentActivity() {
         return enabled.split(':').any { ComponentName.unflattenFromString(it) == me }
     }
 
+    private fun askNotifications() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
     private fun refresh() {
         val byPkg = allApps.associateBy { it.pkg }
+        val serviceOn = serviceEnabled()
+        // Vu actif au moins une fois : un arrêt plus tard sera signalé par CheckInWorker.
+        if (serviceOn) prefs.serviceSeenOn = true
         val targets = selected
             .map { pkg -> byPkg[pkg] ?: AppItem(pkg, pkg, null) }
             .sortedBy { it.label.lowercase() }
             .map { TargetStat(it, prefs.opensToday(it.pkg), prefs.quotaReached(it.pkg)) }
 
         home = HomeUi(
-            serviceOn = serviceEnabled(),
+            serviceOn = serviceOn,
             giveUps = prefs.giveUpsToday(),
             pauses = prefs.attemptsTodayAll(),
             week = prefs.giveUpsLastWeek(),
@@ -164,6 +181,8 @@ class MainActivity : ComponentActivity() {
                 active = prefs.inRiskWindow(),
             ),
             version = installedVersion(),
+            suggestions = Suggestions.pick(byPkg.keys, selected).mapNotNull { byPkg[it] },
+            canNotify = CheckInWorker.canNotify(this),
         )
     }
 

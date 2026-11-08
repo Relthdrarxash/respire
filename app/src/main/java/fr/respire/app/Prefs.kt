@@ -59,6 +59,19 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("a11y_consent", false)
         set(v) = sp.edit().putBoolean("a11y_consent", v).apply()
 
+    // ---- Notifications -------------------------------------------------------
+
+    /** Vrai dès que le service a été vu actif : un arrêt ensuite mérite d'être signalé. */
+    var serviceSeenOn: Boolean
+        get() = sp.getBoolean("service_seen_on", false)
+        set(v) = sp.edit().putBoolean("service_seen_on", v).apply()
+
+    /** Dernier avertissement « Respire est en pause », pour ne pas le répéter plus d'une fois par jour. */
+    var lastServiceWarning: Long
+        get() = sp.getLong("service_warning_at", 0L)
+        set(v) = sp.edit().putLong("service_warning_at", v).apply()
+
+
     // ---- Heures à risque --------------------------------------------------------
 
     /** Plage où les règles se durcissent (attente doublée, ouvertures plafonnées). */

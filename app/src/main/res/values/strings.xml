@@ -157,4 +157,20 @@ What happens to it: it is used on your phone only, at the moment it is accessed.
     <string name="app_lunaison_desc">Menstrual cycle &amp; hormonal health tracking, free and offline</string>
     <string name="app_sommelle_name">Sommelle</string>
     <string name="app_sommelle_desc">CBT-I accompaniment for chronic insomnia, free and offline</string>
+    <string name="notif_channel">Respire</string>
+    <string name="notif_stopped_title">Respire is paused</string>
+    <string name="notif_stopped_text">Android turned off the Respire service: pauses no longer appear. Tap to turn it back on.</string>
+    <string name="toast_giveup">Well done: about %1$d min won back.</string>
+    <string name="start_title">Getting started</string>
+    <string name="start_step_apps">1. Choose the apps you open on autopilot</string>
+    <string name="start_suggest">Suggestions, tap to add:</string>
+    <string name="start_step_service">2. Turn on Respire in Accessibility settings</string>
+    <string name="start_step_notif">3. Optional: be warned if Android stops Respire</string>
+    <string name="start_notif_button">Allow notifications</string>
+    <string name="start_done">Done</string>
+    <string name="stats_week_saved">≈ %1$d min won back that week</string>
+    <plurals name="stats_week_giveups">
+        <item quantity="one">%d give-up that week</item>
+        <item quantity="other">%d give-ups that week</item>
+    </plurals>
 </resources>

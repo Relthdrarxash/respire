@@ -158,4 +158,22 @@ Co dzieje się z danymi: wszystko zostaje wyłącznie w telefonie. Respire nie m
     <string name="app_lunaison_desc">Śledzenie cyklu menstruacyjnego i zdrowie hormonalne, bez konta i offline</string>
     <string name="app_sommelle_name">Sommelle</string>
     <string name="app_sommelle_desc">Wsparcie w przewlekłej bezsenności metodą CBT-I, bez konta i offline</string>
+    <string name="notif_channel">Respire</string>
+    <string name="notif_stopped_title">Respire jest wstrzymane</string>
+    <string name="notif_stopped_text">Android wyłączył usługę Respire: przerwy już się nie wyświetlają. Dotknij, aby ją ponownie włączyć.</string>
+    <string name="toast_giveup">Brawo: odzyskane ok. %1$d min.</string>
+    <string name="start_title">Na początek</string>
+    <string name="start_step_apps">1. Wybierz aplikacje, które otwierasz odruchowo</string>
+    <string name="start_suggest">Propozycje, dotknij, aby dodać:</string>
+    <string name="start_step_service">2. Włącz Respire w ustawieniach ułatwień dostępu</string>
+    <string name="start_step_notif">3. Opcjonalnie: ostrzeżenie, gdy Android wyłączy Respire</string>
+    <string name="start_notif_button">Zezwól na powiadomienia</string>
+    <string name="start_done">Gotowe</string>
+    <string name="stats_week_saved">≈ %1$d min odzyskanych w tym tygodniu</string>
+    <plurals name="stats_week_giveups">
+        <item quantity="one">%d rezygnacja w tym tygodniu</item>
+        <item quantity="few">%d rezygnacje w tym tygodniu</item>
+        <item quantity="many">%d rezygnacji w tym tygodniu</item>
+        <item quantity="other">%d rezygnacji w tym tygodniu</item>
+    </plurals>
 </resources>
