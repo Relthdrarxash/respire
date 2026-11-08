@@ -176,4 +176,8 @@ Co dzieje się z danymi: wszystko zostaje wyłącznie w telefonie. Respire nie m
         <item quantity="many">%d rezygnacji w tym tygodniu</item>
         <item quantity="other">%d rezygnacji w tym tygodniu</item>
     </plurals>
+    <string name="review_title">Respire działa</string>
+    <string name="review_text">Darmowa, otwarta i bez reklam aplikacja Respire nie ma budżetu na promocję. Krótka opinia w Sklepie Play pomoże innym ją znaleźć.</string>
+    <string name="review_yes">Wystaw opinię</string>
+    <string name="review_no">Nie, dziękuję</string>
 </resources>

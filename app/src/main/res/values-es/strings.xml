@@ -171,4 +171,8 @@ Qué hace con ello: se usa solo en tu teléfono, en el momento en que se lee. No
         <item quantity="one">%d renuncia esa semana</item>
         <item quantity="other">%d renuncias esa semana</item>
     </plurals>
+    <string name="review_title">Respire está funcionando</string>
+    <string name="review_text">Gratuita, libre y sin anuncios, Respire no tiene presupuesto para darse a conocer. Una breve opinión en Google Play ayuda a otras personas a encontrarla.</string>
+    <string name="review_yes">Dejar una opinión</string>
+    <string name="review_no">No, gracias</string>
 </resources>

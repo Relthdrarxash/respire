@@ -171,4 +171,8 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
         <item quantity="one">%d renoncement cette semaine-là</item>
         <item quantity="other">%d renoncements cette semaine-là</item>
     </plurals>
+    <string name="review_title">Respire fait son travail</string>
+    <string name="review_text">Gratuite, libre et sans pub, Respire n’a aucun budget pour se faire connaître. Un petit avis sur le Play Store aide d’autres personnes à la trouver.</string>
+    <string name="review_yes">Laisser un avis</string>
+    <string name="review_no">Non merci</string>
 </resources>

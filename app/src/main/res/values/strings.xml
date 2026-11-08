@@ -173,4 +173,8 @@ What happens to it: it is used on your phone only, at the moment it is accessed.
         <item quantity="one">%d give-up that week</item>
         <item quantity="other">%d give-ups that week</item>
     </plurals>
+    <string name="review_title">Respire is doing its job</string>
+    <string name="review_text">Free, open source and ad-free, Respire has no budget to get known. A short review on the Play Store helps others find it.</string>
+    <string name="review_yes">Leave a review</string>
+    <string name="review_no">No thanks</string>
 </resources>

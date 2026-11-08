@@ -168,4 +168,8 @@ Was damit passiert: Die Daten werden nur auf deinem Handy verwendet, in dem Mome
         <item quantity="one">%d Verzicht in dieser Woche</item>
         <item quantity="other">%d Verzichte in dieser Woche</item>
     </plurals>
+    <string name="review_title">Respire wirkt</string>
+    <string name="review_text">Kostenlos, quelloffen und werbefrei hat Respire kein Budget, um bekannt zu werden. Eine kurze Bewertung im Play Store hilft anderen, die App zu finden.</string>
+    <string name="review_yes">Bewertung abgeben</string>
+    <string name="review_no">Nein danke</string>
 </resources>

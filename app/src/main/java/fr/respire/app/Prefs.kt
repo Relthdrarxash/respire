@@ -66,6 +66,11 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("service_seen_on", false)
         set(v) = sp.edit().putBoolean("service_seen_on", v).apply()
 
+    /** Demande d'avis sur le Play Store déjà proposée (acceptée ou refusée) : on ne la remontre pas. */
+    var reviewPromptDone: Boolean
+        get() = sp.getBoolean("review_prompt_done", false)
+        set(v) = sp.edit().putBoolean("review_prompt_done", v).apply()
+
     /** Dernier avertissement « Respire est en pause », pour ne pas le répéter plus d'une fois par jour. */
     var lastServiceWarning: Long
         get() = sp.getLong("service_warning_at", 0L)

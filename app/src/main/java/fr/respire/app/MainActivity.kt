@@ -98,6 +98,15 @@ class MainActivity : ComponentActivity() {
                         appWeek = { pkg -> prefs.appWeek(pkg) },
                         onAddApp = { pkg -> setTarget(pkg, true) },
                         onAllowNotifications = ::askNotifications,
+                        onReview = {
+                            prefs.reviewPromptDone = true
+                            openStore()
+                            refresh()
+                        },
+                        onDismissReview = {
+                            prefs.reviewPromptDone = true
+                            refresh()
+                        },
                     )
                     else -> Box(Modifier.fillMaxSize().background(Calme.Ground))
                 }
@@ -135,6 +144,15 @@ class MainActivity : ComponentActivity() {
         ) ?: return false
         val me = ComponentName(this, PauseService::class.java)
         return enabled.split(':').any { ComponentName.unflattenFromString(it) == me }
+    }
+
+    /** Fiche Play Store, ou sa page web sans Store (APK GitHub). */
+    private fun openStore() {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse("market://details?id=$packageName")))
+        } catch (e: android.content.ActivityNotFoundException) {
+            openLink("https://play.google.com/store/apps/details?id=$packageName")
+        }
     }
 
     private fun askNotifications() {
@@ -183,6 +201,7 @@ class MainActivity : ComponentActivity() {
             version = installedVersion(),
             suggestions = Suggestions.pick(byPkg.keys, selected).mapNotNull { byPkg[it] },
             canNotify = CheckInWorker.canNotify(this),
+            showReviewPrompt = !prefs.reviewPromptDone && prefs.giveUpsLastWeek(count = 7).sum() >= REVIEW_AFTER_GIVE_UPS,
         )
     }
 
@@ -266,3 +285,6 @@ class MainActivity : ComponentActivity() {
         }.start()
     }
 }
+
+/** Renoncements sur 7 jours à partir desquels Respire a clairement servi. */
+private const val REVIEW_AFTER_GIVE_UPS = 10

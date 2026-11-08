@@ -176,4 +176,8 @@
         <item quantity="many">%d відмов за цей тиждень</item>
         <item quantity="other">%d відмови за цей тиждень</item>
     </plurals>
+    <string name="review_title">Respire працює</string>
+    <string name="review_text">Безкоштовний, відкритий і без реклами, Respire не має бюджету на просування. Короткий відгук у Play Store допоможе іншим його знайти.</string>
+    <string name="review_yes">Залишити відгук</string>
+    <string name="review_no">Ні, дякую</string>
 </resources>

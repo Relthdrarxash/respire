@@ -74,6 +74,8 @@ data class HomeUi(
     /** Applis à flux sans fin installées, proposées dans la checklist de démarrage. */
     val suggestions: List<AppItem> = emptyList(),
     val canNotify: Boolean = true,
+    /** Une fois, après une semaine où les pauses ont vraiment servi. */
+    val showReviewPrompt: Boolean = false,
 )
 
 enum class ShortKind { REELS, SHORTS, FACEBOOK }
@@ -96,6 +98,8 @@ fun HomeScreen(
     appWeek: (String) -> Prefs.AppWeek,
     onAddApp: (String) -> Unit = {},
     onAllowNotifications: () -> Unit = {},
+    onReview: () -> Unit = {},
+    onDismissReview: () -> Unit = {},
 ) {
     var currentTab by rememberSaveable { mutableStateOf(RespireTab.APPS) }
     var openApp by remember { mutableStateOf<AppItem?>(null) }
@@ -164,6 +168,10 @@ fun HomeScreen(
                     item { Header(stringResource(R.string.nav_stats), ui.serviceOn, onOpenAccessibility) }
 
                     item { StatsCard(ui) }
+
+                    if (ui.showReviewPrompt) {
+                        item { ReviewCard(onReview = onReview, onDismiss = onDismissReview) }
+                    }
 
                     if (ui.targets.isNotEmpty()) {
                         item {
@@ -335,5 +343,28 @@ private fun Header(title: String, serviceOn: Boolean, onOpenAccessibility: () ->
                 color = if (serviceOn) Calme.SageDark else Calme.ClayText,
             )
         }
+    }
+}
+
+@Composable
+private fun ReviewCard(onReview: () -> Unit, onDismiss: () -> Unit) {
+    CalmeCard {
+        Text(stringResource(R.string.review_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = Calme.Ink)
+        Text(
+            stringResource(R.string.review_text),
+            modifier = Modifier.padding(top = 6.dp, bottom = 12.dp),
+            fontFamily = Nunito, fontSize = 14.sp, color = Calme.Muted,
+        )
+        PillButton(stringResource(R.string.review_yes), onClick = onReview, height = 48.dp)
+        Text(
+            stringResource(R.string.review_no),
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp)
+                .clickable(role = Role.Button, onClick = onDismiss)
+                .padding(vertical = 14.dp),
+            fontFamily = Nunito, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Calme.Sage,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+        )
     }
 }
