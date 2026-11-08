@@ -152,4 +152,24 @@ Was damit passiert: Die Daten werden nur auf deinem Handy verwendet, in dem Mome
     <string name="app_lunaison_desc">Menstruationszyklus- &amp; Hormongesundheits-Tracking, frei und offline</string>
     <string name="app_sommelle_name">Sommelle</string>
     <string name="app_sommelle_desc">KVT-I-Begleitung bei chronischer Schlaflosigkeit, frei und offline</string>
+    <string name="notif_channel">Respire</string>
+    <string name="notif_stopped_title">Respire ist pausiert</string>
+    <string name="notif_stopped_text">Android hat den Respire-Dienst beendet: Die Pausen erscheinen nicht mehr. Tippe, um ihn wieder einzuschalten.</string>
+    <string name="toast_giveup">Gut gemacht: etwa %1$d Min. gewonnen.</string>
+    <string name="start_title">Erste Schritte</string>
+    <string name="start_step_apps">1. Wähle die Apps, die du aus Gewohnheit öffnest</string>
+    <string name="start_suggest">Vorschläge, zum Hinzufügen tippen:</string>
+    <string name="start_step_service">2. Schalte Respire in den Bedienungshilfen ein</string>
+    <string name="start_step_notif">3. Optional: Hinweis, wenn Android Respire beendet</string>
+    <string name="start_notif_button">Benachrichtigungen erlauben</string>
+    <string name="start_done">Erledigt</string>
+    <string name="stats_week_saved">≈ %1$d Min. in dieser Woche gewonnen</string>
+    <plurals name="stats_week_giveups">
+        <item quantity="one">%d Verzicht in dieser Woche</item>
+        <item quantity="other">%d Verzichte in dieser Woche</item>
+    </plurals>
+    <string name="review_title">Respire wirkt</string>
+    <string name="review_text">Kostenlos, quelloffen und werbefrei hat Respire kein Budget, um bekannt zu werden. Eine kurze Bewertung im Play Store hilft anderen, die App zu finden.</string>
+    <string name="review_yes">Bewertung abgeben</string>
+    <string name="review_no">Nein danke</string>
 </resources>

@@ -155,4 +155,24 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
     <string name="app_lunaison_desc">Suivi du cycle menstruel &amp; santé hormonale, libre et sans compte</string>
     <string name="app_sommelle_name">Sommelle</string>
     <string name="app_sommelle_desc">Accompagnement de l\'insomnie chronique par TCC-I, libre et sans compte</string>
+    <string name="notif_channel">Respire</string>
+    <string name="notif_stopped_title">Respire est en pause</string>
+    <string name="notif_stopped_text">Android a coupé le service Respire : les pauses ne s’affichent plus. Touche pour le réactiver.</string>
+    <string name="toast_giveup">Bien joué : environ %1$d min de gagnées.</string>
+    <string name="start_title">Pour commencer</string>
+    <string name="start_step_apps">1. Choisis les applis que tu ouvres par réflexe</string>
+    <string name="start_suggest">Suggestions, touche pour ajouter :</string>
+    <string name="start_step_service">2. Active Respire dans les paramètres d’accessibilité</string>
+    <string name="start_step_notif">3. Facultatif : être prévenu si Android coupe Respire</string>
+    <string name="start_notif_button">Autoriser les notifications</string>
+    <string name="start_done">Fait</string>
+    <string name="stats_week_saved">≈ %1$d min gagnées sur cette semaine</string>
+    <plurals name="stats_week_giveups">
+        <item quantity="one">%d renoncement cette semaine-là</item>
+        <item quantity="other">%d renoncements cette semaine-là</item>
+    </plurals>
+    <string name="review_title">Respire fait son travail</string>
+    <string name="review_text">Gratuite, libre et sans pub, Respire n’a aucun budget pour se faire connaître. Un petit avis sur le Play Store aide d’autres personnes à la trouver.</string>
+    <string name="review_yes">Laisser un avis</string>
+    <string name="review_no">Non merci</string>
 </resources>

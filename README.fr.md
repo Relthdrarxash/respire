@@ -85,8 +85,8 @@ Respire est un projet personnel de Relthdrarxash, publié sous le nom Pilmil Stu
 
 Concrètement :
 
-- **Les décisions sont humaines.** Le problème à régler, les fonctions retenues à partir des études citées plus bas, ce qui a été écarté (séries, badges, notifications), le design, et chaque correction après des tests sur un vrai téléphone.
-- **Pas besoin de me croire sur parole.** Tout le code est ici, sous licence GPL-3.0. Le manifeste ne déclare pas la permission `INTERNET` : même un bug ne peut rien envoyer nulle part. Le code lié à l'accessibilité se trouve dans [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) et [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
+- **Les décisions sont humaines.** Le problème à régler, les fonctions retenues à partir des études citées plus bas, ce qui a été écarté (séries, badges, rappels ; la seule notification, facultative, prévient qu'Android a coupé le service), le design, et chaque correction après des tests sur un vrai téléphone.
+- **Pas besoin de me croire sur parole.** Tout le code est ici, sous licence MPL-2.0. Le manifeste ne déclare pas la permission `INTERNET` : même un bug ne peut rien envoyer nulle part. Le code lié à l'accessibilité se trouve dans [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) et [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
 - **Les règles sont testées.** Tout ce qui décide d'une attente ou d'un blocage se trouve dans [`Rules.kt`](app/src/main/java/fr/respire/app/Rules.kt), sans dépendance à Android, et est couvert par des tests lancés à chaque compilation (y compris les changements d'heure et les plages qui passent minuit).
 - **Quelqu'un en répond.** Si tu trouves un bug, un souci de vie privée ou quelque chose de flou, [ouvre une issue](https://github.com/Relthdrarxash/respire/issues) ou écris à pilmil.studio@proton.me. Les relectures du code d'accessibilité sont particulièrement bienvenues.
 
@@ -94,7 +94,7 @@ Concrètement :
 
 Copyright (C) 2026 Relthdrarxash
 
-Respire est un logiciel libre : tu peux le redistribuer et le modifier selon les termes de la [licence publique générale GNU v3.0](LICENSE). Les versions modifiées que tu distribues doivent rester sous la même licence, avec leur code source disponible.
+Respire est un logiciel libre, distribué sous licence [Mozilla Public License 2.0](LICENSE) (MPL-2.0) : tu peux l'utiliser, l'étudier, le modifier et le redistribuer ; les fichiers que tu modifies doivent rester publiés sous la même licence, avec leur code source.
 
 Les polices de `app/src/main/res/font/` restent sous leur propre licence SIL Open Font License (voir `licences/`).
 

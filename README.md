@@ -85,8 +85,8 @@ Respire is a personal project by Relthdrarxash, published under the name Pilmil 
 
 What that means in practice:
 
-- **The decisions are human.** Which problem to solve, which features to keep based on the studies cited below, what to leave out (streaks, badges, notifications), the design, and every fix after testing on a real phone.
-- **You don't have to take my word for it.** The full source is here under the GPL-3.0. The manifest declares no `INTERNET` permission, so even a bug cannot send data anywhere. The accessibility code is in [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) and [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
+- **The decisions are human.** Which problem to solve, which features to keep based on the studies cited below, what to leave out (streaks, badges, reminders; the only notification, optional, warns that Android stopped the service), the design, and every fix after testing on a real phone.
+- **You don't have to take my word for it.** The full source is here under the MPL-2.0. The manifest declares no `INTERNET` permission, so even a bug cannot send data anywhere. The accessibility code is in [`PauseService.kt`](app/src/main/java/fr/respire/app/PauseService.kt) and [`ShortFormBlocker.kt`](app/src/main/java/fr/respire/app/ShortFormBlocker.kt).
 - **The rules are tested.** Everything that decides a wait or a block lives in [`Rules.kt`](app/src/main/java/fr/respire/app/Rules.kt), with no Android dependency, and is covered by unit tests run on every build (including daylight saving time changes and time ranges that cross midnight).
 - **Someone answers for it.** If you find a bug, a privacy concern or something unclear, [open an issue](https://github.com/Relthdrarxash/respire/issues) or write to pilmil.studio@proton.me. Reviews of the accessibility code are especially welcome.
 
@@ -94,7 +94,7 @@ What that means in practice:
 
 Copyright (C) 2026 Relthdrarxash
 
-Respire is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License v3.0](LICENSE). Modified versions you distribute must stay under the same license, with their source code available.
+Respire is free software, distributed under the [Mozilla Public License 2.0](LICENSE) (MPL-2.0): you can use, study, modify and redistribute it; files you modify must stay under the same license, with their source code.
 
 The fonts in `app/src/main/res/font/` keep their own SIL Open Font License (see `licences/`).
 

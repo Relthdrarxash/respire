@@ -10,7 +10,7 @@ Ce document regroupe la fiche technique prête à copier-coller pour référence
 Categories:
   - Time
   - System
-License: GPL-3.0-or-later
+License: MPL-2.0
 AuthorName: Pilmil Studio
 AuthorEmail: pilmil.studio@proton.me
 WebSite: https://relthdrarxash.github.io/respire/

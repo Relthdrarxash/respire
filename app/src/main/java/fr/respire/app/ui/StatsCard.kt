@@ -123,7 +123,7 @@ internal fun StatsCard(ui: HomeUi) {
                         pluralStringResource(R.plurals.stats_gave_up, ui.pauses, ui.pauses)
                     }
                 } else {
-                    "${currentWeek.sum()} renoncements cette semaine-là"
+                    pluralStringResource(R.plurals.stats_week_giveups, currentWeek.sum(), currentWeek.sum())
                 },
                 modifier = Modifier.padding(bottom = 6.dp),
                 fontFamily = Nunito, fontSize = 16.sp, lineHeight = 21.sp, color = Calme.Ink,
@@ -132,7 +132,7 @@ internal fun StatsCard(ui: HomeUi) {
         if (savedWeekMin > 0) {
             Text(
                 if (weekOffset == 0) stringResource(R.string.stats_time_saved, savedTodayMin, savedWeekMin)
-                else "≈ $savedWeekMin min gagnées sur cette semaine",
+                else stringResource(R.string.stats_week_saved, savedWeekMin),
                 modifier = Modifier.padding(top = 6.dp),
                 fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Calme.SageDark,
             )
@@ -183,7 +183,7 @@ internal fun StatsCard(ui: HomeUi) {
             }
         }
         Text(
-            (if (weekOffset == 0) stringResource(R.string.stats_week) else "Renoncements · Glisser pour changer de semaine") + " · " + stringResource(R.string.stats_tap_hint),
+            (if (weekOffset == 0) stringResource(R.string.stats_week) else stringResource(R.string.hours_giveups)) + " · " + stringResource(R.string.stats_tap_hint),
             modifier = Modifier.padding(top = 4.dp),
             fontFamily = Nunito, fontSize = 12.sp, color = Calme.Muted,
         )

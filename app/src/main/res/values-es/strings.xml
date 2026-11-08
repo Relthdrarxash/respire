@@ -155,4 +155,24 @@ Qué hace con ello: se usa solo en tu teléfono, en el momento en que se lee. No
     <string name="app_lunaison_desc">Seguimiento del ciclo menstrual y salud hormonal, libre y sin conexión</string>
     <string name="app_sommelle_name">Sommelle</string>
     <string name="app_sommelle_desc">Acompañamiento del insomnio crónico con TCC-I, libre y sin conexión</string>
+    <string name="notif_channel">Respire</string>
+    <string name="notif_stopped_title">Respire está en pausa</string>
+    <string name="notif_stopped_text">Android ha detenido el servicio de Respire: las pausas ya no aparecen. Toca para reactivarlo.</string>
+    <string name="toast_giveup">Bien hecho: unos %1$d min recuperados.</string>
+    <string name="start_title">Para empezar</string>
+    <string name="start_step_apps">1. Elige las apps que abres por inercia</string>
+    <string name="start_suggest">Sugerencias, toca para añadir:</string>
+    <string name="start_step_service">2. Activa Respire en los ajustes de accesibilidad</string>
+    <string name="start_step_notif">3. Opcional: recibir un aviso si Android detiene Respire</string>
+    <string name="start_notif_button">Permitir notificaciones</string>
+    <string name="start_done">Hecho</string>
+    <string name="stats_week_saved">≈ %1$d min recuperados esa semana</string>
+    <plurals name="stats_week_giveups">
+        <item quantity="one">%d renuncia esa semana</item>
+        <item quantity="other">%d renuncias esa semana</item>
+    </plurals>
+    <string name="review_title">Respire está funcionando</string>
+    <string name="review_text">Gratuita, libre y sin anuncios, Respire no tiene presupuesto para darse a conocer. Una breve opinión en Google Play ayuda a otras personas a encontrarla.</string>
+    <string name="review_yes">Dejar una opinión</string>
+    <string name="review_no">No, gracias</string>
 </resources>

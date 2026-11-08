@@ -19,6 +19,6 @@ Service d’accessibilité
 Respire utilise l’API du service d’accessibilité d’Android, dont elle a besoin pour fonctionner. Elle lit uniquement le nom de l’appli qui passe au premier plan et, si tu actives le filtre Reels ou Shorts, les identifiants techniques des éléments affichés dans Instagram, YouTube et Facebook. Elle ne lit jamais les textes, les messages ou les images. Ces informations restent sur ton téléphone et ne sont jamais collectées ni partagées.
 
 Logiciel libre
-Respire est open source, sous licence GPL-3.0. Code source : https://github.com/Relthdrarxash/respire
+Respire est open source, sous licence MPL-2.0. Code source : https://github.com/Relthdrarxash/respire
 
 Disponible en français, anglais, espagnol et allemand.

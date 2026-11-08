@@ -144,6 +144,12 @@ class PauseActivity : ComponentActivity() {
         decided = true
         prefs.recordGiveUp(System.currentTimeMillis(), pkg)
         RespireWidget.refreshAll(this)
+        // Récompense immédiate : le temps qu'aurait duré la session, rendu visible tout de suite.
+        android.widget.Toast.makeText(
+            applicationContext,
+            getString(R.string.toast_giveup, prefs.sessionMinutes.coerceAtLeast(1)),
+            android.widget.Toast.LENGTH_SHORT,
+        ).show()
         startActivity(
             Intent(Intent.ACTION_MAIN)
                 .addCategory(Intent.CATEGORY_HOME)
