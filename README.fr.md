@@ -96,6 +96,8 @@ Copyright (C) 2026 Relthdrarxash
 
 Respire est un logiciel libre : tu peux le redistribuer et le modifier selon les termes de la [licence publique générale GNU v3.0](LICENSE). Les versions modifiées que tu distribues doivent rester sous la même licence, avec leur code source disponible.
 
+Une [permission additionnelle](LICENSE-EXCEPTION.md) (article 7 de la GPL) autorise la distribution par les magasins d'applications, App Store compris, tant que le code source reste disponible sous la même licence.
+
 Les polices de `app/src/main/res/font/` restent sous leur propre licence SIL Open Font License (voir `licences/`).
 
 ## Crédits
