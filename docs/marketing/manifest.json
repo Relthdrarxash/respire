@@ -1,0 +1,158 @@
+{
+  "brand": {
+    "name": "Respire",
+    "bg1": "#3A584B",
+    "bg2": "#1E3028",
+    "accent": "#E6D3AE",
+    "onBg": "#F8F8F3",
+    "icon": "fastlane/metadata/android/en-US/images/icon.png",
+    "font": {
+      "file": "docs/assets/fonts/fraunces-latin-600-normal.woff2",
+      "weight": 600,
+      "body_file": "docs/assets/fonts/nunito-latin-400-normal.woff2",
+      "bold_file": "docs/assets/fonts/nunito-latin-700-normal.woff2"
+    }
+  },
+  "langs": {
+    "fr": {
+      "tagline": "Une pause avant chaque réflexe",
+      "social_line": "Une pause de respiration avant les applis que tu ouvres par réflexe. Libre, sans compte, hors ligne.",
+      "chips": [
+        "Sans pub",
+        "Sans compte",
+        "Hors ligne"
+      ],
+      "screens": [
+        {
+          "slug": "accueil",
+          "capture": "docs/marketing/captures/accueil.png",
+          "layout": "duo",
+          "tilt": -3,
+          "title": "Choisis les applis à freiner",
+          "subtitle": "Celles que tu ouvres par réflexe, avec leur nombre d’ouvertures du jour.",
+          "chips": [
+            "Gratuit"
+          ],
+          "second": "docs/marketing/captures/choix_applis.png"
+        },
+        {
+          "slug": "respiration",
+          "capture": "docs/marketing/captures/respiration.png",
+          "layout": "solo",
+          "tilt": 3,
+          "title": "Respire avant d’ouvrir",
+          "subtitle": "Un compte à rebours, puis une question : pourquoi tu l’ouvres maintenant ?",
+          "chips": []
+        },
+        {
+          "slug": "quota",
+          "capture": "docs/marketing/captures/quota_atteint.png",
+          "layout": "solo",
+          "tilt": -3,
+          "title": "Un quota par jour",
+          "subtitle": "Au-delà du nombre d’ouvertures fixé, l’appli reste fermée jusqu’au lendemain.",
+          "chips": []
+        },
+        {
+          "slug": "statistiques",
+          "capture": "docs/marketing/captures/statistiques.png",
+          "layout": "solo",
+          "tilt": 3,
+          "title": "Ta semaine en un coup d’œil",
+          "subtitle": "Renoncements par jour, heure de plus forte tentation, temps estimé épargné.",
+          "chips": []
+        },
+        {
+          "slug": "reglages",
+          "capture": "docs/marketing/captures/reglages.png",
+          "layout": "solo",
+          "tilt": -3,
+          "title": "Des règles à ta mesure",
+          "subtitle": "Attente, session, quota par jour et heures à risque : tout se règle.",
+          "chips": []
+        },
+        {
+          "slug": "confidentialite",
+          "capture": "docs/marketing/captures/demarrage.png",
+          "layout": "solo",
+          "tilt": 3,
+          "title": "Sans pub, sans compte",
+          "subtitle": "Deux étapes pour démarrer, pas d’inscription, pas de permission Internet.",
+          "chips": [
+            "Hors ligne"
+          ]
+        }
+      ]
+    },
+    "en": {
+      "tagline": "A pause before every reflex",
+      "social_line": "A breathing pause before the apps you open on autopilot. Free, no account, works offline.",
+      "chips": [
+        "No ads",
+        "No account",
+        "Offline"
+      ],
+      "screens": [
+        {
+          "slug": "accueil",
+          "capture": "docs/marketing/captures/en/accueil.png",
+          "layout": "duo",
+          "tilt": -3,
+          "title": "Pick the apps to slow down",
+          "subtitle": "The ones you open on autopilot, with today’s number of opens.",
+          "chips": [
+            "Free"
+          ],
+          "second": "docs/marketing/captures/en/choix_applis.png"
+        },
+        {
+          "slug": "respiration",
+          "capture": "docs/marketing/captures/en/respiration.png",
+          "layout": "solo",
+          "tilt": 3,
+          "title": "Breathe before you open",
+          "subtitle": "A countdown, then one question: why are you opening it now?",
+          "chips": []
+        },
+        {
+          "slug": "quota",
+          "capture": "docs/marketing/captures/en/quota_atteint.png",
+          "layout": "solo",
+          "tilt": -3,
+          "title": "A daily limit",
+          "subtitle": "Past the number of opens you set, the app stays closed until tomorrow.",
+          "chips": []
+        },
+        {
+          "slug": "statistiques",
+          "capture": "docs/marketing/captures/en/statistiques.png",
+          "layout": "solo",
+          "tilt": 3,
+          "title": "Your week at a glance",
+          "subtitle": "Gave-ups per day, your most tempting hour, estimated time saved.",
+          "chips": []
+        },
+        {
+          "slug": "reglages",
+          "capture": "docs/marketing/captures/en/reglages.png",
+          "layout": "solo",
+          "tilt": -3,
+          "title": "Rules that fit you",
+          "subtitle": "Wait, session, daily limit and risky hours: all adjustable.",
+          "chips": []
+        },
+        {
+          "slug": "confidentialite",
+          "capture": "docs/marketing/captures/en/demarrage.png",
+          "layout": "solo",
+          "tilt": 3,
+          "title": "No ads, no account",
+          "subtitle": "Two steps to start, no sign-up, no Internet permission.",
+          "chips": [
+            "Offline"
+          ]
+        }
+      ]
+    }
+  }
+}
