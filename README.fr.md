@@ -44,7 +44,7 @@ Je passe moi aussi trop de temps à faire défiler des fils sans fin, et des pro
 ## Installer
 
 1. Depuis ton téléphone, télécharge `Respire.apk` dans la [dernière version](../../releases/latest) et installe-le. Android te demandera d'autoriser l'installation depuis ton navigateur ou ton gestionnaire de fichiers.
-2. Ouvre Respire, appuie sur **Choisir les applis** et active celles à freiner.
+2. Ouvre Respire. Le court accueil te guide dans les mêmes étapes (tu peux le passer et le revoir depuis les Réglages). Sinon, appuie sur **Choisir les applis** et active celles à freiner.
 3. Appuie sur **Ouvrir les paramètres** (ou sur la pastille **Inactif**) et active **Respire** dans les paramètres d'accessibilité.
 4. **Android 13 et plus** : si l'interrupteur est grisé (« paramètre restreint »), va dans Paramètres > Applications > Respire > menu ⋮ > **Autoriser les paramètres restreints**, puis recommence l'étape 3.
 5. Sur certaines surcouches (Xiaomi, Huawei, Oppo...), désactive l'optimisation de batterie pour Respire, sinon le système peut couper le service.

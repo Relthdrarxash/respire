@@ -16,6 +16,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,6 +30,7 @@ import fr.respire.app.ui.DisclosureDialog
 import fr.respire.app.ui.Calme
 import fr.respire.app.ui.HomeScreen
 import fr.respire.app.ui.HomeUi
+import fr.respire.app.ui.OnboardingScreen
 import fr.respire.app.ui.PickerScreen
 import fr.respire.app.ui.RespireTheme
 import fr.respire.app.ui.RiskUi
@@ -46,6 +48,12 @@ class MainActivity : ComponentActivity() {
     private var home by mutableStateOf<HomeUi?>(null)
     private var allApps by mutableStateOf<List<AppItem>>(emptyList())
     private var selected by mutableStateOf<Set<String>>(emptySet())
+
+    /** Vrai entre le départ vers les réglages d'accessibilité et le retour dans l'appli. */
+    private var settingsLaunched = false
+
+    /** Vrai une fois revenu des réglages : permet de dire « pas encore actif » plutôt que de rester muet. */
+    private var returnedFromSettings by mutableStateOf(false)
 
     private val notificationPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { refresh() }
 
@@ -65,6 +73,23 @@ class MainActivity : ComponentActivity() {
             RespireTheme {
                 var picking by rememberSaveable { mutableStateOf(false) }
                 var disclosing by rememberSaveable { mutableStateOf(false) }
+                var onboarding by rememberSaveable {
+                    mutableStateOf(
+                        Onboarding.shouldShow(
+                            done = prefs.onboardingDone,
+                            hasTargets = prefs.targets.isNotEmpty(),
+                            consent = prefs.accessibilityConsent,
+                            serviceSeenOn = prefs.serviceSeenOn,
+                        )
+                    )
+                }
+                var onboardingStep by rememberSaveable { mutableIntStateOf(0) }
+                val step = OnboardingStep.entries[onboardingStep.coerceIn(0, OnboardingStep.entries.lastIndex)]
+                val finishOnboarding = {
+                    prefs.onboardingDone = true
+                    onboarding = false
+                    onboardingStep = 0
+                }
                 if (disclosing) {
                     DisclosureDialog(
                         onAccept = {
@@ -76,6 +101,10 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 BackHandler(enabled = picking) { picking = false }
+                // Retour dans l'accueil : étape précédente. Sur la première étape, le retour système quitte l'appli.
+                BackHandler(enabled = onboarding && !picking && step.previous() != null) {
+                    step.previous()?.let { onboardingStep = it.ordinal }
+                }
 
                 val ui = home
                 when {
@@ -84,6 +113,29 @@ class MainActivity : ComponentActivity() {
                         selected = selected,
                         onToggle = ::setTarget,
                         onBack = { picking = false },
+                    )
+                    ui != null && onboarding -> OnboardingScreen(
+                        step = step,
+                        ui = ui,
+                        activation = Onboarding.activationStatus(ui.serviceOn, returnedFromSettings),
+                        showRestrictedHelp = Onboarding.needsRestrictedHelp(Build.VERSION.SDK_INT),
+                        onAddApp = { pkg -> setTarget(pkg, true) },
+                        onPickApps = { picking = true },
+                        onNext = { step.next()?.let { onboardingStep = it.ordinal } },
+                        onBack = { step.previous()?.let { onboardingStep = it.ordinal } },
+                        onSkip = finishOnboarding,
+                        onAccept = {
+                            prefs.accessibilityConsent = true
+                            val next = Onboarding.afterDisclosure(accepted = true)
+                            if (next != null) onboardingStep = next.ordinal else finishOnboarding()
+                        },
+                        onDecline = {
+                            val next = Onboarding.afterDisclosure(accepted = false)
+                            if (next != null) onboardingStep = next.ordinal else finishOnboarding()
+                        },
+                        onOpenAccessibility = ::openAccessibilitySettings,
+                        onOpenAppInfo = ::openAppInfo,
+                        onFinish = finishOnboarding,
                     )
                     ui != null -> HomeScreen(
                         ui = ui,
@@ -107,6 +159,11 @@ class MainActivity : ComponentActivity() {
                             prefs.reviewPromptDone = true
                             refresh()
                         },
+                        onReplayOnboarding = {
+                            onboardingStep = 0
+                            onboarding = true
+                        },
+                        onOpenAppInfo = ::openAppInfo,
                     )
                     else -> Box(Modifier.fillMaxSize().background(Calme.Ground))
                 }
@@ -116,6 +173,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (settingsLaunched) {
+            settingsLaunched = false
+            returnedFromSettings = true
+        }
         refresh()
         RespireWidget.refreshAll(this)
     }
@@ -127,7 +188,20 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun openAccessibilitySettings() {
+        settingsLaunched = true
+        returnedFromSettings = false
         startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+    }
+
+    /** Infos de l'appli, où se trouve « Autoriser les paramètres restreints » (menu ⋮, Android 13+). */
+    private fun openAppInfo() {
+        try {
+            startActivity(
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.fromParts("package", packageName, null))
+            )
+        } catch (e: android.content.ActivityNotFoundException) {
+            // Pas d'écran d'infos : rien à faire.
+        }
     }
 
     private fun openLink(url: String) {

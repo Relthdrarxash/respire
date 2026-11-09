@@ -6,6 +6,8 @@ Novembre 2026. Ce document formalise le parcours utilisateur dans **Respire** (p
 
 ## 1. Parcours complet : de l'installation à l'autorégulation
 
+Au premier lancement, un accueil en quatre écrans (`OnboardingScreen.kt`, logique dans `Onboarding.kt`) enchaîne la promesse de l'appli, le choix des applis, l'information sur l'accessibilité avec consentement explicite (« J'accepte » ou « Refuser »), puis l'activation du service avec retour d'état au retour des réglages et aide pour les paramètres restreints d'Android 13+. On peut le passer (« Passer », « Configurer plus tard »), revenir en arrière, et le rouvrir depuis l'onglet Réglages. Les étapes 1 et 2 ci-dessous restent disponibles depuis l'accueil de l'appli (liste de démarrage).
+
 | Étape | Besoin de l'utilisateur | Réponse dans Respire | Fichier d'implémentation |
 |---|---|---|---|
 | **1. Choix des applications (30 s)** | Protéger immédiatement les applications qui captent son attention, sans limite commerciale | Suggestions automatiques en haut de liste (`TikTok`, `Instagram`, `YouTube`, `X`, `Reddit`, etc. via `Suggestions.kt`) + sélection libre d'un nombre illimité d'applications | `PickerScreen.kt`, `Suggestions.kt` |
