@@ -59,6 +59,11 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("a11y_consent", false)
         set(v) = sp.edit().putBoolean("a11y_consent", v).apply()
 
+    /** L'accueil du premier lancement a été terminé ou passé : on ne le remontre pas tout seul. */
+    var onboardingDone: Boolean
+        get() = sp.getBoolean("onboarding_done", false)
+        set(v) = sp.edit().putBoolean("onboarding_done", v).apply()
+
     // ---- Notifications -------------------------------------------------------
 
     /** Vrai dès que le service a été vu actif : un arrêt ensuite mérite d'être signalé. */
