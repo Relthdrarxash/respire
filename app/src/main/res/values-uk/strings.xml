@@ -120,7 +120,31 @@
 
 Усі дані залишаються виключно на вашому телефоні. Respire не має дозволу на доступ до Інтернету.</string>
     <string name="disclosure_accept">Погоджуюся</string>
-    <string name="disclosure_decline">Не зараз</string>
+    <string name="disclosure_decline">Відмовляюся</string>
+    <string name="onb_skip">Пропустити</string>
+    <string name="onb_next">Далі</string>
+    <string name="onb_progress">Крок %1$d з %2$d</string>
+    <string name="onb_welcome_title">Пауза перед застосунками, які ви відкриваєте машинально</string>
+    <string name="onb_welcome_body">Respire змушує вас кілька секунд подихати, перш ніж відкриється застосунок, і обмежує тривалість сеансу та кількість відкриттів за день. Усе залишається на вашому телефоні.</string>
+    <string name="onb_welcome_cta">Почати</string>
+    <string name="onb_apps_title">Які застосунки сповільнити?</string>
+    <string name="onb_apps_body">Почніть із тих, які відкриваєте не думаючи. Це можна змінити будь-коли.</string>
+    <string name="onb_apps_chosen">Обрано застосунків: %1$d</string>
+    <string name="onb_disclosure_refuse_note">Якщо ви відмовитеся, Respire не зможе показувати паузи. Більше нічого не зміниться, а службу можна буде ввімкнути пізніше на головному екрані.</string>
+    <string name="onb_act_title">Увімкніть Respire в налаштуваннях Android</string>
+    <string name="onb_act_body">Android відкриє налаштування спеціальних можливостей. Виберіть «Respire», увімкніть і підтвердьте. Потім поверніться сюди.</string>
+    <string name="onb_act_retry">Спробувати ще раз</string>
+    <string name="onb_act_ok_title">Respire увімкнено</string>
+    <string name="onb_act_ok_body">Пауза з’являтиметься перед обраними застосунками.</string>
+    <string name="onb_act_off_title">Respire ще не ввімкнено</string>
+    <string name="onb_act_off_body">Нічого страшного: спробуйте ще раз або зробіть це пізніше на головному екрані.</string>
+    <string name="onb_act_restricted_title">Перемикач неактивний?</string>
+    <string name="onb_act_restricted_body">В Android 13 і новіших система блокує службу застосунку, встановленого не з Play Market. Відкрийте відомості про застосунок, торкніться меню ⋮ угорі праворуч, виберіть «Дозволити обмежені налаштування» і спробуйте ще раз.</string>
+    <string name="onb_act_appinfo">Відкрити відомості про застосунок</string>
+    <string name="onb_done">Готово</string>
+    <string name="onb_later">Налаштувати пізніше</string>
+    <string name="settings_replay_onboarding">Переглянути вітання ще раз</string>
+    <string name="settings_review_disclosure">Відомості про спеціальні можливості</string>
     <string name="link_privacy">Конфіденційність</string>
     <string name="link_feedback">Написати відгук</string>
     <string name="link_source">Вихідний код</string>
