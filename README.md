@@ -113,3 +113,5 @@ The fonts in `app/src/main/res/font/` keep their own SIL Open Font License (see 
 
 - **[Sommelle](https://github.com/Relthdrarxash/sommelle)**: 6-to-8-week CBT-I insomnia support app, free, open source and offline.
 - **[Lunaison](https://github.com/Relthdrarxash/lunaison)**: private menstrual cycle tracker with referenced medical guides and serverless partner sharing.
+- **[Sauve](https://github.com/Relthdrarxash/sauve)**: anti-panic first aid guide, free, open source and offline, with hands-free voice and haptic guidance.
+- **[Sillon](https://github.com/Relthdrarxash/sillon)**: living vegetable garden planner and agronomic calendar based on the last frost date, free, open source and offline.
