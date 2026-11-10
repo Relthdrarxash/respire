@@ -10,6 +10,8 @@ No Internet permission, no trackers, no account. Everything stays on your phone.
 
 **[Respire website](https://relthdrarxash.github.io/respire/)** · **[Google Play](https://play.google.com/store/apps/details?id=fr.respire.app)** · **[Download APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Why these choices](https://relthdrarxash.github.io/respire/why.html) · [Privacy policy](https://relthdrarxash.github.io/respire/privacy.html)
 
+**Before the Google Play release:** [join the internal test](https://play.google.com/apps/internaltest/4701443078606336635) (only for people already on the tester list: [ask for access by e-mail](mailto:pilmil.studio@proton.me?subject=Tester%20Respire)).
+
 Available in English, French, Spanish and German.
 
 ## Why these features
