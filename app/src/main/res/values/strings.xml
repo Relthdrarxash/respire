@@ -124,7 +124,31 @@ What it accesses:
 
 What happens to it: it is used on your phone only, at the moment it is accessed. Nothing is collected, sent or shared. Respire has no Internet permission.</string>
     <string name="disclosure_accept">I agree</string>
-    <string name="disclosure_decline">Not now</string>
+    <string name="disclosure_decline">Decline</string>
+    <string name="onb_skip">Skip</string>
+    <string name="onb_next">Continue</string>
+    <string name="onb_progress">Step %1$d of %2$d</string>
+    <string name="onb_welcome_title">A pause before the apps you open on autopilot</string>
+    <string name="onb_welcome_body">Respire makes you breathe for a few seconds before an app opens, limits how long a session lasts and how many times a day you can open it. Everything stays on your phone.</string>
+    <string name="onb_welcome_cta">Get started</string>
+    <string name="onb_apps_title">Which apps should slow down?</string>
+    <string name="onb_apps_body">Start with the ones you open without thinking. You can change this any time.</string>
+    <string name="onb_apps_chosen">Chosen apps: %1$d</string>
+    <string name="onb_disclosure_refuse_note">If you decline, Respire can’t show pauses. Nothing else changes, and you can turn the service on later from the home screen.</string>
+    <string name="onb_act_title">Turn on Respire in Android settings</string>
+    <string name="onb_act_body">Android will open its accessibility settings. Choose “Respire”, switch it on and confirm. Then come back here.</string>
+    <string name="onb_act_retry">Try again</string>
+    <string name="onb_act_ok_title">Respire is on</string>
+    <string name="onb_act_ok_body">The pause will appear before the apps you chose.</string>
+    <string name="onb_act_off_title">Respire isn’t on yet</string>
+    <string name="onb_act_off_body">No problem: try again, or do it later from the home screen.</string>
+    <string name="onb_act_restricted_title">Switch greyed out?</string>
+    <string name="onb_act_restricted_body">On Android 13 and later, Android blocks the service of an app installed outside the Play Store. Open the app info, tap the ⋮ menu at the top right, choose “Allow restricted settings”, then try again.</string>
+    <string name="onb_act_appinfo">Open app info</string>
+    <string name="onb_done">Done</string>
+    <string name="onb_later">Set up later</string>
+    <string name="settings_replay_onboarding">Replay the welcome</string>
+    <string name="settings_review_disclosure">Accessibility information</string>
     <string name="link_privacy">Privacy policy</string>
     <string name="link_feedback">Give feedback</string>
     <string name="link_source">Source code</string>

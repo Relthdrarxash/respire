@@ -100,12 +100,15 @@ fun HomeScreen(
     onAllowNotifications: () -> Unit = {},
     onReview: () -> Unit = {},
     onDismissReview: () -> Unit = {},
+    onReplayOnboarding: () -> Unit = {},
+    onOpenAppInfo: () -> Unit = {},
 ) {
     var currentTab by rememberSaveable { mutableStateOf(RespireTab.APPS) }
     var openApp by remember { mutableStateOf<AppItem?>(null) }
     var editing by remember { mutableStateOf<Rule?>(null) }
     var disabling by remember { mutableStateOf<ShortKind?>(null) }
     var showDiag by remember { mutableStateOf(false) }
+    var showDisclosure by remember { mutableStateOf(false) }
     val res = LocalContext.current.resources
     val quota = ui.rules[Rule.QUOTA] ?: 0
     val whyUrl = stringResource(R.string.url_why)
@@ -142,6 +145,7 @@ fun HomeScreen(
                                 onPickApps = onPickApps,
                                 onOpenAccessibility = onOpenAccessibility,
                                 onAllowNotifications = onAllowNotifications,
+                                onOpenAppInfo = onOpenAppInfo,
                             )
                         }
                     }
@@ -221,6 +225,8 @@ fun HomeScreen(
                             onOpenFeedback = { onOpenLink("https://github.com/Relthdrarxash/respire/issues") },
                             onOpenSource = { onOpenLink("https://github.com/Relthdrarxash/respire") },
                             onShowDiag = { showDiag = true },
+                            onReplayOnboarding = onReplayOnboarding,
+                            onShowDisclosure = { showDisclosure = true },
                         )
                     }
                 }
@@ -246,6 +252,10 @@ fun HomeScreen(
 
     if (showDiag) {
         DiagnosticDialog(ui.diagnostic) { showDiag = false }
+    }
+
+    if (showDisclosure) {
+        DisclosureDialog(onAccept = { showDisclosure = false }, onDecline = { showDisclosure = false }, reviewOnly = true)
     }
 
     disabling?.let { kind ->

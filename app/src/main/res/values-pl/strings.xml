@@ -120,7 +120,31 @@ Do czego ma dostęp:
 
 Co dzieje się z danymi: wszystko zostaje wyłącznie w telefonie. Respire nie ma uprawnień do Internetu.</string>
     <string name="disclosure_accept">Rozumiem i akceptuję</string>
-    <string name="disclosure_decline">Nie teraz</string>
+    <string name="disclosure_decline">Odmawiam</string>
+    <string name="onb_skip">Pomiń</string>
+    <string name="onb_next">Dalej</string>
+    <string name="onb_progress">Krok %1$d z %2$d</string>
+    <string name="onb_welcome_title">Chwila przerwy przed aplikacjami, które otwierasz odruchowo</string>
+    <string name="onb_welcome_body">Respire każe Ci kilka sekund pooddychać, zanim otworzy się aplikacja, i ogranicza długość sesji oraz liczbę otwarć w ciągu dnia. Wszystko zostaje na Twoim telefonie.</string>
+    <string name="onb_welcome_cta">Zaczynamy</string>
+    <string name="onb_apps_title">Które aplikacje spowolnić?</string>
+    <string name="onb_apps_body">Zacznij od tych, które otwierasz bezwiednie. Możesz to zmienić w każdej chwili.</string>
+    <string name="onb_apps_chosen">Wybrane aplikacje: %1$d</string>
+    <string name="onb_disclosure_refuse_note">Jeśli odmówisz, Respire nie wyświetli przerw. Nic innego się nie zmieni, a usługę włączysz później na ekranie głównym.</string>
+    <string name="onb_act_title">Włącz Respire w ustawieniach Androida</string>
+    <string name="onb_act_body">Android otworzy ustawienia ułatwień dostępu. Wybierz „Respire”, włącz usługę i potwierdź. Potem wróć tutaj.</string>
+    <string name="onb_act_retry">Spróbuj ponownie</string>
+    <string name="onb_act_ok_title">Respire jest włączony</string>
+    <string name="onb_act_ok_body">Przerwa pojawi się przed wybranymi aplikacjami.</string>
+    <string name="onb_act_off_title">Respire nie jest jeszcze włączony</string>
+    <string name="onb_act_off_body">Nic się nie stało: spróbuj ponownie albo zrób to później na ekranie głównym.</string>
+    <string name="onb_act_restricted_title">Przełącznik jest wyszarzony?</string>
+    <string name="onb_act_restricted_body">W Androidzie 13 i nowszych system blokuje usługę aplikacji zainstalowanej spoza Sklepu Play. Otwórz informacje o aplikacji, dotknij menu ⋮ w prawym górnym rogu, wybierz „Zezwól na ustawienia ograniczone” i spróbuj ponownie.</string>
+    <string name="onb_act_appinfo">Otwórz informacje o aplikacji</string>
+    <string name="onb_done">Gotowe</string>
+    <string name="onb_later">Skonfiguruj później</string>
+    <string name="settings_replay_onboarding">Zobacz powitanie ponownie</string>
+    <string name="settings_review_disclosure">Informacje o ułatwieniach dostępu</string>
     <string name="link_privacy">Prywatność</string>
     <string name="link_feedback">Zgłoś uwagę</string>
     <string name="link_source">Kod źródłowy</string>

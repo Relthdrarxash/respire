@@ -304,9 +304,10 @@ internal fun FooterLink(label: String, onClick: () -> Unit) {
     Text(
         label,
         modifier = Modifier
+            .heightIn(min = 48.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 6.dp, vertical = 8.dp),
+            .padding(horizontal = 6.dp, vertical = 14.dp),
         fontFamily = Nunito, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Calme.Muted,
     )
 }
@@ -381,6 +382,8 @@ internal fun AboutSection(
     onOpenFeedback: () -> Unit,
     onOpenSource: () -> Unit,
     onShowDiag: () -> Unit,
+    onReplayOnboarding: () -> Unit,
+    onShowDisclosure: () -> Unit,
 ) {
     Column {
         SectionTitle(stringResource(R.string.section_about))
@@ -410,10 +413,13 @@ internal fun AboutSection(
                 FooterLink(stringResource(R.string.link_source), onClick = onOpenSource)
                 FooterLink(stringResource(R.string.link_feedback), onClick = onOpenFeedback)
             }
+            TextAction(stringResource(R.string.settings_replay_onboarding), onClick = onReplayOnboarding)
+            TextAction(stringResource(R.string.settings_review_disclosure), onClick = onShowDisclosure)
             Text(
                 stringResource(R.string.diag_title),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .heightIn(min = 48.dp)
                     .clickable(role = Role.Button, onClick = onShowDiag)
                     .padding(top = 8.dp),
                 fontFamily = Nunito,
@@ -441,6 +447,7 @@ internal fun StartChecklist(
     onPickApps: () -> Unit,
     onOpenAccessibility: () -> Unit,
     onAllowNotifications: () -> Unit,
+    onOpenAppInfo: () -> Unit,
 ) {
     CalmeCard {
         Text(stringResource(R.string.start_title), fontFamily = Fraunces, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Calme.Ink)
@@ -490,7 +497,8 @@ internal fun StartChecklist(
                 modifier = Modifier.padding(top = 4.dp),
                 fontFamily = Nunito, fontSize = 13.sp, color = Calme.Muted,
             )
-            Spacer(Modifier.height(10.dp))
+            TextAction(stringResource(R.string.onb_act_appinfo), onClick = onOpenAppInfo, fill = true, center = false)
+            Spacer(Modifier.height(4.dp))
             PillButton(stringResource(R.string.activation_button), onClick = onOpenAccessibility, enabled = hasApps, height = 52.dp)
         }
 

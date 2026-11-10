@@ -120,7 +120,31 @@ Worauf sie zugreift:
 
 Was damit passiert: Die Daten werden nur auf deinem Handy verwendet, in dem Moment, in dem sie gelesen werden. Nichts wird erfasst, gesendet oder geteilt. Respire hat keine Internetberechtigung.</string>
     <string name="disclosure_accept">Ich stimme zu</string>
-    <string name="disclosure_decline">Nicht jetzt</string>
+    <string name="disclosure_decline">Ablehnen</string>
+    <string name="onb_skip">Überspringen</string>
+    <string name="onb_next">Weiter</string>
+    <string name="onb_progress">Schritt %1$d von %2$d</string>
+    <string name="onb_welcome_title">Eine Pause vor den Apps, die du aus Gewohnheit öffnest</string>
+    <string name="onb_welcome_body">Respire lässt dich ein paar Sekunden atmen, bevor sich eine App öffnet, und begrenzt die Dauer einer Sitzung und die Öffnungen pro Tag. Alles bleibt auf deinem Handy.</string>
+    <string name="onb_welcome_cta">Los geht’s</string>
+    <string name="onb_apps_title">Welche Apps sollen gebremst werden?</string>
+    <string name="onb_apps_body">Fang mit denen an, die du ohne nachzudenken öffnest. Du kannst das jederzeit ändern.</string>
+    <string name="onb_apps_chosen">Gewählte Apps: %1$d</string>
+    <string name="onb_disclosure_refuse_note">Wenn du ablehnst, kann Respire keine Pausen anzeigen. Sonst ändert sich nichts, und du kannst den Dienst später auf dem Startbildschirm aktivieren.</string>
+    <string name="onb_act_title">Aktiviere Respire in den Android-Einstellungen</string>
+    <string name="onb_act_body">Android öffnet die Bedienungshilfen. Wähle „Respire“, schalte es ein und bestätige. Komm danach hierher zurück.</string>
+    <string name="onb_act_retry">Erneut versuchen</string>
+    <string name="onb_act_ok_title">Respire ist aktiv</string>
+    <string name="onb_act_ok_body">Die Pause erscheint vor den Apps, die du gewählt hast.</string>
+    <string name="onb_act_off_title">Respire ist noch nicht aktiv</string>
+    <string name="onb_act_off_body">Kein Problem: Versuch es erneut oder mach es später auf dem Startbildschirm.</string>
+    <string name="onb_act_restricted_title">Schalter ausgegraut?</string>
+    <string name="onb_act_restricted_body">Ab Android 13 sperrt Android den Dienst einer App, die nicht aus dem Play Store stammt. Öffne die App-Info, tippe oben rechts auf das Menü ⋮, wähle „Eingeschränkte Einstellungen zulassen“ und versuch es erneut.</string>
+    <string name="onb_act_appinfo">App-Info öffnen</string>
+    <string name="onb_done">Fertig</string>
+    <string name="onb_later">Später einrichten</string>
+    <string name="settings_replay_onboarding">Willkommen erneut ansehen</string>
+    <string name="settings_review_disclosure">Hinweis zur Bedienungshilfe</string>
     <string name="link_privacy">Datenschutz</string>
     <string name="link_feedback">Feedback geben</string>
     <string name="link_source">Quellcode</string>
