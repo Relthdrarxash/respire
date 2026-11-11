@@ -8,7 +8,7 @@ Une petite appli Android contre le doom scroll. Respire place une pause de respi
 
 Pas de permission Internet, pas de traqueur, pas de compte. Tout reste sur ton téléphone.
 
-**[Site de Respire](https://relthdrarxash.github.io/respire/fr/)** · **[Télécharger l'APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Pourquoi ces choix](https://relthdrarxash.github.io/respire/fr/pourquoi.html) · [Confidentialité](https://relthdrarxash.github.io/respire/fr/confidentialite.html)
+**[Site de Respire](https://relthdrarxash.github.io/respire/fr/)** · **[Google Play](https://play.google.com/store/apps/details?id=fr.respire.app)** · **[Télécharger l'APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Pourquoi ces choix](https://relthdrarxash.github.io/respire/fr/pourquoi.html) · [Confidentialité](https://relthdrarxash.github.io/respire/fr/confidentialite.html)
 
 **Avant la sortie sur Google Play :** [rejoindre le test interne](https://play.google.com/apps/internaltest/4701443078606336635) (réservé aux personnes déjà ajoutées à la liste de testeurs : [demande l'accès par mail](mailto:pilmil.studio@proton.me?subject=Tester%20Respire)).
 
@@ -45,7 +45,7 @@ Je passe moi aussi trop de temps à faire défiler des fils sans fin, et des pro
 
 ## Installer
 
-1. Depuis ton téléphone, télécharge `Respire.apk` dans la [dernière version](../../releases/latest) et installe-le. Android te demandera d'autoriser l'installation depuis ton navigateur ou ton gestionnaire de fichiers.
+1. Installe Respire depuis [Google Play](https://play.google.com/store/apps/details?id=fr.respire.app), ou télécharge `Respire.apk` dans la [dernière version](../../releases/latest) depuis ton téléphone et installe-le. Android te demandera d'autoriser l'installation depuis ton navigateur ou ton gestionnaire de fichiers.
 2. Ouvre Respire. Le court accueil te guide dans les mêmes étapes (tu peux le passer et le revoir depuis les Réglages). Sinon, appuie sur **Choisir les applis** et active celles à freiner.
 3. Appuie sur **Ouvrir les paramètres** (ou sur la pastille **Inactif**) et active **Respire** dans les paramètres d'accessibilité.
 4. **Android 13 et plus** : si l'interrupteur est grisé (« paramètre restreint »), va dans Paramètres > Applications > Respire > menu ⋮ > **Autoriser les paramètres restreints**, puis recommence l'étape 3.
@@ -115,3 +115,5 @@ Les polices de `app/src/main/res/font/` restent sous leur propre licence SIL Ope
 
 - **[Sommelle](https://github.com/Relthdrarxash/sommelle)** : accompagnement de l'insomnie chronique par la TCC-I en 6 à 8 semaines, gratuit, libre et sans accès à Internet.
 - **[Lunaison](https://github.com/Relthdrarxash/lunaison)** : suivi du cycle menstruel libre, gratuit et sans accès à Internet, avec fiches médicales sourcées et partage partenaire hors-ligne.
+- **[Sauve](https://github.com/Relthdrarxash/sauve)** : premiers secours « anti-panique », gratuit, libre et sans accès à Internet, avec guidage vocal et haptique mains libres.
+- **[Sillon](https://github.com/Relthdrarxash/sillon)** : potager vivant et calendrier agronomique indexé sur la date des dernières gelées, gratuit, libre et sans accès à Internet.
