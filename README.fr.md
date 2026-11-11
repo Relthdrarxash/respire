@@ -10,6 +10,8 @@ Pas de permission Internet, pas de traqueur, pas de compte. Tout reste sur ton t
 
 **[Site de Respire](https://relthdrarxash.github.io/respire/fr/)** · **[Télécharger l'APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Pourquoi ces choix](https://relthdrarxash.github.io/respire/fr/pourquoi.html) · [Confidentialité](https://relthdrarxash.github.io/respire/fr/confidentialite.html)
 
+**Avant la sortie sur Google Play :** [rejoindre le test interne](https://play.google.com/apps/internaltest/4701443078606336635) (réservé aux personnes déjà ajoutées à la liste de testeurs : [demande l'accès par mail](mailto:pilmil.studio@proton.me?subject=Tester%20Respire)).
+
 Disponible en français, anglais, espagnol et allemand.
 
 ## Pourquoi ces fonctions
