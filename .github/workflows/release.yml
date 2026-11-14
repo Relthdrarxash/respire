@@ -126,3 +126,36 @@ jobs:
           status: ${{ vars.PLAY_RELEASE_STATUS || 'completed' }}
           whatsNewDirectory: distribution/whatsnew
           mappingFile: app/build/outputs/mapping/release/mapping.txt
+
+  ios:
+    name: Archive iOS (simulateur)
+    needs: release
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Choisir Xcode 16
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Générer et compiler l'appli iPhone (simulateur)
+        run: |
+          brew install xcodegen
+          cd iosApp && xcodegen generate
+          xcodebuild -project Respire.xcodeproj -scheme Respire -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' -configuration Debug \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+          cd build/Build/Products/Debug-iphonesimulator
+          zip -qr "$GITHUB_WORKSPACE/respire-ios-simulateur.zip" Respire.app
+      - name: Joindre à la version GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then TAG="v${{ inputs.version#v }}"; fi
+          gh release upload "$TAG" respire-ios-simulateur.zip --clobber
