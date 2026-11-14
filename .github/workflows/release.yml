@@ -156,6 +156,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then TAG="v${{ inputs.version#v }}"; fi
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then TAG="v${INPUT_VERSION#v}"; fi
           gh release upload "$TAG" respire-ios-simulateur.zip --clobber
