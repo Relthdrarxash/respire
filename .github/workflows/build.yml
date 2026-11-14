@@ -18,10 +18,10 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Lancer les tests
+      - name: Lancer les tests et le lint
         run: |
           chmod +x gradlew
-          ./gradlew testReleaseUnitTest --no-daemon
+          ./gradlew testReleaseUnitTest lintDebug --no-daemon
 
       - name: Récupérer la clé d'envoi (si les secrets existent)
         env:

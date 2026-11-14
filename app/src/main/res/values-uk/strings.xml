@@ -165,7 +165,7 @@
         <item quantity="other">разів відмовилися\nз %d пауз</item>
     </plurals>
     <plurals name="picker_add_all">
-        <item quantity="one">Додати цей застосунок</item>
+        <item quantity="one">Додати %d застосунок</item>
         <item quantity="few">Додати ці %d застосунки</item>
         <item quantity="many">Додати ці %d застосунків</item>
         <item quantity="other">Додати ці %d застосунків</item>

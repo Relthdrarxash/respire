@@ -163,7 +163,7 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
         <item quantity="other">fois où tu as renoncé\nsur %d pauses</item>
     </plurals>
     <plurals name="picker_add_all">
-        <item quantity="one">Ajouter cette appli</item>
+        <item quantity="one">Ajouter %d appli</item>
         <item quantity="many">Ajouter ces %d applis</item>
         <item quantity="other">Ajouter ces %d applis</item>
     </plurals>
@@ -173,8 +173,8 @@ Ce qu’elle en fait : ces informations sont utilisées sur ton téléphone uniq
     <string name="nav_label">Navigation principale</string>
     <string name="section_about">À propos &amp; démarche</string>
     <string name="suite_title">Dans la même démarche</string>
-    <string name="suite_subtitle">Applications libres, 100 % hors-ligne et respectueuses de votre attention.</string>
-    <string name="suite_commitment">100 % hors-ligne • Zéro pisteur, zéro compte • Code source libre et auditable</string>
+    <string name="suite_subtitle" formatted="false">Applications libres, 100 % hors-ligne et respectueuses de votre attention.</string>
+    <string name="suite_commitment" formatted="false">100 % hors-ligne • Zéro pisteur, zéro compte • Code source libre et auditable</string>
     <string name="app_lunaison_name">Lunaison</string>
     <string name="app_lunaison_desc">Suivi du cycle menstruel &amp; santé hormonale, libre et sans compte</string>
     <string name="app_sommelle_name">Sommelle</string>
