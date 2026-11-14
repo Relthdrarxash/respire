@@ -5,3 +5,11 @@ local.properties
 .idea/
 *.iml
 distribution/
+
+# Clés de signature (la clé de test du dépôt reste versionnée)
+*.keystore
+*.jks
+!app/respire-debug.keystore
+
+# Captures brutes de Paparazzi (la version suivie est dans docs/marketing/captures)
+app/src/test/snapshots/

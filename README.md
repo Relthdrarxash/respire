@@ -8,7 +8,7 @@ A small Android app against doomscrolling. Respire puts a breathing pause in fro
 
 No Internet permission, no trackers, no account. Everything stays on your phone.
 
-**[Respire website](https://relthdrarxash.github.io/respire/)** · **[Google Play](https://play.google.com/store/apps/details?id=fr.respire.app)** · **[Download APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Why these choices](https://relthdrarxash.github.io/respire/why.html) · [Privacy policy](https://relthdrarxash.github.io/respire/privacy.html)
+**[Respire website](https://relthdrarxash.github.io/respire/)** · **[Download APK](https://github.com/Relthdrarxash/respire/releases/latest)** · [Why these choices](https://relthdrarxash.github.io/respire/why.html) · [Privacy policy](https://relthdrarxash.github.io/respire/privacy.html)
 
 **Before the Google Play release:** [join the internal test](https://play.google.com/apps/internaltest/4701443078606336635) (only for people already on the tester list: [ask for access by e-mail](mailto:pilmil.studio@proton.me?subject=Tester%20Respire)).
 
@@ -45,7 +45,7 @@ I spend too much time scrolling endless feeds myself, and people close to me hav
 
 ## Install
 
-1. Install from [Google Play](https://play.google.com/store/apps/details?id=fr.respire.app) or download `Respire.apk` from the [latest release](../../releases/latest) on your phone and install it (Android will ask you to allow installs from your browser or file manager).
+1. Download `Respire.apk` from the [latest release](../../releases/latest) on your phone and install it (Android will ask you to allow installs from your browser or file manager).
 2. Open Respire. The short welcome walks you through the same steps (you can skip it, and replay it from Settings). Otherwise tap **Choose apps** and turn on the apps to slow down.
 3. Tap **Open settings** (or the **Inactive** badge) and turn on **Respire** in Accessibility settings.
 4. **Android 13 and later**: if the switch is greyed out ("restricted setting"), go to Settings > Apps > Respire > ⋮ menu > **Allow restricted settings**, then repeat step 3.
@@ -74,6 +74,8 @@ To build locally, open the folder in Android Studio, or run:
 Requirements: JDK 17. The app uses Kotlin and Jetpack Compose, with a minimum of Android 8.0 (API 26).
 
 Run the unit tests with `./gradlew testReleaseUnitTest`.
+
+Release builds (`assembleRelease`, `bundleRelease`) refuse to run without an upload key; they never fall back to the public test key. Set `RELEASE_KEYSTORE` (path to an existing keystore file), `RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS` and, if it differs from the store password, `RELEASE_KEY_PASSWORD`. In CI these come from the secrets `RELEASE_KEYSTORE_B64`, `RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD`. Debug builds are unaffected.
 
 ## Known limits
 

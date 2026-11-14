@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -52,6 +54,7 @@ data class PauseUi(
     val riskQuota: Int = 0,
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PauseScreen(
     ui: PauseUi,
@@ -139,10 +142,12 @@ fun PauseScreen(
                 R.string.pause_reason_lookup,
                 R.string.pause_reason_habit,
             )
-            Row(
+            // FlowRow et non Row : trois pastilles ne tiennent pas toujours sur une ligne (écran étroit, police agrandie).
+            // Avec une Row, la dernière était écrasée et son libellé coupé lettre par lettre ; ici la pastille passe à la ligne entière.
+            FlowRow(
                 Modifier.padding(top = 14.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 reasons.forEachIndexed { idx, resId ->
                     val chosen = selectedReason == idx
@@ -158,6 +163,7 @@ fun PauseScreen(
                             fontFamily = Nunito,
                             fontWeight = if (chosen) FontWeight.Bold else FontWeight.SemiBold,
                             fontSize = 13.sp,
+                            textAlign = TextAlign.Center,
                             color = if (chosen) Calme.SageDark else Calme.InkSoft,
                         )
                     }

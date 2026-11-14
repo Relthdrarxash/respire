@@ -2,11 +2,14 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    // Captures d'écran sans émulateur (./tools/screenshots.sh) ; sans effet sur l'APK.
+    id("app.cash.paparazzi")
 }
 
 android {
     namespace = "fr.respire.app"
-    compileSdk = 36
+    // 35 et non 36 : Paparazzi 1.3.5 ne sait pas lire les propriétés Build de la plateforme 36 (targetSdk reste 36).
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "fr.respire.app"
@@ -33,7 +36,8 @@ android {
                 storeFile = file(keystore)
                 storePassword = System.getenv("RELEASE_STORE_PASSWORD")
                 keyAlias = System.getenv("RELEASE_KEY_ALIAS")
-                keyPassword = System.getenv("RELEASE_STORE_PASSWORD")
+                // Mot de passe de clé distinct si fourni, sinon celui du keystore.
+                keyPassword = System.getenv("RELEASE_KEY_PASSWORD")?.takeIf { it.isNotEmpty() } ?: System.getenv("RELEASE_STORE_PASSWORD")
             }
         }
     }
@@ -43,8 +47,8 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Sans clé d'envoi (compilation locale), on signe avec la clé de test du dépôt.
-            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+            // Jamais de repli sur la clé de test (publique) : voir le garde-fou plus bas.
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 
@@ -61,6 +65,22 @@ android {
     }
 }
 
+// Une variante release sans clé d'envoi échoue au lieu d'être signée avec la clé de test publique.
+// Les tests unitaires et les builds debug ne sont pas concernés.
+gradle.taskGraph.whenReady {
+    val buildsRelease = allTasks.any { t ->
+        t.project == project && Regex("^(assemble|bundle|package|sign|validateSigning).*Release$").matches(t.name)
+    }
+    if (buildsRelease && project.extensions.getByType<com.android.build.api.dsl.ApplicationExtension>()
+            .signingConfigs.findByName("release") == null) {
+        throw GradleException(
+            "Signature release impossible : clé d'envoi absente. Définir les variables d'environnement " +
+                "RELEASE_KEYSTORE (chemin d'un fichier existant), RELEASE_STORE_PASSWORD, RELEASE_KEY_ALIAS " +
+                "et, si différent, RELEASE_KEY_PASSWORD. Pour un test local, utiliser assembleDebug."
+        )
+    }
+}
+
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2024.10.01")
     implementation(composeBom)
@@ -73,4 +93,12 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.10.0")
 
     testImplementation("junit:junit:4.13.2")
+}
+
+// Trace complète en cas d'échec d'une capture, lisible directement dans le journal.
+tasks.withType<Test>().configureEach {
+    testLogging {
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        events("failed")
+    }
 }

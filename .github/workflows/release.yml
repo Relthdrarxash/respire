@@ -74,6 +74,7 @@ jobs:
         env:
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
           RESPIRE_VERSION_CODE: ${{ env.VERSION_CODE }}
           RESPIRE_VERSION_NAME: ${{ env.VERSION_NAME }}
         run: |

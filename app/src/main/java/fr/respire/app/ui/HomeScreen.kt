@@ -102,8 +102,10 @@ fun HomeScreen(
     onDismissReview: () -> Unit = {},
     onReplayOnboarding: () -> Unit = {},
     onOpenAppInfo: () -> Unit = {},
+    /** Onglet affiché à l'ouverture (les captures d'écran en ouvrent un autre que le premier). */
+    initialTab: RespireTab = RespireTab.APPS,
 ) {
-    var currentTab by rememberSaveable { mutableStateOf(RespireTab.APPS) }
+    var currentTab by rememberSaveable { mutableStateOf(initialTab) }
     var openApp by remember { mutableStateOf<AppItem?>(null) }
     var editing by remember { mutableStateOf<Rule?>(null) }
     var disabling by remember { mutableStateOf<ShortKind?>(null) }

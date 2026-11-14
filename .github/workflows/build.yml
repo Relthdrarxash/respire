@@ -32,13 +32,15 @@ jobs:
             echo "RELEASE_KEYSTORE=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
             echo "Clé d'envoi trouvée : build signé pour Google Play."
           else
-            echo "::warning::Secrets absents : build release signé avec la clé de test (non publiable sur Google Play)."
+            echo "::error::Secrets absents : le build release n'est plus signé avec la clé de test. Définir RELEASE_KEYSTORE_B64, RELEASE_STORE_PASSWORD, RELEASE_KEY_ALIAS (et RELEASE_KEY_PASSWORD si différent)."
+            exit 1
           fi
 
       - name: Compiler l'APK et l'AAB
         env:
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease bundleRelease --no-daemon

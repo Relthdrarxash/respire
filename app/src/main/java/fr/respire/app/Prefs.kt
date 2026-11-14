@@ -141,7 +141,8 @@ class Prefs(context: Context) {
             .split(',')
             .mapNotNull { it.toLongOrNull() }
 
-    private fun appendLog(key: String, now: Long) {
+    // Lecture puis écriture : verrou commun à toutes les instances (service, activité, thread respire-shorts).
+    private fun appendLog(key: String, now: Long) = synchronized(LOCK) {
         val kept = readLog(key).filter { now - it < DAY_MS } + now
         sp.edit().putString(key, kept.joinToString(",")).apply()
     }
@@ -178,7 +179,7 @@ class Prefs(context: Context) {
         return "${prefix}_${y}_$d"
     }
 
-    private fun bumpDay(prefix: String, now: Long) {
+    private fun bumpDay(prefix: String, now: Long) = synchronized(LOCK) {
         val key = dayKey(prefix, now)
         sp.edit().putInt(key, sp.getInt(key, 0) + 1).apply()
     }
@@ -215,9 +216,28 @@ class Prefs(context: Context) {
         if (keys.isNotEmpty()) sp.edit().apply { keys.forEach { remove(it) } }.apply()
     }
 
-    fun shortDiagnostic(): String = listOf(ShortFormBlocker.YOUTUBE, ShortFormBlocker.INSTAGRAM, ShortFormBlocker.FACEBOOK)
-        .mapNotNull { sp.getString("diag_$it", null) }
-        .joinToString("\n\n")
+    /** Échec de lecture de l'écran (aucune fenêtre lisible, erreur d'arbre) : compteur et dernière heure, sans contenu. */
+    fun recordShortFailure(kind: String, now: Long = System.currentTimeMillis()) = synchronized(LOCK) {
+        sp.edit()
+            .putInt("fail_$kind", sp.getInt("fail_$kind", 0) + 1)
+            .putLong("fail_at_$kind", now)
+            .apply()
+    }
+
+    fun shortDiagnostic(): String {
+        val screens = listOf(ShortFormBlocker.YOUTUBE, ShortFormBlocker.INSTAGRAM, ShortFormBlocker.FACEBOOK)
+            .mapNotNull { sp.getString("diag_$it", null) }
+        val fails = listOf(FAIL_NO_WINDOW to "aucune fenêtre lisible", FAIL_TREE_ERROR to "erreur de lecture de l'arbre")
+            .mapNotNull { (kind, label) ->
+                val n = sp.getInt("fail_$kind", 0)
+                if (n == 0) return@mapNotNull null
+                val at = java.text.SimpleDateFormat("dd/MM HH:mm:ss", java.util.Locale.ROOT)
+                    .format(java.util.Date(sp.getLong("fail_at_$kind", 0L)))
+                "$label : $n fois, dernière le $at"
+            }
+        return (screens + listOfNotNull(fails.takeIf { it.isNotEmpty() }?.joinToString("\n")))
+            .joinToString("\n\n")
+    }
 
     fun recordShortBlocked(now: Long, pkg: String? = null) {
         bumpDay("d_short", now)
@@ -260,15 +280,12 @@ class Prefs(context: Context) {
 
     /** Supprime les compteurs journaliers de plus de 60 jours. */
     fun pruneOldDays(now: Long = System.currentTimeMillis()) {
-        val c = Calendar.getInstance().apply { timeInMillis = now }
-        val today = c.get(Calendar.YEAR) * 366 + c.get(Calendar.DAY_OF_YEAR)
-        val old = sp.all.keys.filter { key ->
-            val parts = key.split('_')
-            val y = parts.getOrNull(parts.size - 2)?.toIntOrNull()
-            val d = parts.lastOrNull()?.toIntOrNull()
-            y != null && d != null && y in 2000..3000 && today - (y * 366 + d) > 60
+        val today = java.time.Instant.ofEpochMilli(now)
+            .atZone(java.time.ZoneId.systemDefault()).toLocalDate().toEpochDay()
+        synchronized(LOCK) {
+            val old = sp.all.keys.filter { isExpiredDayKey(it, today) }
+            if (old.isNotEmpty()) sp.edit().apply { old.forEach { remove(it) } }.apply()
         }
-        if (old.isNotEmpty()) sp.edit().apply { old.forEach { remove(it) } }.apply()
     }
 
     // ---- Historique par heure (24 compteurs par jour) -------------------------------
@@ -281,7 +298,7 @@ class Prefs(context: Context) {
         return out
     }
 
-    private fun bumpHour(prefix: String, now: Long) {
+    private fun bumpHour(prefix: String, now: Long) = synchronized(LOCK) {
         val key = dayKey(prefix, now)
         val hours = readHours(key)
         val h = Calendar.getInstance().apply { timeInMillis = now }.get(Calendar.HOUR_OF_DAY)
@@ -328,6 +345,28 @@ class Prefs(context: Context) {
         Rules.delay(baseDelay, stepDelay, attemptsSince(pkg, now - HOUR_MS), inRiskWindow(now))
 
     companion object {
+        private val LOCK = Any()
+
+        const val FAIL_NO_WINDOW = "no_window"
+        const val FAIL_TREE_ERROR = "tree_error"
+
+        /**
+         * Vrai si la clé « préfixe_année_jour » date de plus de [maxAgeDays] jours.
+         * Le jour de l'année est converti en jour absolu (epochDay) : exact au passage d'année.
+         */
+        fun isExpiredDayKey(key: String, todayEpochDay: Long, maxAgeDays: Int = 60): Boolean {
+            val parts = key.split('_')
+            val y = parts.getOrNull(parts.size - 2)?.toIntOrNull() ?: return false
+            val d = parts.lastOrNull()?.toIntOrNull() ?: return false
+            if (y !in 2000..3000) return false
+            val keyDay = try {
+                java.time.LocalDate.ofYearDay(y, d).toEpochDay()
+            } catch (e: java.time.DateTimeException) {
+                return false
+            }
+            return todayEpochDay - keyDay > maxAgeDays
+        }
+
         private const val K_TARGETS = "targets"
         private const val K_BASE = "base_delay"
         private const val K_STEP = "step_delay"

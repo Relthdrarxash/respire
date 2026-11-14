@@ -98,8 +98,11 @@ class PauseService : AccessibilityService() {
             return
         }
 
-        val roots = ShortFormBlocker.roots(this, pkg)
-        if (roots.isEmpty()) return
+        val roots = ShortFormBlocker.roots(this, pkg) { prefs.recordShortFailure(Prefs.FAIL_TREE_ERROR) }
+        if (roots.isEmpty()) {
+            prefs.recordShortFailure(Prefs.FAIL_NO_WINDOW)
+            return
+        }
 
         val explore = now - lastExplore > EXPLORE_EVERY_MS
         if (explore) lastExplore = now

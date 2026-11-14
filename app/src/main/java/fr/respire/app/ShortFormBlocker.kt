@@ -76,13 +76,18 @@ object ShortFormBlocker {
     }
 
     /** Fenêtres de l'appli visée ; à défaut, la fenêtre active. */
-    fun roots(service: AccessibilityService, pkg: String): List<AccessibilityNodeInfo> {
+    fun roots(
+        service: AccessibilityService,
+        pkg: String,
+        onTreeError: () -> Unit = {},
+    ): List<AccessibilityNodeInfo> {
         val fromWindows = try {
             service.windows
                 .filter { it.type == AccessibilityWindowInfo.TYPE_APPLICATION }
                 .mapNotNull { it.root }
                 .filter { it.packageName?.toString() == pkg }
         } catch (e: RuntimeException) {
+            onTreeError() // compté dans le diagnostic, sans rien consigner de l'écran
             emptyList()
         }
         if (fromWindows.isNotEmpty()) return fromWindows
