@@ -13,4 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Respire"
+includeBuild("pilmil-core")
 include(":app")

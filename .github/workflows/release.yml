@@ -36,6 +36,8 @@ jobs:
       PACKAGE_NAME: fr.respire.app
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - uses: actions/setup-java@v4
         with:
