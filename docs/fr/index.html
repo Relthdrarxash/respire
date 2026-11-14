@@ -51,48 +51,82 @@
 </div></section>
 
 <section id="simulateur"><div class="wrap">
-<h2>Simulateur de pause (4 s / 6 s)</h2>
-<p class="intro">Voici la respiration guidée affichée avant l’ouverture d’une appli chronophage : 4 secondes d’inspiration, 6 secondes d’expiration.</p>
-<div style="border:1px solid currentColor;border-color:rgba(128,128,128,.25);border-radius:18px;padding:24px;display:grid;gap:16px;justify-items:center;text-align:center">
-  <div id="re-bubble" style="width:124px;height:124px;border-radius:50%;background:radial-gradient(circle,#7aa889,#3d6b52);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;transition:transform 1s ease;transform:scale(0.85)">Prêt</div>
-  <p id="re-info" style="margin:0;opacity:.8">Appuyez sur Démarrer pour lancer un cycle de 10 secondes.</p>
-  <button type="button" id="re-btn" style="font:inherit;padding:10px 20px;border-radius:999px;border:0;background:#3d6b52;color:#fff;font-weight:700;cursor:pointer">Démarrer la pause</button>
+<h2>Essayer l’application en direct</h2>
+<p class="intro">Naviguez entre les écrans de Respire et testez la pause respiratoire avant l’ouverture d’une appli.</p>
+<div style="display:flex;justify-content:center">
+  <div style="width:min(340px,100%);border:8px solid #262925;border-radius:32px;background:#f7f5f0;color:#222621;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.2);font-size:14px">
+    <div style="background:#3d6b52;color:#fff;padding:10px 16px;display:flex;justify-content:space-between;font-weight:700">
+      <span>Respire</span><span style="font-size:11px;opacity:.85">Service actif</span>
+    </div>
+    <div id="re-screen" style="padding:14px;min-height:330px;display:grid;gap:10px;align-content:start"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #e1ddd3;background:#fff">
+      <button type="button" class="re-tab" data-tab="apps" style="padding:10px 4px;border:0;background:none;font:inherit;cursor:pointer">Applis</button>
+      <button type="button" class="re-tab" data-tab="pause" style="padding:10px 4px;border:0;background:none;font:inherit;cursor:pointer">Pause</button>
+      <button type="button" class="re-tab" data-tab="stats" style="padding:10px 4px;border:0;background:none;font:inherit;cursor:pointer">Bilan</button>
+    </div>
+  </div>
 </div>
 </div></section>
 <script>
 (function(){
-  let timer = null, sec = 0, cycles = 0;
-  const bubble = document.getElementById("re-bubble");
-  const info = document.getElementById("re-info");
-  const btn = document.getElementById("re-btn");
-  function tick() {
-    const phaseSec = sec % 10;
-    if (phaseSec < 4) {
-      bubble.style.transitionDuration = "4s";
-      bubble.style.transform = "scale(1.18)";
-      bubble.textContent = `Inspirez (${4 - phaseSec}s)`;
+  let tab = "pause", timer = null, sec = 0, cycles = 0;
+  function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+  function render() {
+    document.querySelectorAll(".re-tab").forEach(b => {
+      const act = b.dataset.tab === tab;
+      b.style.color = act ? "#3d6b52" : "#6b6e68";
+      b.style.fontWeight = act ? "700" : "500";
+    });
+    const scr = document.getElementById("re-screen");
+    if (tab === "apps") {
+      stopTimer();
+      scr.innerHTML = `
+        <div style="font-weight:800;font-size:16px">Applis freinées</div>
+        <div style="background:#fff;border:1px solid #e1ddd3;border-radius:12px;padding:10px;display:flex;justify-content:space-between"><span>Instagram</span><strong>Pause 10 s</strong></div>
+        <div style="background:#fff;border:1px solid #e1ddd3;border-radius:12px;padding:10px;display:flex;justify-content:space-between"><span>YouTube Shorts</span><strong>Filtré</strong></div>
+        <button type="button" id="re-try" style="margin-top:6px;padding:10px;border-radius:999px;border:0;background:#3d6b52;color:#fff;font:inherit;font-weight:700;cursor:pointer">Simuler l'ouverture</button>
+      `;
+    } else if (tab === "pause") {
+      scr.innerHTML = `
+        <div style="text-align:center;display:grid;gap:12px;justify-items:center;padding-top:12px">
+          <div style="font-weight:700">Prenez une pause avant d'ouvrir</div>
+          <div id="re-bubble" style="width:118px;height:118px;border-radius:50%;background:radial-gradient(circle,#7aa889,#3d6b52);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;transition:transform 1s ease;transform:scale(0.85)">Prêt</div>
+          <p id="re-info" style="margin:0;font-size:12px;color:#5d615b">Cycle 4 s inspiration / 6 s expiration</p>
+          <button type="button" id="re-btn" style="font:inherit;padding:9px 18px;border-radius:999px;border:0;background:#3d6b52;color:#fff;font-weight:700;cursor:pointer">${timer ? "Arrêter" : "Démarrer"}</button>
+        </div>
+      `;
     } else {
-      bubble.style.transitionDuration = "6s";
-      bubble.style.transform = "scale(0.82)";
-      bubble.textContent = `Expirez (${10 - phaseSec}s)`;
+      stopTimer();
+      scr.innerHTML = `
+        <div style="font-weight:800;font-size:16px">Cette semaine</div>
+        <div style="background:#fff;border:1px solid #e1ddd3;border-radius:12px;padding:12px">
+          <div style="font-size:22px;font-weight:800;color:#3d6b52">18 renoncements</div>
+          <div style="font-size:12px;color:#5d615b">~1 h 15 économisée sur les fils infinis</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e1ddd3;border-radius:12px;padding:12px;font-size:12px">Pic de tentations : 21 h – 22 h</div>
+      `;
     }
-    if (phaseSec === 9) cycles++;
-    info.textContent = `Cycle en cours · ${cycles} cycle(s) terminé(s)`;
+  }
+  function tick() {
+    const bubble = document.getElementById("re-bubble"), info = document.getElementById("re-info");
+    if (!bubble) return;
+    const p = sec % 10;
+    if (p < 4) { bubble.style.transitionDuration = "4s"; bubble.style.transform = "scale(1.18)"; bubble.textContent = `Inspirez (${4-p}s)`; }
+    else { bubble.style.transitionDuration = "6s"; bubble.style.transform = "scale(0.82)"; bubble.textContent = `Expirez (${10-p}s)`; }
+    if (p === 9) cycles++;
+    info.textContent = `${cycles} cycle(s) terminé(s)`;
     sec++;
   }
-  btn.addEventListener("click", () => {
-    if (timer) {
-      clearInterval(timer); timer = null; sec = 0;
-      bubble.style.transform = "scale(0.85)";
-      bubble.textContent = "Prêt";
-      btn.textContent = "Démarrer la pause";
-      info.textContent = "Pause arrêtée.";
-    } else {
-      cycles = 0; sec = 0; tick();
-      timer = setInterval(tick, 1000);
-      btn.textContent = "Arrêter";
+  document.getElementById("simulateur").addEventListener("click", (e) => {
+    const t = e.target.closest(".re-tab");
+    if (t) { tab = t.dataset.tab; render(); return; }
+    if (e.target.id === "re-try") { tab = "pause"; render(); }
+    if (e.target.id === "re-btn") {
+      if (timer) { stopTimer(); sec = 0; render(); }
+      else { cycles = 0; sec = 0; tick(); timer = setInterval(tick, 1000); document.getElementById("re-btn").textContent = "Arrêter"; }
     }
   });
+  render();
 })();
 </script>
 
