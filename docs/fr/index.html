@@ -50,6 +50,52 @@
 </ul>
 </div></section>
 
+<section id="simulateur"><div class="wrap">
+<h2>Simulateur de pause (4 s / 6 s)</h2>
+<p class="intro">Voici la respiration guidée affichée avant l’ouverture d’une appli chronophage : 4 secondes d’inspiration, 6 secondes d’expiration.</p>
+<div style="border:1px solid currentColor;border-color:rgba(128,128,128,.25);border-radius:18px;padding:24px;display:grid;gap:16px;justify-items:center;text-align:center">
+  <div id="re-bubble" style="width:124px;height:124px;border-radius:50%;background:radial-gradient(circle,#7aa889,#3d6b52);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;transition:transform 1s ease;transform:scale(0.85)">Prêt</div>
+  <p id="re-info" style="margin:0;opacity:.8">Appuyez sur Démarrer pour lancer un cycle de 10 secondes.</p>
+  <button type="button" id="re-btn" style="font:inherit;padding:10px 20px;border-radius:999px;border:0;background:#3d6b52;color:#fff;font-weight:700;cursor:pointer">Démarrer la pause</button>
+</div>
+</div></section>
+<script>
+(function(){
+  let timer = null, sec = 0, cycles = 0;
+  const bubble = document.getElementById("re-bubble");
+  const info = document.getElementById("re-info");
+  const btn = document.getElementById("re-btn");
+  function tick() {
+    const phaseSec = sec % 10;
+    if (phaseSec < 4) {
+      bubble.style.transitionDuration = "4s";
+      bubble.style.transform = "scale(1.18)";
+      bubble.textContent = `Inspirez (${4 - phaseSec}s)`;
+    } else {
+      bubble.style.transitionDuration = "6s";
+      bubble.style.transform = "scale(0.82)";
+      bubble.textContent = `Expirez (${10 - phaseSec}s)`;
+    }
+    if (phaseSec === 9) cycles++;
+    info.textContent = `Cycle en cours · ${cycles} cycle(s) terminé(s)`;
+    sec++;
+  }
+  btn.addEventListener("click", () => {
+    if (timer) {
+      clearInterval(timer); timer = null; sec = 0;
+      bubble.style.transform = "scale(0.85)";
+      bubble.textContent = "Prêt";
+      btn.textContent = "Démarrer la pause";
+      info.textContent = "Pause arrêtée.";
+    } else {
+      cycles = 0; sec = 0; tick();
+      timer = setInterval(tick, 1000);
+      btn.textContent = "Arrêter";
+    }
+  });
+})();
+</script>
+
 <section id="privacy"><div class="wrap">
 <div class="privacy-box">
 <div><h2>Tout reste sur ton téléphone</h2></div>

@@ -50,6 +50,52 @@
 </ul>
 </div></section>
 
+<section id="simulator"><div class="wrap">
+<h2>Try the 4s / 6s pause simulator</h2>
+<p class="intro">Here is the guided breathing prompt shown before opening a distracting app: inhale for 4 seconds, exhale for 6 seconds.</p>
+<div style="border:1px solid rgba(128,128,128,.25);border-radius:18px;padding:24px;display:grid;gap:16px;justify-items:center;text-align:center">
+  <div id="re-bubble" style="width:124px;height:124px;border-radius:50%;background:radial-gradient(circle,#7aa889,#3d6b52);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;transition:transform 1s ease;transform:scale(0.85)">Ready</div>
+  <p id="re-info" style="margin:0;opacity:.8">Press Start for a 10-second breathing cycle.</p>
+  <button type="button" id="re-btn" style="font:inherit;padding:10px 20px;border-radius:999px;border:0;background:#3d6b52;color:#fff;font-weight:700;cursor:pointer">Start pause</button>
+</div>
+</div></section>
+<script>
+(function(){
+  let timer = null, sec = 0, cycles = 0;
+  const bubble = document.getElementById("re-bubble");
+  const info = document.getElementById("re-info");
+  const btn = document.getElementById("re-btn");
+  function tick() {
+    const phaseSec = sec % 10;
+    if (phaseSec < 4) {
+      bubble.style.transitionDuration = "4s";
+      bubble.style.transform = "scale(1.18)";
+      bubble.textContent = `Inhale (${4 - phaseSec}s)`;
+    } else {
+      bubble.style.transitionDuration = "6s";
+      bubble.style.transform = "scale(0.82)";
+      bubble.textContent = `Exhale (${10 - phaseSec}s)`;
+    }
+    if (phaseSec === 9) cycles++;
+    info.textContent = `Running · ${cycles} cycle(s) completed`;
+    sec++;
+  }
+  btn.addEventListener("click", () => {
+    if (timer) {
+      clearInterval(timer); timer = null; sec = 0;
+      bubble.style.transform = "scale(0.85)";
+      bubble.textContent = "Ready";
+      btn.textContent = "Start pause";
+      info.textContent = "Paused.";
+    } else {
+      cycles = 0; sec = 0; tick();
+      timer = setInterval(tick, 1000);
+      btn.textContent = "Stop";
+    }
+  });
+})();
+</script>
+
 <section id="privacy"><div class="wrap">
 <div class="privacy-box">
 <div><h2>Everything stays on your phone</h2></div>
