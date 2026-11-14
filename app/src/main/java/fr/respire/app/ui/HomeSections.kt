@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
@@ -415,6 +416,21 @@ internal fun AboutSection(
             }
             TextAction(stringResource(R.string.settings_replay_onboarding), onClick = onReplayOnboarding)
             TextAction(stringResource(R.string.settings_review_disclosure), onClick = onShowDisclosure)
+            val uriHandler = LocalUriHandler.current
+            Text(
+                "pilmil.studio@proton.me",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(role = Role.Button) {
+                        runCatching { uriHandler.openUri("mailto:pilmil.studio@proton.me?subject=Respire") }
+                    }
+                    .padding(top = 6.dp),
+                fontFamily = Nunito,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 13.sp,
+                color = Calme.Sage,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            )
             Text(
                 stringResource(R.string.diag_title),
                 modifier = Modifier
